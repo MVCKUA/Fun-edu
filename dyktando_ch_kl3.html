@@ -25,25 +25,25 @@
       margin-bottom: 30px;
     }
     .container {
-      max-width: 700px;
+      max-width: 800px;
       margin: 0 auto;
       background: white;
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
     }
-    .sentence {
+    .dyktando {
+      font-size: 18px;
       margin-bottom: 20px;
-      font-size: 20px;
+      line-height: 1.6;
     }
     select {
       font-size: 16px;
-      padding: 5px 10px;
+      padding: 3px 6px;
       margin: 0 3px;
     }
     button {
-      margin: 10px;
+      margin: 10px 10px 0 0;
       padding: 10px 20px;
       font-size: 16px;
       background: #ffca28;
@@ -59,6 +59,7 @@
       margin-top: 20px;
       font-size: 18px;
       font-weight: bold;
+      color: #00695c;
     }
     .nav {
       margin-top: 30px;
@@ -68,7 +69,7 @@
 <body>
   <div class="header">Dyktando: ch/h – klasa 3</div>
   <div class="container">
-    <div id="dyktando" class="sentence"></div>
+    <div id="dyktando" class="dyktando"></div>
 
     <button onclick="sprawdz()">Sprawdź</button>
     <button onclick="noweZdanie()">Nowe zdanie</button>
@@ -81,54 +82,72 @@
   </div>
 
   <script>
-    const zdania = [
-      ["Mały", ["ch", "h"], "łopak ma", ["ch", "h"], "omika."],
-      ["Na plaży znaleźliśmy muszlę z", ["ch", "h"], "orwatką."],
-      ["Dzie", ["ch", "h"], "ci bawiły się w piaskownicy."],
-      ["To był sły", ["ch", "h"], " dźwięk dzwonka."],
-      ["Zobaczyłem", ["ch", "h"], "murę na łące."],
-      ["Na stole stała filiżanka z", ["ch", "h"], "erbatą."],
-      ["Mama zrobiła pyszną", ["ch", "h"], "rupkę dyniową."],
-      ["W lesie rosły grzyby i", ["ch", "h"], "aszcze."],
-      ["", ["ch", "h"], "łopak pomógł babci z zakupami."],
-      ["To była piękna", ["ch", "h"], "wila z ogrodem."],
-      ["Nie lubię, gdy ktoś mnie szarpie za", ["ch", "h"], "ust."],
-      ["W pudełku były stare zdjęcia i", ["ch", "h"], "usteczki."],
-      ["Zamknął", ["ch", "h"], "o z hałasem i poszedł spać."],
-      ["W kącie siedział cichy", ["ch", "h"], "omik."],
-      ["Dziadek opowiadał o swo", ["ch", "h"], " młodości."]
+    const dyktanda = [
+      [
+        ["W lesie rosły stru", ["ch", "h"], "y z jagodami."],
+        ["Dziewczynka niesie filiżankę", ["ch", "h"], "erbaty."],
+        ["Tata naprawiał sa", ["ch", "h"], "y w ogrodzie."],
+        ["Na plaży widzieliśmy muszlę z ", ["ch", "h"], "orwatką."],
+        ["Mama kupiła nową sukienkę z falban", ["ch", "h"], "."]
+      ],
+      [
+        ["Słońce świeciło jasno nad dru", ["ch", "h"], "ą."],
+        ["Chłopiec grał na ", ["ch", "h"], "armonijce w parku."],
+        ["Na stole stał kubek z gorącą ", ["ch", "h"], "a."],
+        ["Dziadek opowiadał o swo", ["ch", "h"], " młodości."],
+        ["Pies spał w kącie pod ", ["ch", "h"], "ustą."]
+      ],
+      [
+        ["W pudełku były stare zdjęcia i pa", ["ch", "h"], "nące listy."],
+        ["Na podwórku stała nowa ", ["ch", "h"], "ata."],
+        ["Zosia narysowała dom i ", ["ch", "h"], "murki."],
+        ["To był bardzo ciepły ", ["ch", "h"], "wila."],
+        ["Dzieci zrobiły prezent z pudełka po ", ["ch", "h"], "usteczkach."]
+      ],
+      [
+        ["Zobaczyliśmy w ogrodzie rze", ["ch", "h"], "otnika."],
+        ["Przy drodze stała tablica z na", ["ch", "h"], "em."],
+        ["Na kolację była zupa z mar", ["ch", "h"], "wi."],
+        ["Dzieci przyniosły kwiaty do ", ["ch", "h"], "oinki."],
+        ["Pani napisała temat na tabli", ["ch", "h"], "."]
+      ]
     ];
 
     let current = 0;
 
     function render() {
-      const s = zdania[current];
+      const dyktando = dyktanda[current];
       let html = "";
-      for (let part of s) {
-        if (Array.isArray(part)) {
-          html += `<select><option value="">--</option><option value="${part[0]}">${part[0]}</option><option value="${part[1]}">${part[1]}</option></select>`;
-        } else {
-          html += part + " ";
+      for (let zdanie of dyktando) {
+        for (let fragment of zdanie) {
+          if (Array.isArray(fragment)) {
+            html += `<select><option value="">--</option><option value="${fragment[0]}">${fragment[0]}</option><option value="${fragment[1]}">${fragment[1]}</option></select>`;
+          } else {
+            html += fragment + " ";
+          }
         }
+        html += "<br><br>";
       }
       document.getElementById("dyktando").innerHTML = html;
       document.getElementById("wynik").innerText = "";
     }
 
     function sprawdz() {
+      const dyktando = dyktanda[current];
       const selects = document.querySelectorAll("select");
-      const correct = zdania[current].filter(p => Array.isArray(p)).map(p => p[0]);
+      const correctAnswers = dyktando.map(z => z.find(f => Array.isArray(f))[0]);
       let score = 0;
       selects.forEach((s, i) => {
-        if (s.value === correct[i]) score++;
+        if (s.value === correctAnswers[i]) score++;
       });
-      const total = correct.length;
-      const ocena = (score === total) ? "Świetnie!" : `Masz ${score} z ${total} poprawnych.`;
-      document.getElementById("wynik").innerText = ocena;
+      const result = score === correctAnswers.length
+        ? "Świetnie! Wszystkie odpowiedzi poprawne."
+        : `Masz ${score} z ${correctAnswers.length} poprawnych odpowiedzi.`;
+      document.getElementById("wynik").innerText = result;
     }
 
     function noweZdanie() {
-      current = Math.floor(Math.random() * zdania.length);
+      current = Math.floor(Math.random() * dyktanda.length);
       render();
     }
 
