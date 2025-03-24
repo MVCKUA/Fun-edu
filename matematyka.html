@@ -2,111 +2,98 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Matematyka</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
       margin: 0;
-      background: #eafcff;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><text x="20" y="150" font-size="100" fill="%23e0f7fa" font-family="Fredoka">+ − × ÷ =</text></svg>');
-      background-repeat: repeat;
+      background: #e0f7fa;
+      color: #333;
     }
     .header {
-      background: linear-gradient(to right, #00bcd4, #ffe082);
-      padding: 30px 20px 20px 20px;
+      background: linear-gradient(to right, #4dd0e1, #0097a7);
+      padding: 30px;
       text-align: center;
       color: white;
       font-size: 32px;
-      font-weight: 600;
-      border-bottom: 4px solid #ffcc80;
-    }
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin: 25px auto;
-    }
-    .menu a {
-      text-decoration: none;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-size: 16px;
       font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      display: inline-block;
     }
-    .menu a:nth-child(1) { background: #ff8a65; color: white; }
-    .menu a:nth-child(2) { background: #ffd54f; color: #333; }
-    .menu a:nth-child(3) { background: #4db6ac; color: white; }
-    .menu a:nth-child(4) { background: #ba68c8; color: white; }
-    .menu a:nth-child(5) { background: #90caf9; color: #333; }
-
-    .content {
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
       background: white;
-      max-width: 700px;
-      margin: auto;
       padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.08);
-    }
-
-    h2 {
-      color: #388e3c;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       text-align: center;
-      font-size: 28px;
     }
-
+    h2 {
+      color: #00796b;
+      margin-bottom: 20px;
+    }
     ul {
       list-style: none;
-      padding-left: 0;
+      padding: 0;
     }
     li {
-      margin: 10px 0;
+      margin: 15px 0;
     }
-    a.link {
-      color: #00796b;
-      font-weight: bold;
+    a {
       text-decoration: none;
+      color: white;
+      background: #26c6da;
+      padding: 12px 24px;
+      border-radius: 10px;
+      display: inline-block;
+      font-weight: bold;
+      transition: background 0.3s;
     }
-    a.link:hover {
-      text-decoration: underline;
+    a:hover {
+      background: #00acc1;
+    }
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 30px;
+    }
+    .nav-buttons {
+      margin-top: 40px;
+    }
+    .nav-buttons a {
+      margin: 5px;
+      font-size: 14px;
+      background: #80deea;
+      color: #004d40;
     }
   </style>
 </head>
 <body>
 
-<div class="header">Fun Edu</div>
+  <div class="header">Matematyka</div>
 
-<div class="menu">
-  <a href="index.html">Strona główna</a>
-  <a href="ortografia.html">Ortografia</a>
-  <a href="matematyka.html">Matematyka</a>
-  <a href="fun-english.html">Fun English</a>
-  <a href="o-stronie.html">O stronie</a>
-</div>
+  <div class="container">
+    <h2>Wybierz zestaw zadań:</h2>
+    <ul class="btn-container">
+      <li><a href="dodawanie_do_20.html">Dodawanie do 20</a></li>
+      <li><a href="dodawanie_do_100.html">Dodawanie do 100</a></li>
+      <li><a href="odejmowanie_do_20.html">Odejmowanie do 20</a></li>
+      <li><a href="odejmowanie_do_100.html">Odejmowanie do 100</a></li>
+      <li><a href="dodawanie_odejmowanie.html">Dodawanie i odejmowanie</a></li>
+      <li><a href="mnozenie_dzielenie.html">Mnożenie i dzielenie</a></li>
+      <li><a href="geometria_losowa.html">Zadania geometryczne</a></li>
+      <li><a href="ile_bokow_ma_figura.html">Ile boków ma figura?</a></li>
+      <li><a href="gra_obwod.html">Gra: Oblicz obwód</a></li>
+      <li><a href="gra_pole_kwadratu.html">Gra: Pola kwadratów</a></li>
+    </ul>
 
-<div class="content">
-  <h2>Matematyka</h2>
-  <p>Interaktywne ćwiczenia matematyczne:</p>
-  <ul>
-    <li><a class="link" href="tabliczka_mnozenia.html">Tabliczka mnożenia – ćwiczenie</a></li>
-    <li><a class="link" href="dodawanie_do_20.html">Dodawanie do 20</a></li>
-    <li><a class="link" href="dodawanie_do_100.html">Dodawanie do 100</a></li>
-    <li><a class="link" href="odejmowanie_do_20.html">Odejmowanie do 20</a></li>
-    <li><a class="link" href="odejmowanie_do_100.html">Odejmowanie do 100</a></li>
-    <li><a class="link" href="dodawanie_odejmowanie.html">Dodawanie i odejmowanie</a></li>
-    <li><a class="link" href="mnozenie_dzielenie.html">Mnożenie i dzielenie</a></li>
-    <li><a class="link" href="wyrazenia_dwa_dzialania.html">Wyrażenia z dwiema działaniami</a></li>
-    <li><a class="link" href="geometria_text_only.html">Geometria – pytania tekstowe</a></li>
-    <li><a class="link" href="ile_bokow_ma_figura.html">Gra: Ile boków ma figura?</a></li>
-    <li><a class="link" href="gra_pole_figury.html">Gra: Oblicz pole figury</a></li>
-    <li><a class="link" href="gra_obwod_figury.html">Gra: Oblicz obwód figury</a></li>
-  </ul>
-</div>
+    <div class="nav-buttons">
+      <a href="index.html">Strona główna</a>
+    </div>
+  </div>
 
 </body>
 </html>
