@@ -2,75 +2,98 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Ortografia – Fun Edu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Ortografia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
       margin: 0;
-      background: #fff3e0;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><text x="30" y="140" font-size="90" fill="%23ffe0b2" font-family="Fredoka">ABC</text></svg>');
-      background-repeat: repeat;
+      background: #f1f8e9;
+      color: #333;
     }
     .header {
-      background: linear-gradient(to right, #ffcc80, #ff8a65);
-      padding: 25px;
+      background: linear-gradient(to right, #ffcc80, #f57c00);
+      padding: 30px;
       text-align: center;
       color: white;
-      font-size: 26px;
+      font-size: 32px;
       font-weight: bold;
     }
     .container {
       max-width: 800px;
-      margin: 30px auto;
+      margin: 40px auto;
       background: white;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      text-align: center;
     }
     h2 {
-      text-align: center;
       color: #ef6c00;
+      margin-bottom: 20px;
     }
     ul {
-      list-style-type: none;
+      list-style: none;
       padding: 0;
-      font-size: 18px;
     }
     li {
-      margin: 12px 0;
+      margin: 15px 0;
     }
     a {
-      color: #d84315;
       text-decoration: none;
+      color: #fff;
+      background: #ffa726;
+      padding: 12px 24px;
+      border-radius: 10px;
+      display: inline-block;
+      transition: background 0.3s;
       font-weight: bold;
     }
     a:hover {
-      text-decoration: underline;
+      background: #fb8c00;
+    }
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 30px;
+    }
+    .nav-buttons {
+      margin-top: 40px;
+    }
+    .nav-buttons a {
+      margin: 5px;
+      font-size: 14px;
+      background: #aed581;
     }
   </style>
 </head>
 <body>
 
-<div class="header">Ortografia – klasy 2–4</div>
+  <div class="header">Ortografia</div>
 
-<div class="container">
-  <h2>Wybierz temat ortograficzny:</h2>
-  <ul>
-    <li>1. <a href="dyktando_ch_kl3.html">ch / h – klasa 3</a></li>
-    <li>2. <a href="dyktando_rz_kl3.html">rz / ż – klasa 3</a></li>
-    <li>3. <a href="dyktando_ou_kl3.html">ó / u – klasa 3</a></li>
-    <li>4. <a href="dyktando_wielka_litera_kl2.html">Wielka litera – klasa 2</a></li>
-    <li>5. <a href="dyktando_nie_kl3.html">Pisownia „nie” – klasa 3</a></li>
-    <li>6. <a href="dyktando_ae_kl2.html">Ą / Ę – klasa 2</a></li>
-    <li>7. <a href="dyktando_homonimy_kl3.html">Homonimy – klasa 3</a></li>
-    <li>8. <a href="dyktando_ii_kl4.html">Wyrazy z „i” / „ii” – klasa 4</a></li>
-    <li>9. <a href="dyktando_zakonczenia_kl4.html">Zakończenia -ów / -owa / -eń – klasa 4</a></li>
-    <li>10. <a href="dyktando_wyjatki_all.html">Ortograficzne wyjątki – wszystkie klasy</a></li>
-  </ul>
-</div>
+  <div class="container">
+    <h2>Wybierz temat dyktanda ortograficznego:</h2>
+    <ul class="btn-container">
+      <li><a href="dyktando_ch_kl3.html">Pisownia ch/h – klasa 3</a></li>
+      <li><a href="dyktando_rz_kl3.html">Pisownia rz/ż – klasa 3</a></li>
+      <li><a href="dyktando_wielka_litera_kl2.html">Wielka litera – klasa 2</a></li>
+      <li><a href="dyktando_nie_kl3.html">Pisownia „nie” – klasa 3</a></li>
+      <li><a href="dyktando_ae_kl2.html">Ą / Ę – klasa 2</a></li>
+      <li><a href="dyktando_homonimy_kl3.html">Homonimy – klasa 3</a></li>
+      <li><a href="dyktando_ii_kl4.html">„i” / „ii” – klasa 4</a></li>
+      <li><a href="dyktando_zakonczenia_kl3.html">Zakończenia -ów / -owa – klasa 3</a></li>
+      <li><a href="dyktando_nie_czasowniki_kl2.html">„nie” z czasownikami – klasa 2</a></li>
+      <li><a href="dyktando_ou_kl2.html">ó / u – klasa 2</a></li>
+    </ul>
+
+    <div class="nav-buttons">
+      <a href="index.html">Strona główna</a>
+      <a href="javascript:location.reload()">Odśwież stronę</a>
+    </div>
+  </div>
 
 </body>
 </html>
