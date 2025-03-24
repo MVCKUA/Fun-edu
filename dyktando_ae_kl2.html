@@ -2,34 +2,103 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Ą / Ę – klasa 2</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Dyktando: Ą / Ę – klasa 2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background: #f3f3f3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      background: #fce4ec;
+    }
+    .header {
+      background: linear-gradient(to right, #f06292, #ec407a);
+      padding: 25px;
       text-align: center;
+      color: white;
+      font-size: 26px;
+      font-weight: bold;
     }
-    h1 {
-      color: #33691e;
-      font-size: 32px;
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    p {
+    h2 {
+      text-align: center;
+      color: #d81b60;
+    }
+    .question {
+      margin: 15px 0;
+      font-size: 18px;
+    }
+    select {
+      font-size: 16px;
+      margin: 0 5px;
+    }
+    button {
+      background: #ec407a;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    .result {
+      font-weight: bold;
+      text-align: center;
       font-size: 20px;
-      color: #558b2f;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
-  <h1>Ą / Ę – klasa 2</h1>
-  <p>Ta strona jest w trakcie przygotowania. Wkrótce będzie dostępna!</p>
+
+<div class="header">Ortografia – Ą / Ę – klasa 2</div>
+
+<div class="container">
+  <h2>Wybierz poprawną literę nosową:</h2>
+  <form id="dyktandoForm">
+    <div class="question">
+      1. Mama kupiła jabłk<select><option>--</option><option>ę</option><option>ą</option></select>.
+    </div>
+    <div class="question">
+      2. Widzę piękn<select><option>--</option><option>ą</option><option>ę</option></select> dziewczynkę.
+    </div>
+    <div class="question">
+      3. Chłopiec zrobił min<select><option>--</option><option>ę</option><option>ą</option></select>.
+    </div>
+    <div class="question">
+      4. Tata jest zmęczon<select><option>--</option><option>y</option><option>ą</option></select> po pracy.
+    </div>
+    <div class="question">
+      5. Spotkaliśmy now<select><option>--</option><option>ą</option><option>ę</option></select> koleżankę.
+    </div>
+    <button type="button" onclick="sprawdz()">Sprawdź odpowiedzi</button>
+    <div class="result" id="result"></div>
+  </form>
+</div>
+
+<script>
+  const poprawne = ["ę", "ą", "ę", "ą", "ą"];
+  function sprawdz() {
+    const selects = document.querySelectorAll("select");
+    let wynik = 0;
+    selects.forEach((s, i) => {
+      if (s.value === poprawne[i]) wynik++;
+    });
+    const ocena = Math.round((wynik / poprawne.length) * 6);
+    document.getElementById("result").innerText =
+      `Poprawne odpowiedzi: ${wynik}/${poprawne.length} – Ocena: ${ocena}`;
+  }
+</script>
+
 </body>
 </html>
