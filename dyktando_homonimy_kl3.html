@@ -9,102 +9,123 @@
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
+      background: #f1f8e9;
       margin: 0;
-      background: #ede7f6;
+      padding: 20px;
+      color: #333;
     }
     .header {
-      background: linear-gradient(to right, #9575cd, #7e57c2);
-      padding: 25px;
       text-align: center;
-      color: white;
-      font-size: 26px;
+      background: linear-gradient(to right, #aed581, #7cb342);
+      padding: 20px;
+      font-size: 28px;
       font-weight: bold;
+      color: #fff;
+      border-radius: 10px;
+      margin-bottom: 30px;
     }
     .container {
       max-width: 800px;
-      margin: 30px auto;
+      margin: 0 auto;
       background: white;
-      padding: 25px;
-      border-radius: 16px;
+      padding: 30px;
+      border-radius: 15px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h2 {
-      text-align: center;
-      color: #673ab7;
-    }
-    .question {
-      margin: 15px 0;
+    .dyktando {
       font-size: 18px;
+      margin-bottom: 20px;
+      line-height: 1.6;
     }
     select {
       font-size: 16px;
-      margin: 0 5px;
+      padding: 3px 6px;
+      margin: 0 3px;
     }
     button {
-      background: #7e57c2;
-      color: white;
-      font-size: 16px;
+      margin: 10px 10px 0 0;
       padding: 10px 20px;
+      font-size: 16px;
+      background: #8bc34a;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
-      display: block;
-      margin: 20px auto;
+      font-weight: bold;
+      color: white;
+    }
+    button:hover {
+      background: #7cb342;
     }
     .result {
+      margin-top: 20px;
+      font-size: 18px;
       font-weight: bold;
-      text-align: center;
-      font-size: 20px;
-      margin-top: 15px;
+      color: #33691e;
+    }
+    .nav {
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
+  <div class="header">Dyktando: Homonimy – klasa 3</div>
+  <div class="container">
+    <div id="dyktando" class="dyktando"></div>
 
-<div class="header">Ortografia – Homonimy – klasa 3</div>
+    <button onclick="sprawdz()">Sprawdź</button>
+    <button onclick="noweZdanie()">Nowe zdanie</button>
 
-<div class="container">
-  <h2>Wybierz poprawne znaczenie wyrazu (homonimy):</h2>
-  <form id="dyktandoForm">
-    <div class="question">
-      1. Mama kupiła <select><option>--</option><option>zamek (w drzwiach)</option><option>zamek (budowla)</option></select> do torebki.
+    <div class="result" id="wynik"></div>
+
+    <div class="nav">
+      <a href="ortografia.html"><button>Powrót do Ortografii</button></a>
     </div>
-    <div class="question">
-      2. Dzieci zwiedzały piękny <select><option>--</option><option>zamek (budowla)</option><option>zamek (w drzwiach)</option></select>.
-    </div>
-    <div class="question">
-      3. W lesie złamałem <select><option>--</option><option>ząb (zębatka)</option><option>ząb (w buzi)</option></select> od piły.
-    </div>
-    <div class="question">
-      4. Boli mnie <select><option>--</option><option>ząb (w buzi)</option><option>ząb (zębatka)</option></select>, muszę iść do dentysty.
-    </div>
-    <div class="question">
-      5. Tata opowiadał o <select><option>--</option><option>fala (na morzu)</option><option>fala (włosy)</option></select>, które uderzały o brzeg.
-    </div>
-    <button type="button" onclick="sprawdz()">Sprawdź odpowiedzi</button>
-    <div class="result" id="result"></div>
-  </form>
-</div>
+  </div>
 
 <script>
-  const poprawne = [
-    "zamek (w drzwiach)",
-    "zamek (budowla)",
-    "ząb (zębatka)",
-    "ząb (w buzi)",
-    "fala (na morzu)"
-  ];
-  function sprawdz() {
-    const selects = document.querySelectorAll("select");
-    let wynik = 0;
-    selects.forEach((s, i) => {
-      if (s.value === poprawne[i]) wynik++;
-    });
-    const ocena = Math.round((wynik / poprawne.length) * 6);
-    document.getElementById("result").innerText =
-      `Poprawne odpowiedzi: ${wynik}/${poprawne.length} – Ocena: ${ocena}`;
-  }
-</script>
+const dyktanda = [[["Widziałem stary", ["zamek", "zamek"], " na wzgórzu."], ["Złamałem", ["zamek", "zamek"], " w kurtce."], ["Kupiliśmy nowy", ["zamek", "zamek"], " z wieżyczkami."], ["Mama naprawiła", ["zamek", "zamek"], " w spodniach."], ["Pojechaliśmy zwiedzać", ["zamek", "zamek"], "."]]];
+let current = 0;
 
+function render() {
+  const dyktando = dyktanda[current];
+  let html = "";
+  for (let zdanie of dyktando) {
+    for (let fragment of zdanie) {
+      if (Array.isArray(fragment)) {
+        html += `<select><option value="">--</option><option value="${fragment[0]}">${fragment[0]}</option><option value="${fragment[1]}">${fragment[1]}</option></select>`;
+      } else {
+        html += fragment + " ";
+      }
+    }
+    html += "<br><br>";
+  }
+  document.getElementById("dyktando").innerHTML = html;
+  document.getElementById("wynik").innerText = "";
+}
+
+function sprawdz() {
+  const dyktando = dyktanda[current];
+  const selects = document.querySelectorAll("select");
+  const correctAnswers = dyktando.map(z => z.find(f => Array.isArray(f))[0]);
+  let score = 0;
+  selects.forEach((s, i) => {
+    if (s.value === correctAnswers[i]) score++;
+  });
+  let resultText = "";
+  if (score === correctAnswers.length) {
+    resultText = "Świetnie! Wszystkie odpowiedzi poprawne.";
+  } else {
+    resultText = "Masz " + score + " z " + correctAnswers.length + " poprawnych odpowiedzi.";
+  }
+  document.getElementById("wynik").innerText = resultText;
+}
+
+function noweZdanie() {
+  current = Math.floor(Math.random() * dyktanda.length);
+  render();
+}
+
+window.onload = noweZdanie;
+</script>
 </body>
 </html>
