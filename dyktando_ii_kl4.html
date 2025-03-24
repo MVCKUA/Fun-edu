@@ -2,34 +2,103 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Dyktando – w przygotowaniu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Dyktando: Wyrazy z „i” / „ii” – klasa 4</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background: #f9fbe7;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      background: #e0f7fa;
+    }
+    .header {
+      background: linear-gradient(to right, #4dd0e1, #00acc1);
+      padding: 25px;
       text-align: center;
+      color: white;
+      font-size: 26px;
+      font-weight: bold;
     }
-    h1 {
-      color: #c0ca33;
-      font-size: 32px;
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    p {
+    h2 {
+      text-align: center;
+      color: #00838f;
+    }
+    .question {
+      margin: 15px 0;
+      font-size: 18px;
+    }
+    select {
+      font-size: 16px;
+      margin: 0 5px;
+    }
+    button {
+      background: #00bcd4;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    .result {
+      font-weight: bold;
+      text-align: center;
       font-size: 20px;
-      color: #827717;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
-  <h1>Dyktando ii kl4</h1>
-  <p>Strona z tym dyktandem jest w trakcie przygotowania. Wkrótce będzie dostępna!</p>
+
+<div class="header">Ortografia – Wyrazy z „i” / „ii” – klasa 4</div>
+
+<div class="container">
+  <h2>Wybierz poprawną formę: „i” czy „ii”</h2>
+  <form id="dyktandoForm">
+    <div class="question">
+      1. Ola chodzi do klas<select><option>--</option><option>i</option><option>ii</option></select> czwartej.
+    </div>
+    <div class="question">
+      2. Spotkałem się z koleg<select><option>--</option><option>i</option><option>ii</option></select> ze szkoły.
+    </div>
+    <div class="question">
+      3. Mama piekła ciast<select><option>--</option><option>i</option><option>ii</option></select> z jabłkami.
+    </div>
+    <div class="question">
+      4. W zoo widzieliśmy lam<select><option>--</option><option>i</option><option>ii</option></select>.
+    </div>
+    <div class="question">
+      5. Na placu zabaw bawiły się dziewczyn<select><option>--</option><option>i</option><option>ii</option></select>.
+    </div>
+    <button type="button" onclick="sprawdz()">Sprawdź odpowiedzi</button>
+    <div class="result" id="result"></div>
+  </form>
+</div>
+
+<script>
+  const poprawne = ["y", "i", "i", "i", "i"];
+  const selects = document.querySelectorAll("select");
+  function sprawdz() {
+    let wynik = 0;
+    selects.forEach((s, i) => {
+      if (s.value === poprawne[i]) wynik++;
+    });
+    const ocena = Math.round((wynik / poprawne.length) * 6);
+    document.getElementById("result").innerText =
+      `Poprawne odpowiedzi: ${wynik}/${poprawne.length} – Ocena: ${ocena}`;
+  }
+</script>
+
 </body>
 </html>
