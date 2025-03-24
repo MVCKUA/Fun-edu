@@ -2,34 +2,109 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Homonimy – klasa 3</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Dyktando: Homonimy – klasa 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background: #f3f3f3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      background: #ede7f6;
+    }
+    .header {
+      background: linear-gradient(to right, #9575cd, #7e57c2);
+      padding: 25px;
       text-align: center;
+      color: white;
+      font-size: 26px;
+      font-weight: bold;
     }
-    h1 {
-      color: #33691e;
-      font-size: 32px;
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    p {
+    h2 {
+      text-align: center;
+      color: #673ab7;
+    }
+    .question {
+      margin: 15px 0;
+      font-size: 18px;
+    }
+    select {
+      font-size: 16px;
+      margin: 0 5px;
+    }
+    button {
+      background: #7e57c2;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    .result {
+      font-weight: bold;
+      text-align: center;
       font-size: 20px;
-      color: #558b2f;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
-  <h1>Homonimy – klasa 3</h1>
-  <p>Ta strona jest w trakcie przygotowania. Wkrótce będzie dostępna!</p>
+
+<div class="header">Ortografia – Homonimy – klasa 3</div>
+
+<div class="container">
+  <h2>Wybierz poprawne znaczenie wyrazu (homonimy):</h2>
+  <form id="dyktandoForm">
+    <div class="question">
+      1. Mama kupiła <select><option>--</option><option>zamek (w drzwiach)</option><option>zamek (budowla)</option></select> do torebki.
+    </div>
+    <div class="question">
+      2. Dzieci zwiedzały piękny <select><option>--</option><option>zamek (budowla)</option><option>zamek (w drzwiach)</option></select>.
+    </div>
+    <div class="question">
+      3. W lesie złamałem <select><option>--</option><option>ząb (zębatka)</option><option>ząb (w buzi)</option></select> od piły.
+    </div>
+    <div class="question">
+      4. Boli mnie <select><option>--</option><option>ząb (w buzi)</option><option>ząb (zębatka)</option></select>, muszę iść do dentysty.
+    </div>
+    <div class="question">
+      5. Tata opowiadał o <select><option>--</option><option>fala (na morzu)</option><option>fala (włosy)</option></select>, które uderzały o brzeg.
+    </div>
+    <button type="button" onclick="sprawdz()">Sprawdź odpowiedzi</button>
+    <div class="result" id="result"></div>
+  </form>
+</div>
+
+<script>
+  const poprawne = [
+    "zamek (w drzwiach)",
+    "zamek (budowla)",
+    "ząb (zębatka)",
+    "ząb (w buzi)",
+    "fala (na morzu)"
+  ];
+  function sprawdz() {
+    const selects = document.querySelectorAll("select");
+    let wynik = 0;
+    selects.forEach((s, i) => {
+      if (s.value === poprawne[i]) wynik++;
+    });
+    const ocena = Math.round((wynik / poprawne.length) * 6);
+    document.getElementById("result").innerText =
+      `Poprawne odpowiedzi: ${wynik}/${poprawne.length} – Ocena: ${ocena}`;
+  }
+</script>
+
 </body>
 </html>
