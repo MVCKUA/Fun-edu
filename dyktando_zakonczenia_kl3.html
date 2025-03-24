@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Dyktando: Zakończenia -ów / -owa – klasa 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      margin: 0;
+      background: #fff3e0;
+    }
+    .header {
+      background: linear-gradient(to right, #ffb74d, #ff9800);
+      padding: 25px;
+      text-align: center;
+      color: white;
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #ef6c00;
+    }
+    .question {
+      margin: 15px 0;
+      font-size: 18px;
+    }
+    select {
+      font-size: 16px;
+      margin: 0 5px;
+    }
+    button {
+      background: #fb8c00;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    .result {
+      font-weight: bold;
+      text-align: center;
+      font-size: 20px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">Ortografia – Zakończenia -ów / -owa – klasa 3</div>
+
+<div class="container">
+  <h2>Wybierz poprawne zakończenie wyrazu:</h2>
+  <form id="dyktandoForm">
+    <div class="question">
+      1. Mama kupiła now<select><option>--</option><option>ą</option><option>owa</option></select> sukienkę.
+    </div>
+    <div class="question">
+      2. Na stole stała miska jabłk<select><option>--</option><option>ów</option><option>owa</option></select>.
+    </div>
+    <div class="question">
+      3. Zbliża się wizyta babci i dziadk<select><option>--</option><option>ów</option><option>owa</option></select>.
+    </div>
+    <div class="question">
+      4. To była bardzo mądra kobiet<select><option>--</option><option>owa</option><option>ów</option></select>.
+    </div>
+    <div class="question">
+      5. Tata wrócił z zakup<select><option>--</option><option>ów</option><option>owa</option></select>.
+    </div>
+    <button type="button" onclick="sprawdz()">Sprawdź odpowiedzi</button>
+    <div class="result" id="result"></div>
+  </form>
+</div>
+
+<script>
+  const poprawne = ["owa", "ów", "ów", "owa", "ów"];
+  function sprawdz() {
+    const selects = document.querySelectorAll("select");
+    let wynik = 0;
+    selects.forEach((s, i) => {
+      if (s.value === poprawne[i]) wynik++;
+    });
+    const ocena = Math.round((wynik / poprawne.length) * 6);
+    document.getElementById("result").innerText =
+      `Poprawne odpowiedzi: ${wynik}/${poprawne.length} – Ocena: ${ocena}`;
+  }
+</script>
+
+</body>
+</html>
