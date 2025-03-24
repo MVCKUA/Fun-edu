@@ -1,28 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fun Edu – Dyktanda</title>
+  <title>Fun Edu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      margin: 0;
+      background: #f9fcff;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #00bcd4, #ffca28);
+      padding: 15px 20px;
+      text-align: center;
+      color: white;
+      font-size: 28px;
+      font-weight: 600;
+      border-bottom: 4px solid #ffa000;
+    }
+    nav {
+      background: #e0f7fa;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 15px 10px;
+      font-size: 18px;
+    }
+    nav a {
+      color: #00796b;
+      text-decoration: none;
+      background: #fff3e0;
+      padding: 10px 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+    nav a:hover {
+      background: #ffe0b2;
+      color: #d84315;
+    }
+    .content {
+      max-width: 800px;
+      margin: auto;
+      padding: 30px 20px;
+      text-align: center;
+    }
+    .content h1, .content h2 {
+      color: #00acc1;
+    }
+    .content p, .content ul {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    ul li {
+      margin: 10px 0;
+    }
+  </style>
 </head>
-<body style="font-family: Comic Sans MS, sans-serif; background: #f9faff; padding: 20px;">
+<body>
 
-<nav style="background: #e0f4ff; padding: 10px; text-align: center;">
-  <a href="index.html">Strona główna</a> |
-  <a href="dyktanda.html"><strong>Dyktanda</strong></a> |
-  <a href="matematyka.html">Matematyka</a> |
-  <a href="fun-english.html">Fun English</a> |
-  <a href="o-stronie.html">O stronie</a>
+<header>Fun Edu</header>
+
+<nav>
+  <a href="index.html">Strona główna</a>
+  <a href="dyktanda.html">✍️ Dyktanda</a>
+  <a href="matematyka.html">➕ Matematyka</a>
+  <a href="fun-english.html">✨ Fun English</a>
+  <a href="o-stronie.html">ℹ️ O stronie</a>
 </nav>
-<hr>
 
-<h2>Dyktanda</h2>
-<p>Wybierz dyktando odpowiednie dla klasy i tematu ortograficznego:</p>
-
-<ul>
-  <li><a href="dyktando_ch_klasa3.html">Dyktando: ch / h – klasa 3</a></li>
-  <li><a href="dyktando_rz_z_klasa3_timer.html">Dyktando: rz / ż z zegarem – klasa 3</a></li>
-</ul>
-
+<div class="content">
+<h2>Dyktanda</h2><p>Wybierz dyktando ortograficzne:</p><ul><li><a href='dyktando_ch_klasa3.html'>Dyktando: ch/h – klasa 3</a></li><li><a href='dyktando_rz_z_klasa3_timer.html'>Dyktando: rz/ż z zegarem – klasa 3</a></li></ul>
+</div>
 </body>
 </html>
