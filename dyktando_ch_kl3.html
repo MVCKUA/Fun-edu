@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Dyktando: ch / h – klasa 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      margin: 0;
+      background: #e3f2fd;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><text x="20" y="140" font-size="90" fill="%23bbdefb" font-family="Fredoka">ch h</text></svg>');
+      background-repeat: repeat;
+    }
+    .header {
+      background: linear-gradient(to right, #4fc3f7, #0288d1);
+      padding: 25px;
+      text-align: center;
+      color: white;
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #0277bd;
+    }
+    .question {
+      margin: 15px 0;
+      font-size: 18px;
+    }
+    select {
+      font-size: 16px;
+      margin: 0 5px;
+    }
+    button {
+      background: #039be5;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    .result {
+      font-weight: bold;
+      text-align: center;
+      font-size: 20px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">Ortografia – ch / h – klasa 3</div>
+
+<div class="container">
+  <h2>Uzupełnij tekst wybierając poprawną formę:</h2>
+  <form id="dyktandoForm">
+    <div class="question">
+      1. Mały se<select><option>--</option><option>ch</option><option>h</option></select> był wesoły i skakał po trawie.
+    </div>
+    <div class="question">
+      2. Na stole leżał kru<select><option>--</option><option>ch</option><option>h</option></select>y placek z jabłkami.
+    </div>
+    <div class="question">
+      3. Tata naprawiał rower w garażu i miał brudne ra<select><option>--</option><option>ch</option><option>h</option></select>y.
+    </div>
+    <div class="question">
+      4. W lesie słychać było szelest liści i stuku selek<select><option>--</option><option>ch</option><option>h</option></select> gałęzi.
+    </div>
+    <div class="question">
+      5. Zupa była gorąca i parowała w dużym garnku na ku<select><option>--</option><option>ch</option><option>h</option></select>ni.
+    </div>
+    <button type="button" onclick="sprawdz()">Sprawdź odpowiedzi</button>
+    <div class="result" id="result"></div>
+  </form>
+</div>
+
+<script>
+  const poprawne = ["ch", "ch", "h", "ch", "ch"];
+
+  function sprawdz() {
+    const selects = document.querySelectorAll("select");
+    let wynik = 0;
+    selects.forEach((s, i) => {
+      if (s.value === poprawne[i]) wynik++;
+    });
+    const ocena = Math.round((wynik / poprawne.length) * 6);
+    document.getElementById("result").innerText =
+      `Poprawne odpowiedzi: ${wynik}/${poprawne.length} – Ocena: ${ocena}`;
+  }
+</script>
+
+</body>
+</html>
