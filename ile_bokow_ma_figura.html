@@ -23,7 +23,8 @@
       text-align: center;
     }
     img {
-      max-width: 150px;
+      width: 120px;
+      height: auto;
       margin: 20px 0;
     }
     h1 {
@@ -61,9 +62,9 @@
 <div class="container">
   <h1>Ile boków ma ta figura?</h1>
   <div id="figureBox">
-    <img id="figureImage" src="" alt="figura" />
+    <img id="figureImage" src="" alt="figura" onload="imageLoaded()" />
   </div>
-  <div class="options" id="optionsBox"></div>
+  <div class="options" id="optionsBox">Ładowanie odpowiedzi...</div>
   <button onclick="checkAnswer()">Sprawdź</button>
   <div class="result" id="resultBox"></div>
 </div>
@@ -117,6 +118,11 @@ function checkAnswer() {
     resultBox.innerHTML = "Niestety, spróbuj ponownie!";
     resultBox.style.color = "red";
   }
+}
+
+function imageLoaded() {
+  // Тільки після завантаження зображення показуємо опції
+  console.log("Obrazek załadowany.");
 }
 
 window.onload = loadRandomFigure;
