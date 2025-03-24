@@ -3,105 +3,131 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Dyktando: ch / h – klasa 3</title>
+  <title>Dyktando: ch/h – klasa 3</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
+      background: #fffde7;
       margin: 0;
-      background: #e3f2fd;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><text x="20" y="140" font-size="90" fill="%23bbdefb" font-family="Fredoka">ch h</text></svg>');
-      background-repeat: repeat;
+      padding: 20px;
+      color: #333;
     }
     .header {
-      background: linear-gradient(to right, #4fc3f7, #0288d1);
-      padding: 25px;
       text-align: center;
-      color: white;
-      font-size: 26px;
+      background: linear-gradient(to right, #ffeb3b, #fbc02d);
+      padding: 20px;
+      font-size: 28px;
       font-weight: bold;
+      color: #333;
+      border-radius: 10px;
+      margin-bottom: 30px;
     }
     .container {
-      max-width: 800px;
-      margin: 30px auto;
+      max-width: 700px;
+      margin: 0 auto;
       background: white;
-      padding: 25px;
-      border-radius: 16px;
+      padding: 30px;
+      border-radius: 15px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
       text-align: center;
-      color: #0277bd;
     }
-    .question {
-      margin: 15px 0;
-      font-size: 18px;
+    .sentence {
+      margin-bottom: 20px;
+      font-size: 20px;
     }
     select {
       font-size: 16px;
-      margin: 0 5px;
+      padding: 5px 10px;
+      margin: 0 3px;
     }
     button {
-      background: #039be5;
-      color: white;
-      font-size: 16px;
+      margin: 10px;
       padding: 10px 20px;
+      font-size: 16px;
+      background: #ffca28;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
-      display: block;
-      margin: 20px auto;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #fbc02d;
     }
     .result {
+      margin-top: 20px;
+      font-size: 18px;
       font-weight: bold;
-      text-align: center;
-      font-size: 20px;
-      margin-top: 15px;
+    }
+    .nav {
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
+  <div class="header">Dyktando: ch/h – klasa 3</div>
+  <div class="container">
+    <div id="dyktando" class="sentence"></div>
 
-<div class="header">Ortografia – ch / h – klasa 3</div>
+    <button onclick="sprawdz()">Sprawdź</button>
+    <button onclick="noweZdanie()">Nowe zdanie</button>
 
-<div class="container">
-  <h2>Uzupełnij tekst wybierając poprawną formę:</h2>
-  <form id="dyktandoForm">
-    <div class="question">
-      1. Mały se<select><option>--</option><option>ch</option><option>h</option></select> był wesoły i skakał po trawie.
-    </div>
-    <div class="question">
-      2. Na stole leżał kru<select><option>--</option><option>ch</option><option>h</option></select>y placek z jabłkami.
-    </div>
-    <div class="question">
-      3. Tata naprawiał rower w garażu i miał brudne ra<select><option>--</option><option>ch</option><option>h</option></select>y.
-    </div>
-    <div class="question">
-      4. W lesie słychać było szelest liści i stuku selek<select><option>--</option><option>ch</option><option>h</option></select> gałęzi.
-    </div>
-    <div class="question">
-      5. Zupa była gorąca i parowała w dużym garnku na ku<select><option>--</option><option>ch</option><option>h</option></select>ni.
-    </div>
-    <button type="button" onclick="sprawdz()">Sprawdź odpowiedzi</button>
-    <div class="result" id="result"></div>
-  </form>
-</div>
+    <div class="result" id="wynik"></div>
 
-<script>
-  const poprawne = ["ch", "ch", "h", "ch", "ch"];
+    <div class="nav">
+      <a href="ortografia.html"><button>Powrót do Ortografii</button></a>
+    </div>
+  </div>
 
-  function sprawdz() {
-    const selects = document.querySelectorAll("select");
-    let wynik = 0;
-    selects.forEach((s, i) => {
-      if (s.value === poprawne[i]) wynik++;
-    });
-    const ocena = Math.round((wynik / poprawne.length) * 6);
-    document.getElementById("result").innerText =
-      `Poprawne odpowiedzi: ${wynik}/${poprawne.length} – Ocena: ${ocena}`;
-  }
-</script>
+  <script>
+    const zdania = [
+      ["Mały", ["ch", "h"], "łopak ma", ["ch", "h"], "omika."],
+      ["Na plaży znaleźliśmy muszlę z", ["ch", "h"], "orwatką."],
+      ["Dzie", ["ch", "h"], "ci bawiły się w piaskownicy."],
+      ["To był sły", ["ch", "h"], " dźwięk dzwonka."],
+      ["Zobaczyłem", ["ch", "h"], "murę na łące."],
+      ["Na stołu stała filiżanka z", ["ch", "h"], "erbatą."],
+      ["Mama zrobiła pyszną", ["ch", "h"], "rupkę dyniową."],
+      ["W lesie rosły grzyby i", ["ch", "h"], "aszcze."],
+      ["", ["ch", "h"], "łopak pomógł babci z zakupami."],
+      ["To była piękna", ["ch", "h"], "wila z ogrodem."]
+    ];
 
+    let current = 0;
+
+    function render() {
+      const s = zdania[current];
+      let html = "";
+      for (let part of s) {
+        if (Array.isArray(part)) {
+          html += `<select><option value="">--</option><option value="${part[0]}">${part[0]}</option><option value="${part[1]}">${part[1]}</option></select>`;
+        } else {
+          html += part + " ";
+        }
+      }
+      document.getElementById("dyktando").innerHTML = html;
+      document.getElementById("wynik").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("select");
+      const correct = zdania[current].filter(p => Array.isArray(p)).map(p => p[0]);
+      let score = 0;
+      selects.forEach((s, i) => {
+        if (s.value === correct[i]) score++;
+      });
+      const total = correct.length;
+      const ocena = (score === total) ? "Świetnie!" : `Masz ${score} z ${total} poprawnych.`;
+      document.getElementById("wynik").innerText = ocena;
+    }
+
+    function noweZdanie() {
+      current = Math.floor(Math.random() * zdania.length);
+      render();
+    }
+
+    window.onload = render;
+  </script>
 </body>
 </html>
