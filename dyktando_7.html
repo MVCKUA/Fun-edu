@@ -1,70 +1,54 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
     <title>Dyktando 7</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: 'Fredoka', sans-serif;
-            background-color: #f0fbff;
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
         .container {
             max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
+            margin: auto;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
-            text-align: center;
-            background: linear-gradient(90deg, #00c3ff, #ffff1c);
+            background: linear-gradient(to right, #00c6ff, #0072ff);
             color: white;
-            padding: 1rem;
-            border-radius: 12px;
-        }
-        .buttons {
-            margin-top: 2rem;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
         }
         button {
-            flex: 1;
-            padding: 1rem;
-            font-size: 1rem;
-            background-color: #00c3ff;
-            color: white;
+            margin: 10px 5px 0 0;
+            padding: 10px 20px;
+            font-size: 16px;
             border: none;
-            border-radius: 10px;
+            border-radius: 6px;
             cursor: pointer;
         }
-        select {
-            font-size: 1rem;
-            padding: 0.3rem;
-            margin: 0 0.2rem;
-        }
+        .check { background-color: #4CAF50; color: white; }
+        .new { background-color: #2196F3; color: white; }
+        .back { background-color: #fbc02d; color: black; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Dyktando: nie z przymiotnikami – Klasa 2</h1>
-        <div id="sentences">
-            <!-- Приклад речення -->
-            <p>Zegar wskazuje d <select><option>--</option><option>ó</option><option>o</option></select> iewiątą godzinę.</p>
-            <p>Na biurku leżała nowa ks <select><option>--</option><option>ó</option><option>o</option></select> ążka o przygodach.</p>
-            <p>Dzieci uczą się pisać p <select><option>--</option><option>ó</option><option>o</option></select> ynnie i poprawnie.</p>
-        </div>
-        <div class="buttons">
-            <button onclick="checkAnswers()">Sprawdź</button>
-            <button onclick="location.reload()">Nowe zdanie</button>
-            <button onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
-        </div>
-    </div>
+<div class="container">
+    <h1>Dyktando 7 – Klasa 3</h1>
+    <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
+    <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
+    <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
+    <button class="check">Sprawdź</button>
+    <button class="new">Nowe zdanie</button>
+    <button class="back" onclick="location.href='dyktanda.html'">Powrót do Ortografii</button>
+</div>
 </body>
 </html>
