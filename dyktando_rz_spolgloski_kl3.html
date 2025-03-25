@@ -78,24 +78,17 @@
     </div>
   </div>
 <script>
-const dyktanda = [["Pat", ["rzę", "rze"], " przez okno."], ["W ", ["grze", "gże"], " komputerowej zdobył nowy poziom."]];
+const dyktanda = [[["Pat", "Pat"], ["rzę", "rze"], " przez okno.", "Lubię grać w ", ["grze", "gże"], "."], ["To był piękny ", ["krzak", "kszak"], ".", "Zespół ", ["przegrał", "pszegrał"], " mecz."]];
 let current = 0;
 function render() {
   const dyktando = dyktanda[current];
   let html = "";
-  for (let zdanie of dyktando) {
-    if (Array.isArray(zdanie)) {
-      for (let fragment of zdanie) {
-        if (Array.isArray(fragment)) {
-          html += `<select><option value="">--</option><option value="${fragment[0]}">${fragment[0]}</option><option value="${fragment[1]}">${fragment[1]}</option></select>`;
-        } else {
-          html += fragment + " ";
-        }
-      }
+  for (let fragment of dyktando) {
+    if (Array.isArray(fragment)) {
+      html += `<select><option value="">--</option><option value="${fragment[0]}">${fragment[0]}</option><option value="${fragment[1]}">${fragment[1]}</option></select>`;
     } else {
-      html += zdanie + " ";
+      html += fragment + " ";
     }
-    html += "<br><br>";
   }
   document.getElementById("dyktando").innerHTML = html;
   document.getElementById("wynik").innerText = "";
@@ -103,7 +96,7 @@ function render() {
 function sprawdz() {
   const dyktando = dyktanda[current];
   const selects = document.querySelectorAll("select");
-  const correctAnswers = dyktando.map(z => z.find(f => Array.isArray(f))[0]);
+  const correctAnswers = dyktando.filter(f => Array.isArray(f)).map(f => f[0]);
   let score = 0;
   selects.forEach((s, i) => {
     if (s.value === correctAnswers[i]) score++;
