@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Dyktando: ó w rzeczownikach i czasownikach – klasa 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: #fff8e1;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .header {
+      text-align: center;
+      background: linear-gradient(to right, #ffb300, #ffa000);
+      padding: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      color: #fff;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .dyktando {
+      font-size: 18px;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    select {
+      font-size: 16px;
+      padding: 3px 6px;
+      margin: 0 3px;
+    }
+    button {
+      margin: 10px 10px 0 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #ffa000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+    }
+    button:hover {
+      background: #fb8c00;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ef6c00;
+    }
+    .nav {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Dyktando: ó w rzeczownikach i czasownikach – klasa 3</div>
+  <div class="container">
+    <div id="dyktando" class="dyktando"></div>
+    <button onclick="sprawdz()">Sprawdź</button>
+    <button onclick="noweZdanie()">Nowe zdanie</button>
+    <div class="result" id="wynik"></div>
+    <div class="nav">
+      <a href="ortografia.html"><button>Powrót do Ortografii</button></a>
+    </div>
+  </div>
+<script>
+const dyktanda = [["W pudełku leżał dług", ["ó", "u"], "pis.", "Na podwórku stał str", ["ó", "u"], "ż szkolny.", "Zobaczyłem chm", ["u", "ó"], "rkę na niebie.", "W sch", ["ó", "u"], "dku były jabłka.", "Na st", ["ó", "u"], "ł stała miska z zupą.", "To był smaczny s", ["ó", "u"], "p.", "Mama kupiła nowy p", ["ió", "u"], "rnik.", "Znalazłem r", ["ó", "u"], "żowe jabłko.", "W r", ["ó", "u"], "ży lisa było widać norę.", "Miałem d", ["ł", "u"], "gi sen tej nocy."], ["Pies wpadł do kał", ["u", "ó"], "ży.", "Na pł", ["ó", "u"], "cie grały dzieci.", "Zjadłem pyszną z", ["u", "ó"], "pę grzybową.", "Słońce świeciło nad str", ["ó", "u"], "m.", "Dostałem list z p", ["ó", "u"], "łnocy.", "Widziałem sowę na strych", ["u", "ó"], ".", "To był bardzo s", ["ł", "u"], "dki tort.", "Na grzbiecie książki był rys", ["u", "ó"], "nek.", "Lubię czytać op", ["ó", "u"], "wiadania.", "Płynąłem wzdł", ["u", "ó"], "ż rzeki."]];
+let current = 0;
+function render() {
+  const dyktando = dyktanda[current];
+  let html = "";
+  for (let fragment of dyktando) {
+    if (Array.isArray(fragment)) {
+      html += `<select><option value="">--</option><option value="${fragment[0]}">${fragment[0]}</option><option value="${fragment[1]}">${fragment[1]}</option></select>`;
+    } else {
+      html += fragment + " ";
+    }
+  }
+  document.getElementById("dyktando").innerHTML = html;
+  document.getElementById("wynik").innerText = "";
+}
+function sprawdz() {
+  const dyktando = dyktanda[current];
+  const selects = document.querySelectorAll("select");
+  const correctAnswers = dyktando.filter(f => Array.isArray(f)).map(f => f[0]);
+  let score = 0;
+  selects.forEach((s, i) => {
+    if (s.value === correctAnswers[i]) score++;
+  });
+  let resultText = "";
+  if (score === correctAnswers.length) {
+    resultText = "Świetnie! Wszystkie odpowiedzi poprawne.";
+  } else {
+    resultText = "Masz " + score + " z " + correctAnswers.length + " poprawnych odpowiedzi.";
+  }
+  document.getElementById("wynik").innerText = resultText;
+}
+function noweZdanie() {
+  current = Math.floor(Math.random() * dyktanda.length);
+  render();
+}
+window.onload = noweZdanie;
+</script>
+</body>
+</html>
