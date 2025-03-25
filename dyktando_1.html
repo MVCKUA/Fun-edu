@@ -1,54 +1,52 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>Dyktando 1</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            background: linear-gradient(to right, #00c6ff, #0072ff);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        button {
-            margin: 10px 5px 0 0;
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .check { background-color: #4CAF50; color: white; }
-        .new { background-color: #2196F3; color: white; }
-        .back { background-color: #fbc02d; color: black; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dyktando 1</title>
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background-color: #f0f8ff;
+      padding: 20px;
+      text-align: center;
+    }
+    .box {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      border-radius: 15px;
+      padding: 10px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .check { background-color: #4CAF50; color: white; }
+    .new { background-color: #2196F3; color: white; }
+    .back { background-color: #FFC107; color: black; }
+  </style>
 </head>
 <body>
-<div class="container">
+  <div class="box">
     <h1>Dyktando 1 – Klasa 2</h1>
     <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
     <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
     <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
     <button class="check">Sprawdź</button>
     <button class="new">Nowe zdanie</button>
-    <button class="back" onclick="location.href='dyktanda.html'">Powrót do Ortografii</button>
-</div>
+    <button class="back" onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+  </div>
 </body>
 </html>
