@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dyktando 11</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #f0fbff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            background: linear-gradient(90deg, #00c3ff, #ffff1c);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+        }
+        .buttons {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        button {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1rem;
+            background-color: #00c3ff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        select {
+            font-size: 1rem;
+            padding: 0.3rem;
+            margin: 0 0.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dyktando: ó w rzeczownikach i czasownikach – Klasa 3</h1>
+        <div id="sentences">
+            <!-- Приклад речення -->
+            <p>Zegar wskazuje d <select><option>--</option><option>ó</option><option>o</option></select> iewiątą godzinę.</p>
+            <p>Na biurku leżała nowa ks <select><option>--</option><option>ó</option><option>o</option></select> ążka o przygodach.</p>
+            <p>Dzieci uczą się pisać p <select><option>--</option><option>ó</option><option>o</option></select> ynnie i poprawnie.</p>
+        </div>
+        <div class="buttons">
+            <button onclick="checkAnswers()">Sprawdź</button>
+            <button onclick="location.reload()">Nowe zdanie</button>
+            <button onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+        </div>
+    </div>
+</body>
+</html>
