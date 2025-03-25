@@ -8,16 +8,16 @@
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background: #f1f8e9;
+      background: #f3f8ff;
       margin: 0;
       padding: 20px;
       color: #333;
     }
     .header {
       text-align: center;
-      background: linear-gradient(to right, #aed581, #7cb342);
+      background: linear-gradient(to right, #4fc3f7, #0288d1);
       padding: 20px;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: bold;
       color: #fff;
       border-radius: 10px;
@@ -34,7 +34,7 @@
     .dyktando {
       font-size: 18px;
       margin-bottom: 20px;
-      line-height: 1.6;
+      line-height: 1.8;
     }
     select {
       font-size: 16px;
@@ -45,7 +45,7 @@
       margin: 10px 10px 0 0;
       padding: 10px 20px;
       font-size: 16px;
-      background: #8bc34a;
+      background: #0288d1;
       border: none;
       border-radius: 10px;
       cursor: pointer;
@@ -53,13 +53,13 @@
       color: white;
     }
     button:hover {
-      background: #7cb342;
+      background: #0277bd;
     }
     .result {
       margin-top: 20px;
       font-size: 18px;
       font-weight: bold;
-      color: #33691e;
+      color: #1b5e20;
     }
     .nav {
       margin-top: 30px;
@@ -78,24 +78,17 @@
     </div>
   </div>
 <script>
-const dyktanda = [[["Król", "Krol"], " siedzi na tronie.", "Patrzy przez ", ["lupę", "łupę"], "."], [["Mówię", "Muwię"], " cicho, żeby nie przeszkadzać."]];
+const dyktanda = [["Mój ", ["król", "krol"], " miał koronę.", "W ", ["piórniku", "piorniku"], " mam długopis.", "Lubię ", ["mówić", "muwić"], " cicho.", "Zobaczyłem ", ["sówkę", "suwkę"], " na drzewie.", "On ", ["góruje", "guruje"], " nad innymi.", "Kupiłem nowy ", ["stół", "stuł"], ".", "Ten chłopiec to mój ", ["wnuk", "wnók"], ".", "To było ", ["trudne", "tródne"], " zadanie.", "Nie ", ["mógł", "mugł"], " tego zrobić.", "To mój ulubiony ", ["róg", "rug"], " miasta."], ["Znalazłem ", ["pióro", "pioro"], " na podłodze.", "To bardzo ", ["mądry", "mandry"], " król.", "Nie lubię ", ["hałasu", "hałazu"], ".", "Zawsze ", ["późno", "puzno"], " wstaje.", "Podoba mi się ten ", ["wzór", "wzur"], ".", "Słońce świeci nad ", ["górą", "gurą"], ".", "On dużo ", ["mówi", "muvi"], ".", "To ", ["pójdzie", "pujdzie"], " źle.", "Nie ", ["kłóć", "kłuc"], " się z bratem.", "Mam ", ["ból", "bul"], " brzucha."]];
 let current = 0;
 function render() {
   const dyktando = dyktanda[current];
   let html = "";
-  for (let zdanie of dyktando) {
-    if (Array.isArray(zdanie)) {
-      for (let fragment of zdanie) {
-        if (Array.isArray(fragment)) {
-          html += `<select><option value="">--</option><option value="${fragment[0]}">${fragment[0]}</option><option value="${fragment[1]}">${fragment[1]}</option></select>`;
-        } else {
-          html += fragment + " ";
-        }
-      }
+  for (let fragment of dyktando) {
+    if (Array.isArray(fragment)) {
+      html += `<select><option value="">--</option><option value="${fragment[0]}">${fragment[0]}</option><option value="${fragment[1]}">${fragment[1]}</option></select>`;
     } else {
-      html += zdanie + " ";
+      html += fragment + " ";
     }
-    html += "<br><br>";
   }
   document.getElementById("dyktando").innerHTML = html;
   document.getElementById("wynik").innerText = "";
@@ -103,7 +96,7 @@ function render() {
 function sprawdz() {
   const dyktando = dyktanda[current];
   const selects = document.querySelectorAll("select");
-  const correctAnswers = dyktando.map(z => z.find(f => Array.isArray(f))[0]);
+  const correctAnswers = dyktando.filter(f => Array.isArray(f)).map(f => f[0]);
   let score = 0;
   selects.forEach((s, i) => {
     if (s.value === correctAnswers[i]) score++;
