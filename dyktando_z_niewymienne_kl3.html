@@ -8,17 +8,18 @@
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background: #fffde7;
+      background: #fff8e1;
       margin: 0;
       padding: 20px;
+      color: #333;
     }
     .header {
-      background: linear-gradient(to right, #ffd54f, #ffca28);
-      padding: 20px;
       text-align: center;
+      background: linear-gradient(to right, #ffca28, #fbc02d);
+      padding: 20px;
       font-size: 26px;
       font-weight: bold;
-      color: #333;
+      color: #fff;
       border-radius: 10px;
       margin-bottom: 30px;
     }
@@ -49,7 +50,7 @@
       border-radius: 10px;
       cursor: pointer;
       font-weight: bold;
-      color: #333;
+      color: white;
     }
     button:hover {
       background: #f9a825;
@@ -68,7 +69,7 @@
 <body>
   <div class="header">Dyktando: ż niewymienne – klasa 3</div>
   <div class="container">
-    <div id="dyktando" class="dyktando">Nowe zdanie pojawi się tutaj.</div>
+    <div id="dyktando" class="dyktando"></div>
     <button onclick="sprawdz()">Sprawdź</button>
     <button onclick="noweZdanie()">Nowe zdanie</button>
     <div class="result" id="wynik"></div>
@@ -77,14 +78,7 @@
     </div>
   </div>
 <script>
-const dyktanda = [[
-  "To jest ", ["żaba", "rzaba"], ".",
-  "Znalazłem ", ["książkę", "ksiąrzkę"], " w plecaku.",
-  "Na końcu był wyraz z literą ", ["ch", "h"], ".",
-  "Nie jestem ", ["niezadowolony", "zadowolony"], ".",
-  "To są trudne ", ["wyjątki", "wijątki"], ".",
-  "Zrobiliśmy ", ["mieszane", "miezane"], " zadanie."
-]];
+const dyktanda = [["Mały ", ["żuczek", "rzuczek"], " chodził po liściu.", "Kupiłem nową ", ["żabkę", "rzabkę"], " do włosów.", "Na plaży był ", ["żwir", "rzwir"], ".", "Widziałem pięknego ", ["żurawia", "rzurawia"], ".", "Lubię ", ["żółty", "rzółty"], " kolor.", "To był stary ", ["żagiel", "rzagiel"], ".", "Zobaczyłem ", ["żarówkę", "rzarówkę"], " w lampie.", "Na stole leżał ", ["żeton", "rzeton"], ".", "Spotkałem ", ["żula", "rzula"], " pod sklepem.", "Zrobiłem ", ["żurek", "rzurek"], " na obiad."], ["W pokoju stał duży ", ["żyrandol", "rzyrandol"], ".", "Znalazłem ", ["żel", "rzel"], " pod prysznicem.", "Dziecko narysowało ", ["żabę", "rzabę"], ".", "On ma ", ["żal", "rzal"], " do kolegi.", "Mama kupiła ", ["żelazko", "rzelazko"], ".", "Na rzece płynął ", ["żaglowiec", "rzaglowiec"], ".", "To był tylko ", ["żart", "rzart"], ".", "Nie lubię ", ["żaby", "rzaby"], ".", "Widziałem ", ["żuka", "rzuka"], " na trawie.", "To był mój pierwszy ", ["żłobek", "rzłobek"], "."]];
 let current = 0;
 function render() {
   const dyktando = dyktanda[current];
@@ -116,6 +110,7 @@ function sprawdz() {
   document.getElementById("wynik").innerText = resultText;
 }
 function noweZdanie() {
+  current = Math.floor(Math.random() * dyktanda.length);
   render();
 }
 window.onload = noweZdanie;
