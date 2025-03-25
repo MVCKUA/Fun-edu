@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Dyktando: rz po spółgłoskach – klasa 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: #e8f5e9;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .header {
+      text-align: center;
+      background: linear-gradient(to right, #81c784, #66bb6a);
+      padding: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      color: #fff;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .dyktando {
+      font-size: 18px;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    select {
+      font-size: 16px;
+      padding: 3px 6px;
+      margin: 0 3px;
+    }
+    button {
+      margin: 10px 10px 0 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #66bb6a;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+    }
+    button:hover {
+      background: #43a047;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+    .nav {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Dyktando: rz po spółgłoskach – klasa 3</div>
+  <div class="container">
+    <div id="dyktando" class="dyktando"></div>
+    <button onclick="sprawdz()">Sprawdź</button>
+    <button onclick="noweZdanie()">Nowe zdanie</button>
+    <div class="result" id="wynik"></div>
+    <div class="nav">
+      <a href="ortografia.html"><button>Powrót do Ortografii</button></a>
+    </div>
+  </div>
+<script>
+const dyktanda = [["Pat", ["rz", "ż"], " rzę rze przez okno.", "Trzymał tal", ["erz", "eż"], " zupy.", "Spac", ["erz", "eż"], " z psem po lesie.", "Zobaczył pi", ["erz", "eż"], "ego misia.", "Ma dob", ["rz", "ż"], "e maniery.", "Smażę piecze", ["rz", "ż"], " na obiad.", "Pies biegnie p", ["rz", "ż"], "em las.", "Siedzę nap", ["rz", "ż"], "eciwko niego.", "Kupiłem to p", ["rz", "ż"], "ez internet.", "Znam ten utwó", ["rz", "ż"], " od dawna."], ["To dob", ["rz", "ż"], "y człowiek.", "Leżał p", ["rz", "ż"], "ez drogą.", "Zobaczyli go nap", ["rz", "ż"], "eciw.", "On był p", ["rz", "ż"], "ezem.", "Nie miał żade", ["rz", "ż"], " szans.", "Szedł ścieżką nad st", ["rz", "ż"], "eką.", "Pływał wp", ["rz", "ż"], "eciwko nurtowi.", "Szli na p", ["rz", "ż"], "ejściu.", "Usiedli p", ["rz", "ż"], "ed domem.", "Spotkali się p", ["rz", "ż"], "ed szkołą."]];
+let current = 0;
+function render() {
+  const dyktando = dyktanda[current];
+  let html = "";
+  for (let fragment of dyktando) {
+    if (Array.isArray(fragment)) {
+      html += `<select><option value="">--</option><option value="${fragment[0]}">${fragment[0]}</option><option value="${fragment[1]}">${fragment[1]}</option></select>`;
+    } else {
+      html += fragment + " ";
+    }
+  }
+  document.getElementById("dyktando").innerHTML = html;
+  document.getElementById("wynik").innerText = "";
+}
+function sprawdz() {
+  const dyktando = dyktanda[current];
+  const selects = document.querySelectorAll("select");
+  const correctAnswers = dyktando.filter(f => Array.isArray(f)).map(f => f[0]);
+  let score = 0;
+  selects.forEach((s, i) => {
+    if (s.value === correctAnswers[i]) score++;
+  });
+  let resultText = "";
+  if (score === correctAnswers.length) {
+    resultText = "Świetnie! Wszystkie odpowiedzi poprawne.";
+  } else {
+    resultText = "Masz " + score + " z " + correctAnswers.length + " poprawnych odpowiedzi.";
+  }
+  document.getElementById("wynik").innerText = resultText;
+}
+function noweZdanie() {
+  current = Math.floor(Math.random() * dyktanda.length);
+  render();
+}
+window.onload = noweZdanie;
+</script>
+</body>
+</html>
