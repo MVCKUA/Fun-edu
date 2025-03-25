@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Dyktando: ż niewymienne – klasa 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+            background-color: #f0f8ff;
+            padding: 0;
+            margin: 0;
+        }
+        .header {
+            background: linear-gradient(to right, #6cb4d9, #ffffff);
+            padding: 20px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 0 0 20px 20px;
+        }
+        .container {
+            padding: 20px;
+        }
+        select {
+            font-size: 18px;
+            margin: 0 4px;
+        }
+        button {
+            margin: 10px 5px;
+            padding: 10px 18px;
+            font-size: 16px;
+            background-color: #6cb4d9;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Dyktando: ż niewymienne – klasa 3</div>
+    <div class="container" id="exercise">
+        <p>Ptaki leciały nad mor<select id="select_0"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select>em.</p>
+<p>Na biurku leżała wie<select id="select_1"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select>a książek.</p>
+<p>Kocham pod<select id="select_2"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select>y w góry.</p>
+<p>Zupa była bard<select id="select_3"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select> gorąca.</p>
+<p>S<select id="select_4"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select>aba padała z nieba.</p>
+<p>W oknie stał świe<select id="select_5"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select>nik.</p>
+<p>Mój kuzyn ma na imię Je<select id="select_6"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select>y.</p>
+<p>Kupiłem nową wie<select id="select_7"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select>ę stereo.</p>
+<p>To było dość powa<select id="select_8"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select>ne wyzwanie.</p>
+<p>Poczułem lekki d<select id="select_9"><option value="">--</option><option value="ż">ż</option><option value="rz">rz</option></select>więk w oddali.</p>
+
+    </div>
+    <div style="text-align:center;">
+        <button onclick="checkAnswers()">Sprawdź</button>
+        <button onclick="location.reload()">Nowe zdanie</button>
+        <button onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <script>
+        function checkAnswers() {
+            let correct = 0;
+            for (let i = 0; i < 10; i++) {
+                const sel = document.getElementById("select_" + i);
+                if (!sel) continue;
+                const val = sel.value;
+                if (val === "ż") {
+                    sel.style.backgroundColor = "#c8f7c5";
+                    correct++;
+                } else {
+                    sel.style.backgroundColor = "#f7c5c5";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

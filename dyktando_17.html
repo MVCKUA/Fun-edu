@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Dyktando: wyjątki ortograficzne – klasa 4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+            background-color: #f0f8ff;
+            padding: 0;
+            margin: 0;
+        }
+        .header {
+            background: linear-gradient(to right, #cd73cf, #ffffff);
+            padding: 20px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 0 0 20px 20px;
+        }
+        .container {
+            padding: 20px;
+        }
+        select {
+            font-size: 18px;
+            margin: 0 4px;
+        }
+        button {
+            margin: 10px 5px;
+            padding: 10px 18px;
+            font-size: 16px;
+            background-color: #cd73cf;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Dyktando: wyjątki ortograficzne – klasa 4</div>
+    <div class="container" id="exercise">
+        <p>K<select id="select_0"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>rka wysiadywała jajka.</p>
+<p>Mój t<select id="select_1"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>ż leżał na ławce.</p>
+<p>Nie było pr<select id="select_2"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>żenia słonecznego.</p>
+<p>Piekła babkę w piec<select id="select_3"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>.</p>
+<p><select id="select_4"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>szywał się do końca ulicy.</p>
+<p><select id="select_5"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>ciek był pełen ryb.</p>
+<p>Przeczytałem c<select id="select_6"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>wne opowiadanie.</p>
+<p>Nowa bl<select id="select_7"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>zka była śliczna.</p>
+<p>To był m<select id="select_8"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>j rower.</p>
+<p>Pociąg się sp<select id="select_9"><option value="">--</option><option value="ó">ó</option><option value="u">u</option></select>źnił.</p>
+
+    </div>
+    <div style="text-align:center;">
+        <button onclick="checkAnswers()">Sprawdź</button>
+        <button onclick="location.reload()">Nowe zdanie</button>
+        <button onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <script>
+        function checkAnswers() {
+            let correct = 0;
+            for (let i = 0; i < 10; i++) {
+                const sel = document.getElementById("select_" + i);
+                if (!sel) continue;
+                const val = sel.value;
+                if (val === "ó") {
+                    sel.style.backgroundColor = "#c8f7c5";
+                    correct++;
+                } else {
+                    sel.style.backgroundColor = "#f7c5c5";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
