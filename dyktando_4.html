@@ -25,10 +25,6 @@
       border-radius: 15px;
       margin-bottom: 20px;
     }
-    .question {
-      font-size: 1.2em;
-      margin: 10px 0;
-    }
     select {
       font-size: 1em;
       padding: 5px;
@@ -71,30 +67,9 @@
     <div class="result" id="result"></div>
   </div>
   <script>
-    const teksty = [
-      "W {W/w}arszawie mieszka moja {B/b}abcia. {J/j}ej dom jest blisko {P/p}arku. {C/c}odziennie chodzi na {S/s}pacer. {K/k}upuje chleb w {S/s}klepie. {P/p}otem czyta gazetę na {Ł/ł}awce. {M/m}oja babcia lubi też {K/k}wiaty. {Z/z}awsze ma ich pełno w ogrodzie. {L/l}ubi słuchać {M/m}uzyki.",
-      "Mój {T/t}ata pracuje w {B/b}anku. {K/k}ażdego dnia wstaje o {S/s}zóstej rano. {P/p}ije kawę i czyta {G/g}azetę. {N/n}astępnie jedzie do {P/p}racy. {W/w} biurze ma dużo {D/d}okumentów. {L/l}ubi swoją pracę i swoich {K/k}olegów.",
-      "W naszej {S/s}zkole jest dużo dzieci. {K/k}ażde dziecko ma swój {P/p}iórnik. {N/n}a lekcjach uczymy się {M/m}atematyki. {P/p}ani nauczycielka jest miła. {Z/z}awsze pomaga w trudnych zadaniach. {W/w}czoraj mieliśmy sprawdzian. {W/w}szyscy się starali. {P/p}o lekcjach bawimy się na {B/b}oisku.",
-      "Mój {B/b}rat gra w {P/p}iłkę nożną. {T/t}renuje trzy razy w tygodniu. {J/j}ego drużyna nazywa się {L/l}wy. {M/m}ają niebieskie koszulki. {T/t}ata chodzi na mecze i kibicuje. {B/b}rat strzelił już pięć goli. {J/j}est bardzo dumny. {K/k}iedyś chce zostać {P/p}iłkarzem.",
-      "{M/m}oja siostra chodzi do {P/p}rzedszkola. {L/l}ubi rysować i malować. {J/j}ej ulubiony kolor to {R/r}óżowy. {W/w} przedszkolu ma dużo koleżanek. {P/p}ani opiekunka czyta im bajki. {D/d}zieci słuchają z zaciekawieniem. {P/p}o południu mają drzemkę. {S/s}iostra mówi, że przedszkole jest fajne."
-    ];
-
-    const poprawne = [
-      ['W','B','J','P','C','S','K','S','P','Ł'],
-      ['T','B','K','S','P','G','N','P','W','D','L','K'],
-      ['S','K','P','N','M','P','Z','W','W','P','B'],
-      ['B','P','T','J','L','M','T','B','J','K','P'],
-      ['M','P','L','J','R','W','P','P','D','P','S']
-    ];
-
-    const zle = [
-      ['w','b','j','p','c','s','k','s','p','ł'],
-      ['t','b','k','s','p','g','n','p','w','d','l','k'],
-      ['s','k','p','n','m','p','z','w','w','p','b'],
-      ['b','p','t','j','l','m','t','b','j','k','p'],
-      ['m','p','l','j','r','w','p','p','d','p','s']
-    ];
-
+    const teksty = ['W lesie rośnie piękna brzoza i stara so{ch/h}a. Dzieci budują domek z patyków i me{ch/h}u. Na ścieżce leży stary plecak z dziurą w suwa{ch/h}u. Tata opowiada historię o rycerzu z mie{ch/h}em pełnym złota. Mama pakuje obiad do termosu z rączką i sprawdza zapa{ch/h} zupy. Na plaży zbieramy muszelki i obserwujemy mewy na ska{ch/h}. Wieczorem przy ognisku słychać skrzypienie w wózku z drewna i pia{ch/h}u. Brat zrobił latawiec i wypuścił go w ru{ch/h} powietrza. W kuchni unosił się zapach smażonej ryby z pietruszką. Mama wyjęła z pieca blaszany garnek z gorącym rosołem z dodatkiem lo{ch/h}u.', 'W szkole dzieci rysują krajobraz z górami i ru{ch/h}em ulicznym. Na podłodze leży dywan z miękkiego me{ch/h}u. Chłopcy znaleźli stary mie{ch/h} do dmuchania ognia. Na biurku leży książka o przygodach na szla{ch/h}u. Tata zapakował kanapki do plecaka i sprawdził suwa{ch/h}. Pies biegał po plaży i tarzał się w pia{ch/h}u. W kuchni pachniało zupą z lo{ch/h}em i koperkiem. Mama nasmarowała kromki masłem z zapachem orze{ch/h}ów. Pod oknem siedział kot i obserwował ru{ch/h} na ulicy. Wieczorem dzieci słuchały bajki o smoku i jego ziejącej z paszczy iskrą i pia{ch/h}em dolinie.', 'Na wsi babcia zbierała me{ch/h} na dekorację świąteczną. Dziadek opowiadał o czasach, gdy używano mie{ch/h}ów do rozpalania ognia. W piwnicy znaleźliśmy stary suwa{ch/h} z popsutym zamkiem. Na stole leżały łupiny orze{ch/h}ów i migdałów. Dzieci bawiły się w ru{ch/h}ome piaski i budowały zamki z pia{ch/h}u. W książce była ilustracja z rycerzem na szla{ch/h}u. Mama przygotowała kompot z jabłek i dodawała zapa{ch/h} cynamonu. Na biurku stała lampka z wygiętym ra{ch/h}em. Brat sklejał samolot z kartonu i dokleił mu skrzydła z pa{ch/h}nącej sklejki. Wieczorem siedzieliśmy w salonie i oglądaliśmy film o przygodach z dzikiego szla{ch/h}u.', 'W klasie rozległ się dziwny zapa{ch/h} z kuchni. Dzieci rozmawiały o lo{ch/h}ach zamku z opowieści. Na plaży znaleźliśmy muszelki i trochę pia{ch/h}u w kieszeniach. Brat naprawił zepsuty suwa{ch/h} w kurtce. Na obrazku w książce był mie{ch/h} używany przez kowala. Tato mówił, że ru{ch/h} na ulicy był dziś ogromny. Mama dała nam orze{ch/h}y w karmelu. Dzieci wspinały się po ska{ch/h} na wzgórzu. Z pieca wydobywał się przyjemny zapa{ch/h} cynamonu i jabłek. W pudełku znaleźliśmy stare guziki i me{ch/h}ową broszkę.', 'W kuchni mama gotowała zupę z dodatkiem lo{ch/h}u i cebuli. Tato wyjął stary mie{ch/h} z szopy i pokazał jak działa. Na stole leżał suwa{ch/h} od tornistra. W lesie było cicho, tylko me{ch/h} szeleścił pod stopami. Dzieci rysowały smoka z ziejącą pa{ch/h}ną. Wędrowaliśmy szla{ch/h}em przez góry. Mama kupiła nowe orze{ch/h}y na ciasto. W piaskownicy dzieci kopały dołki i sypały pia{ch/h}. Pies gonił po podwórku i wskoczył w ru{ch/h}ome liście. Wieczorem w kominku trzaskał ogień i pachniał dymem ze starych gałęzi i me{ch/h}u.'];
+    const poprawne = [['ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch'], ['ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch'], ['ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch'], ['ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch'], ['ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch']];
+    const zle = [['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'], ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'], ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'], ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'], ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h']];
     let index = 0;
 
     function noweZdanie() {
@@ -106,7 +81,7 @@
       let html = "";
       let counter = 0;
       for (let slowo of slowa) {
-        if (slowo.startsWith("{")) {
+        if (slowo === "{ch/h}") {
           const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
           html += `<select><option value="">--</option>`;
           for (let o of opcje) {

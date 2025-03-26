@@ -2,125 +2,118 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>Dyktando: ó/u – klasa 2</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: "Fredoka", sans-serif;
-            background-color: #d2e9e9;
-            padding: 20px;
-            margin: 0;
-        }
-        .container {
-            background-color: white;
-            border-radius: 12px;
-            padding: 20px;
-            max-width: 700px;
-            margin: auto;
-        }
-        .header {
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            color: white;
-            font-size: 22px;
-            text-align: center;
-            border-radius: 12px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        .sentence {
-            margin: 10px 0;
-        }
-        select {
-            font-size: 18px;
-        }
-        .buttons {
-            margin-top: 20px;
-            text-align: center;
-        }
-        button {
-            font-size: 16px;
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .check {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .new {
-            background-color: #2196F3;
-            color: white;
-        }
-        .back {
-            background-color: #FFB300;
-            color: white;
-        }
-        .correct {
-            color: green;
-        }
-        .incorrect {
-            color: red;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyktando: ó/u – klasa 2</title>
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background-color: #e6f7f8;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1 {
+      background: linear-gradient(to right, #4fc3f7, #81d4fa);
+      color: white;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+    select {
+      font-size: 1em;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">Dyktando: ó/u – klasa 2</div>
-        <div id="text-container"></div>
-        <div class="buttons">
-            <button class="check" onclick="checkAnswers()">Sprawdź</button>
-            <button class="new" onclick="generateText()">Nowe zdanie</button>
-            <button class="back" onclick="window.location.href='ortografia.html'">Powrót do Ortografii</button>
-        </div>
-        <div id="result"></div>
+  <div class="container">
+    <h1>Dyktando: ó/u – klasa 2</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
     </div>
+    <div class="result" id="result"></div>
+  </div>
+  <script>
+    const teksty = ['Mój {ó/u}j mieszka na wsi razem z babcią. Każde r{ó/u}no wychodzi na spacer z dużym psem. W ogrodzie rosną r{ó/u}że, tulipany i słoneczniki. Babcia gotuje pyszną z{ó/u}pę jarzynową z koperkiem. Na podw{ó/u}rku biegają kury i jeden g{ó/u}ralski kogut. Dziadek nosi zawsze kolorową ch{ó/u}stkę. Lubię pić kakao z cynam{ó/u}nem i mlekiem. W pokoju stoi stary f{ó/u}tel i lampa z abażurem. Często rysuję z kuzynem, bo obaj kochamy szt{ó/u}kę. Wczoraj Tomek zg{ó/u}bił swój piórnik pod ławką.', 'W parku spotkałem m{ó/u}wiącego papugę. Jego pióra miały kolor fiolet{ó/u}wy i zielony. Papuga siedziała na ramieniu mojego stryjka L{ó/u}ka. Opowiadał o swoich przyg{ó/u}dach w dżungli. Z plecaka wyjął r{ó/u}żowy banan i mi go podał. Zjadłem go na ławce obok str{ó/u}myka. Obok przechodził pies z ogromnym og{ó/u}nem. Mój brat zg{ó/u}bił tam wtedy swoją bl{ó/u}zę. Na szczęście znalazł ją przy wejściu do ogr{ó/u}du zoologicznego.', 'Wczoraj wieczorem padał deszcz i było bardzo ch{ó/u}dno. Mama zaproponowała herbatę z imbirem i cytryn{ó/u}. Tata zapalił świece na starym k{ó/u}le stołowym. Pies wszedł pod st{ó/u}ł i zasnął. W telewizji leciał film o strasznym potw{ó/u}rze. Moja siostra bała się i schowała się za pod{ó/u}szkę. Potem usłyszeliśmy dźwięk dzwonka i b{ó/u}jka zaczęła się na nowo. To był tylko listonosz z paczką z g{ó/u}r. W środku był pluszowy misi{ó/u} i czekolada.', 'W sobotę poszliśmy z rodziną do parku, gdzie spotkaliśmy p{ó/u}łkę przyjaciół. Dzieci grały w piłkę i zjadały kanapki z szynk{ó/u}. Mama usiadła na ławce i czytała gazetę o zdrowym stylu życi{ó/u}. Tata rozłożył koc na trawniku obok d{ó/u}żego drzewa. Wkrótce przyszła ciocia z psem, który miał na szyi kolorową obr{ó/u}żę. Mój brat zbudował z kamieni mały m{ó/u}rek. Potem wszyscy razem rysowaliśmy obrazki na kartkach i podziwialiśmy tęcz{ó/u}. Kiedy wracaliśmy do domu, zobaczyliśmy bociana na dachu i kurki na podw{ó/u}rku. To był bardzo udany dzie{ń/n} z p{ó/u}łką rodziny.', 'W naszej klasie odbył się konkurs na najładniejszy zeszyt z przyr{ó/u}d. Zwyciężyła Ania, bo jej notatki były bardzo kolorowe i pełne ilustracj{ó/u}. Każda strona miała nagł{ó/u}wek ozdobiony flamastrami. Po konkursie nauczycielka dała wszystkim nagr{ó/u}dki – długopisy z g{ó/u}ralskimi wzorami. Michał dostał też specjalną pochwałę za poprawność ortografii i schludn{ó/u}ść pisma. Wszyscy byliśmy dumni z wynik{ó/u}w. Na koniec dnia zrobiliśmy sobie wsp{ó/u}lne zdjęcie z tablicą i dyplomami. Konkurs był wspaniałą pamiątką dla całej klas{y/i}.', 'Zimą często jeździmy w g{ó/u}ry na ferie. Lubimy zjeżdżać na nartach i lepić bałwana z białeg{ó/u} śniegu. W schronisku pijemy gorącą czekoladę i gramy w plansz{ó/u}wki. Wieczorem chodzimy na spacery wzdłuż st{ó/u}kującej rzeki. Widzieliśmy raz lisa, który zniknął w krzakach obok iglasteg{ó/u} lasu. Tata opowiada wtedy ciekawe historię o dawnych g{ó/u}ralach. Mama piecze pyszne ciasteczka z marmolad{ą/ó}. Rano budzimy się i patrzymy przez okno na szczyty g{ó/u}r pokryte śniegiem. Ferie w g{ó/u}rach to nasza ulubiona tradycja.', 'Na urodziny dostałem nowy plecak z obrazkiem dinoza{ó/u}ra. W środku była książka przygodowa z ilustracjami dzikiej pr{ó/u}żni. Był też notes z błyszczącą okładką w kształcie chm{ó/u}rki. Mama upiekła ciasto czekoladowe z kremem wanili{ó/u}wym. Goście przynieśli balony, zabawki i kartki z życzeniami p{ó/u}ł żartem, p{ó/u}ł serio. Wszyscy dobrze się bawili grając w gry planszowe i śmiejąc się z zagadek. Pod koniec dnia zrobiliśmy wsp{ó/u}lne zdjęcie z tortem. To były najwspanialsze urodziny w moim życi{u/ó}.', 'W czasie wakacji pojechaliśmy nad jezioro, gdzie było dużo atrakcji dla dzieci. Pływaliśmy ł{ó/u}dką i łowiliśmy ryby z p{ó/u}łki pomostu. Każdego ranka budziliśmy się przy dźwięku śpiew{u/ó} ptaków. Jedliśmy śniadanie na tarasie z widokiem na błękitną t{ó/u}ń. Wieczorami rozpalaliśmy ognisko i piekliśmy kiełbaski. Mama opowiadała legendy o duchach jeziornych i zaklętych skarbach. Tato zabrał nas też na wycieczkę do pobliskiego rezerwatu przyr{ó/u}dy. Spacerowaliśmy po lesie i słuchaliśmy szelest{ó/u} liści. To były niezapomniane wakacje pełne przyg{ó/u}d.', 'W bibliotece szkolnej znaleźliśmy książkę o zamkach i rycerzach. Czytaliśmy o kr{ó/u}lach, wojnach i dawnych bitwach. Na ilustracjach były pokazane zbroje, miecze i strzelające armaty z wież zamk{ó/u}w. W jednej z historii występował czarny kot z białą plamą na brzuszku, który pomagał księżniczce odnaleźć zg{ó/u}biony pierścień. Wszyscy byli zachwyceni treścią i chcieli zrobić własne rysunki z tej opowieści. Nauczycielka obiecała, że za tydzień stworzymy komiks o własnych bohaterach i krainach fantazj{ó/u}.', 'Na zajęciach z plastyki malowaliśmy obrazki przedstawiające d{ó/u}m marzeń. Jedni rysowali pałace z wieżami, inni kolorowe chatki z ogr{ó/u}dkami. Wszyscy używali flamastr{ó/u}w i kredek pastelowych. Michał dorysował też basen i leżaki obok domu. Gdy skończyliśmy, zrobiliśmy wystawę naszych prac na tablicy. Najwięcej głosów zdobył obrazek z g{ó/u}rami i zachodem słońca. Dostał nagr{ó/u}dę w postaci kolorowego piórnika. To była bardzo inspirująca lekcja.', 'W przedszkolu moja siostra nauczyła się piosenki o misi{u/ó} w lesie. Śpiewała ją z koleżankami podczas porannego kręceni{a/ó}. Potem wszyscy zrobili maski z papieru i przebrali się za zwierz{ę/ó}ta. W sali stała tablica z ilustracjami, a na niej była naklejona duża chm{ó/u}rka. Po obiedzie dzieci odpoczywały na leżakach, słuchając bajki o wr{ó/u}żce i czarodzieju. To był bardzo spokojny dzień.', 'W moim domu mieszkają dwa koty i jeden papużk{a/ó}. Koty często śpią na parapecie i obserwują ptaki na podw{ó/u}rku. Papuga mówi kilka sł{ó/u}w i lubi siedzieć na ramieniu taty. Mama codziennie sprząta ich klatkę i nasypuje śwież{ó/u} karmę. Razem dbamy o naszych pupili i uczymy się odpowiedzialn{ó/u}ści. Wieczorami oglądamy programy o zwierzętach i rozmawiamy o tym, jak pomóc schronisk{ó/u}m.', 'Na lekcji techniki budowaliśmy modele most{ó/u}w z patyczków. Każdy zespół miał inne zadanie – jedni robili wiszące mosty, inni łukowe. Nasz most miał kształt podk{ó/u}wki i bardzo się wszystkim spodobał. Nauczycielka powiedziała, że mamy talent konstrukcyjny i zaprosiła nas na konkurs kreatywn{ó/u}ści. Po zajęciach zostaliśmy jeszcze chwilę, żeby posprzątać i uporządkować narzędzia. To była bardzo ciekawa lekcja.'];
+    const poprawne = [['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó']];
+    const zle = [['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u'], ['u', 'u'], ['u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u']];
+    let index = 0;
 
-    <script>
-        const texts = [
-            "Mój t__ata kupił nową k__pę i zaniósł ją do d__mu.",
-            "W k__łku pod d__mem mieszka mały kr__lik.",
-            "Z__stałem zaproszony na przyjęcie urodzin__we.",
-            "Na p__łce stała szklanka z s__kiem malin__wym.",
-            "Mama p__suje moją nową fryz__rkę.",
-            "W s__siedztwie otworz__no nowy sklep.",
-            "J__rek znalazł muszelkę na pla__y.",
-            "B__t przyjechał do nas z Zak__panego.",
-            "D__brze się bawiłem na fest__nie szkolnym.",
-            "Po lekcjach p__szliśmy do parku grać w piłkę."
-        ];
-
-        function generateText() {
-            let html = '';
-            texts.forEach(sentence => {
-                const withSelects = sentence.replace(/__/g, () => {
-                    return `<select><option>--</option><option>ó</option><option>u</option></select>`;
-                });
-                html += `<div class="sentence">${withSelects}</div>`;
-            });
-            document.getElementById("text-container").innerHTML = html;
-            document.getElementById("result").innerText = "";
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      const tekst = teksty[index];
+      const prawidlowe = poprawne[index];
+      const nieprawidlowe = zle[index];
+      const slowa = tekst.split(/({[^}]+})/g);
+      let html = "";
+      let counter = 0;
+      for (let slowo of slowa) {
+        if (slowo === "{ó/u}") {
+          const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
+          html += `<select><option value="">--</option>`;
+          for (let o of opcje) {
+            html += `<option value="${o}">${o}</option>`;
+          }
+          html += `</select>`;
+          counter++;
+        } else {
+          html += slowo;
         }
+      }
+      document.getElementById("dyktando").innerHTML = html;
+      document.getElementById("result").innerText = "";
+    }
 
-        function checkAnswers() {
-            const selects = document.querySelectorAll("select");
-            let correct = 0;
-            let total = selects.length;
-            selects.forEach(select => {
-                const value = select.value;
-                if (value === "ó") {
-                    select.style.color = "green";
-                    correct++;
-                } else {
-                    select.style.color = "red";
-                }
-            });
-            document.getElementById("result").innerText = `Poprawne odpowiedzi: ${correct} z ${total}`;
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
         }
+      });
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
+    }
 
-        generateText();
-    </script>
+    noweZdanie();
+  </script>
 </body>
 </html>
