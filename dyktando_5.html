@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dyktando: ch na końcu wyrazu – klasa 3</title>
+  <title>Dyktando: ż/ź – klasa 2</title>
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
@@ -24,10 +24,6 @@
       padding: 15px;
       border-radius: 15px;
       margin-bottom: 20px;
-    }
-    .question {
-      font-size: 1.2em;
-      margin: 10px 0;
     }
     select {
       font-size: 1em;
@@ -61,7 +57,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Dyktando: ch na końcu wyrazu – klasa 3</h1>
+    <h1>Dyktando: ż/ź – klasa 2</h1>
     <div id="dyktando"></div>
     <div class="buttons">
       <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
@@ -71,30 +67,9 @@
     <div class="result" id="result"></div>
   </div>
   <script>
-    const teksty = [
-      "W {W/w}arszawie mieszka moja {B/b}abcia. {J/j}ej dom jest blisko {P/p}arku. {C/c}odziennie chodzi na {S/s}pacer. {K/k}upuje chleb w {S/s}klepie. {P/p}otem czyta gazetę na {Ł/ł}awce. {M/m}oja babcia lubi też {K/k}wiaty. {Z/z}awsze ma ich pełno w ogrodzie. {L/l}ubi słuchać {M/m}uzyki.",
-      "Mój {T/t}ata pracuje w {B/b}anku. {K/k}ażdego dnia wstaje o {S/s}zóstej rano. {P/p}ije kawę i czyta {G/g}azetę. {N/n}astępnie jedzie do {P/p}racy. {W/w} biurze ma dużo {D/d}okumentów. {L/l}ubi swoją pracę i swoich {K/k}olegów.",
-      "W naszej {S/s}zkole jest dużo dzieci. {K/k}ażde dziecko ma swój {P/p}iórnik. {N/n}a lekcjach uczymy się {M/m}atematyki. {P/p}ani nauczycielka jest miła. {Z/z}awsze pomaga w trudnych zadaniach. {W/w}czoraj mieliśmy sprawdzian. {W/w}szyscy się starali. {P/p}o lekcjach bawimy się na {B/b}oisku.",
-      "Mój {B/b}rat gra w {P/p}iłkę nożną. {T/t}renuje trzy razy w tygodniu. {J/j}ego drużyna nazywa się {L/l}wy. {M/m}ają niebieskie koszulki. {T/t}ata chodzi na mecze i kibicuje. {B/b}rat strzelił już pięć goli. {J/j}est bardzo dumny. {K/k}iedyś chce zostać {P/p}iłkarzem.",
-      "{M/m}oja siostra chodzi do {P/p}rzedszkola. {L/l}ubi rysować i malować. {J/j}ej ulubiony kolor to {R/r}óżowy. {W/w} przedszkolu ma dużo koleżanek. {P/p}ani opiekunka czyta im bajki. {D/d}zieci słuchają z zaciekawieniem. {P/p}o południu mają drzemkę. {S/s}iostra mówi, że przedszkole jest fajne."
-    ];
-
-    const poprawne = [
-      ['W','B','J','P','C','S','K','S','P','Ł'],
-      ['T','B','K','S','P','G','N','P','W','D','L','K'],
-      ['S','K','P','N','M','P','Z','W','W','P','B'],
-      ['B','P','T','J','L','M','T','B','J','K','P'],
-      ['M','P','L','J','R','W','P','P','D','P','S']
-    ];
-
-    const zle = [
-      ['w','b','j','p','c','s','k','s','p','ł'],
-      ['t','b','k','s','p','g','n','p','w','d','l','k'],
-      ['s','k','p','n','m','p','z','w','w','p','b'],
-      ['b','p','t','j','l','m','t','b','j','k','p'],
-      ['m','p','l','j','r','w','p','p','d','p','s']
-    ];
-
+    const teksty = ['W ogrodzie rośnie krzak porze{ż/ź}ki pełen owoców. Mama przygotowała kanapki z serkiem i po{ż/ź}eczkami. Na stole leżał stary nó{ż/ź}, który trzeba było naostrzyć. Dzieci uczyły się pisać literę {ż/ź} na tablicy. W lesie słychać było śpiew ptaków i szmera{ż/ź} liści. Tato kupił no{ż/ź}yk do grzybów. Na podwórku biegał stru{ż/ź} pies. Babcia upiekła placek z kruszonką i owoce{ż/ź}yną. W szafce leżała ły{ż/ź}ka i widelec. Brat miał komiks o superbohaterze, który miał miec{ż/ź} siły.', 'W klasie pani rozdawała karteczki z literami {ż/ź}. Tomek miał problemy z pisownią słowa porze{ż/ź}ka. W szkole zawisł plakat o bezpieczeństwie i stra{ż/ź}y pożarnej. Dzieci ćwiczyły pisanie wyra{ż/ź}enia na tablicy. Mama przyniosła nó{ż/ź} do krojenia chleba. Na spacerze widzieliśmy jeża chowającego się w krza{ż/ź}ach. W kuchni unosił się zapach pieczonej bułki z serowe{ż/ź}yną. Dziadek pokazał mi starą ły{ż/ź}kę z drewna. Pani pochwaliła ucznia za dobre wyra{ż/ź}anie się.', 'Na rynku był pokaz stra{ż/ź}acki z udziałem dzieci. Na wystawie stały stare miec{ż/ź}e i zbroje. Dziewczynka trzymała no{ż/ź}yk do owoców. W piwnicy znaleźliśmy zapomnianą ły{ż/ź}kę z metalu. W książce było wiele zdań z literą {ż/ź}. W ogródku rosła czerwona po{ż/ź}eczka. Podczas spaceru zobaczyliśmy stru{ż/ź}a lecącego nisko. Na lekcji pani uczyła nas pisać poprawnie wyra{ż/ź}enia. W klasie rozległ się śmiech, gdy ktoś powiedział coś zabawne{ż/ź}.'];
+    const poprawne = [['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż']];
+    const zle = [['ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź'], ['ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź'], ['ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź', 'ź']];
     let index = 0;
 
     function noweZdanie() {
@@ -106,7 +81,7 @@
       let html = "";
       let counter = 0;
       for (let slowo of slowa) {
-        if (slowo.startsWith("{")) {
+        if (slowo === "{ż/ź}") {
           const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
           html += `<select><option value="">--</option>`;
           for (let o of opcje) {
