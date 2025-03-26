@@ -2,143 +2,125 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dyktando: ó/u – klasa 2</title>
-  <style>
-    body {
-      font-family: 'Fredoka', sans-serif;
-      background-color: #e6f7f8;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-    }
-    h1 {
-      background: linear-gradient(to right, #4fc3f7, #81d4fa);
-      color: white;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-    }
-    .question {
-      font-size: 1.2em;
-      margin: 10px 0;
-    }
-    select {
-      font-size: 1em;
-      padding: 5px;
-    }
-    .buttons {
-      margin-top: 20px;
-    }
-    .buttons button {
-      font-size: 1em;
-      padding: 10px 20px;
-      margin: 5px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .correct {
-      background-color: #c8e6c9;
-    }
-    .incorrect {
-      background-color: #ffcdd2;
-    }
-    .result {
-      font-size: 1.2em;
-      margin-top: 15px;
-    }
-    .btn-check { background-color: #4caf50; color: white; }
-    .btn-new { background-color: #2196f3; color: white; }
-    .btn-back { background-color: #ffca28; color: black; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Dyktando: ó/u – klasa 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: "Fredoka", sans-serif;
+            background-color: #d2e9e9;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 700px;
+            margin: auto;
+        }
+        .header {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            font-size: 22px;
+            text-align: center;
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .sentence {
+            margin: 10px 0;
+        }
+        select {
+            font-size: 18px;
+        }
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .check {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .new {
+            background-color: #2196F3;
+            color: white;
+        }
+        .back {
+            background-color: #FFB300;
+            color: white;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Dyktando: ó/u – klasa 2</h1>
-    <div id="dyktando"></div>
-    <div class="buttons">
-      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
-      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
-      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    <div class="container">
+        <div class="header">Dyktando: ó/u – klasa 2</div>
+        <div id="text-container"></div>
+        <div class="buttons">
+            <button class="check" onclick="checkAnswers()">Sprawdź</button>
+            <button class="new" onclick="generateText()">Nowe zdanie</button>
+            <button class="back" onclick="window.location.href='ortografia.html'">Powrót do Ortografii</button>
+        </div>
+        <div id="result"></div>
     </div>
-    <div class="result" id="result"></div>
-  </div>
-  <script>
-    const teksty = [
-      "W {W/w}arszawie mieszka moja {B/b}abcia. {J/j}ej dom jest blisko {P/p}arku. {C/c}odziennie chodzi na {S/s}pacer. {K/k}upuje chleb w {S/s}klepie. {P/p}otem czyta gazetę na {Ł/ł}awce. {M/m}oja babcia lubi też {K/k}wiaty. {Z/z}awsze ma ich pełno w ogrodzie. {L/l}ubi słuchać {M/m}uzyki.",
-      "Mój {T/t}ata pracuje w {B/b}anku. {K/k}ażdego dnia wstaje o {S/s}zóstej rano. {P/p}ije kawę i czyta {G/g}azetę. {N/n}astępnie jedzie do {P/p}racy. {W/w} biurze ma dużo {D/d}okumentów. {L/l}ubi swoją pracę i swoich {K/k}olegów.",
-      "W naszej {S/s}zkole jest dużo dzieci. {K/k}ażde dziecko ma swój {P/p}iórnik. {N/n}a lekcjach uczymy się {M/m}atematyki. {P/p}ani nauczycielka jest miła. {Z/z}awsze pomaga w trudnych zadaniach. {W/w}czoraj mieliśmy sprawdzian. {W/w}szyscy się starali. {P/p}o lekcjach bawimy się na {B/b}oisku.",
-      "Mój {B/b}rat gra w {P/p}iłkę nożną. {T/t}renuje trzy razy w tygodniu. {J/j}ego drużyna nazywa się {L/l}wy. {M/m}ają niebieskie koszulki. {T/t}ata chodzi na mecze i kibicuje. {B/b}rat strzelił już pięć goli. {J/j}est bardzo dumny. {K/k}iedyś chce zostać {P/p}iłkarzem.",
-      "{M/m}oja siostra chodzi do {P/p}rzedszkola. {L/l}ubi rysować i malować. {J/j}ej ulubiony kolor to {R/r}óżowy. {W/w} przedszkolu ma dużo koleżanek. {P/p}ani opiekunka czyta im bajki. {D/d}zieci słuchają z zaciekawieniem. {P/p}o południu mają drzemkę. {S/s}iostra mówi, że przedszkole jest fajne."
-    ];
 
-    const poprawne = [
-      ['W','B','J','P','C','S','K','S','P','Ł'],
-      ['T','B','K','S','P','G','N','P','W','D','L','K'],
-      ['S','K','P','N','M','P','Z','W','W','P','B'],
-      ['B','P','T','J','L','M','T','B','J','K','P'],
-      ['M','P','L','J','R','W','P','P','D','P','S']
-    ];
+    <script>
+        const texts = [
+            "Mój t__ata kupił nową k__pę i zaniósł ją do d__mu.",
+            "W k__łku pod d__mem mieszka mały kr__lik.",
+            "Z__stałem zaproszony na przyjęcie urodzin__we.",
+            "Na p__łce stała szklanka z s__kiem malin__wym.",
+            "Mama p__suje moją nową fryz__rkę.",
+            "W s__siedztwie otworz__no nowy sklep.",
+            "J__rek znalazł muszelkę na pla__y.",
+            "B__t przyjechał do nas z Zak__panego.",
+            "D__brze się bawiłem na fest__nie szkolnym.",
+            "Po lekcjach p__szliśmy do parku grać w piłkę."
+        ];
 
-    const zle = [
-      ['w','b','j','p','c','s','k','s','p','ł'],
-      ['t','b','k','s','p','g','n','p','w','d','l','k'],
-      ['s','k','p','n','m','p','z','w','w','p','b'],
-      ['b','p','t','j','l','m','t','b','j','k','p'],
-      ['m','p','l','j','r','w','p','p','d','p','s']
-    ];
-
-    let index = 0;
-
-    function noweZdanie() {
-      index = Math.floor(Math.random() * teksty.length);
-      const tekst = teksty[index];
-      const prawidlowe = poprawne[index];
-      const nieprawidlowe = zle[index];
-      const slowa = tekst.split(/({[^}]+})/g);
-      let html = "";
-      let counter = 0;
-      for (let slowo of slowa) {
-        if (slowo.startsWith("{")) {
-          const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
-          html += `<select><option value="">--</option>`;
-          for (let o of opcje) {
-            html += `<option value="${o}">${o}</option>`;
-          }
-          html += `</select>`;
-          counter++;
-        } else {
-          html += slowo;
+        function generateText() {
+            let html = '';
+            texts.forEach(sentence => {
+                const withSelects = sentence.replace(/__/g, () => {
+                    return `<select><option>--</option><option>ó</option><option>u</option></select>`;
+                });
+                html += `<div class="sentence">${withSelects}</div>`;
+            });
+            document.getElementById("text-container").innerHTML = html;
+            document.getElementById("result").innerText = "";
         }
-      }
-      document.getElementById("dyktando").innerHTML = html;
-      document.getElementById("result").innerText = "";
-    }
 
-    function sprawdz() {
-      const selects = document.querySelectorAll("#dyktando select");
-      let blad = 0;
-      selects.forEach((select, i) => {
-        const wartosc = select.value;
-        const prawidlowa = poprawne[index][i];
-        if (wartosc === prawidlowa) {
-          select.className = "correct";
-        } else {
-          select.className = "incorrect";
-          blad++;
+        function checkAnswers() {
+            const selects = document.querySelectorAll("select");
+            let correct = 0;
+            let total = selects.length;
+            selects.forEach(select => {
+                const value = select.value;
+                if (value === "ó") {
+                    select.style.color = "green";
+                    correct++;
+                } else {
+                    select.style.color = "red";
+                }
+            });
+            document.getElementById("result").innerText = `Poprawne odpowiedzi: ${correct} z ${total}`;
         }
-      });
-      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
-    }
 
-    noweZdanie();
-  </script>
+        generateText();
+    </script>
 </body>
 </html>
