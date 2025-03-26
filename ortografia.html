@@ -1,60 +1,82 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
     <title>Ortografia</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Fredoka', sans-serif;
-            background-color: #eafcff;
+            background-color: #e6f9f8;
             margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
+            text-align: center;
+        }
+        .header {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
             color: #333;
         }
-        h1 {
-            text-align: center;
-            color: #03a9f4;
-        }
-        .task-button {
+        .menu-button {
             display: block;
-            width: 90%;
-            max-width: 400px;
+            background-color: #4dd0e1;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
             margin: 10px auto;
             padding: 15px;
-            text-align: center;
-            background-color: #00c0f4;
-            color: white;
+            border: none;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            text-decoration: none;
+        }
+        .menu-button:hover {
+            background-color: #26c6da;
+        }
+        .back-button {
+            background-color: #ffca28;
+            color: black;
             font-weight: bold;
             text-decoration: none;
+            padding: 12px 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .task-button:hover {
-            background-color: #019acc;
+            display: inline-block;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
-    <h1>Ortografia – Dyktanda</h1>
-    <a href="dyktando_01.html" class="task-button">1. Dyktando: ą/ę – klasa 2</a>
-<a href="dyktando_02.html" class="task-button">2. Dyktando: ó/u – klasa 2</a>
-<a href="dyktando_03.html" class="task-button">3. Dyktando: ch/h – klasa 3</a>
-<a href="dyktando_04.html" class="task-button">4. Dyktando: ch na końcu wyrazu – klasa 3</a>
-<a href="dyktando_05.html" class="task-button">5. Dyktando: wielka litera – klasa 2</a>
-<a href="dyktando_06.html" class="task-button">6. Dyktando: ou/au – klasa 3</a>
-<a href="dyktando_07.html" class="task-button">7. Dyktando: „rz” – klasa 3</a>
-<a href="dyktando_08.html" class="task-button">8. Dyktando: zakończenia -ów / -owa – klasa 3</a>
-<a href="dyktando_09.html" class="task-button">9. Dyktando: homonimy – klasa 3</a>
-<a href="dyktando_10.html" class="task-button">10. Dyktando: „nie” z czasownikami – klasa 2</a>
-<a href="dyktando_11.html" class="task-button">11. Dyktando: ó w rzeczownikach i czasownikach – klasa 3</a>
-<a href="dyktando_12.html" class="task-button">12. Dyktando: rz po spółgłoskach – klasa 3</a>
-<a href="dyktando_13.html" class="task-button">13. Dyktando: ż niewymienne – klasa 3</a>
-<a href="dyktando_14.html" class="task-button">14. Dyktando: zakończenia -it / -itby – klasa 4</a>
-<a href="dyktando_15.html" class="task-button">15. Dyktando: ch na końcu wyrazu – klasa 3</a>
-<a href="dyktando_16.html" class="task-button">16. Dyktando: „nie” z przymiotnikami – klasa 2</a>
-<a href="dyktando_17.html" class="task-button">17. Dyktando: wyjątki ortograficzne – klasa 4</a>
-<a href="dyktando_18.html" class="task-button">18. Dyktando mieszane – klasa 4</a>
+    <div class="container">
+        <div class="header">Ortografia – Dyktanda</div>
+
+        <a href="dyktando_1.html" class="menu-button">Wielka i mała litera – klasa 2</a>
+        <a href="dyktando_2.html" class="menu-button">ó/u – klasa 2</a>
+        <a href="dyktando_3.html" class="menu-button">rz/ż – klasa 2</a>
+        <a href="dyktando_4.html" class="menu-button">ch/h – klasa 2</a>
+        <a href="dyktando_5.html" class="menu-button">Zakończenia -ą/-om – klasa 2</a>
+        <a href="dyktando_6.html" class="menu-button">rz/ż po spółgłoskach – klasa 3</a>
+        <a href="dyktando_7.html" class="menu-button">ó w czasownikach – klasa 3</a>
+        <a href="dyktando_8.html" class="menu-button">ó w rzeczownikach – klasa 3</a>
+        <a href="dyktando_9.html" class="menu-button">ch/h na końcu wyrazu – klasa 3</a>
+        <a href="dyktando_10.html" class="menu-button">nie z czasownikami – klasa 2</a>
+        <a href="dyktando_11.html" class="menu-button">nie z przymiotnikami – klasa 2</a>
+        <a href="dyktando_12.html" class="menu-button">Zakończenia -it/-itby – klasa 4</a>
+        <a href="dyktando_13.html" class="menu-button">Homonimy – klasa 3</a>
+        <a href="dyktando_14.html" class="menu-button">ae/ę – klasa 2</a>
+        <a href="dyktando_15.html" class="menu-button">ou/au – klasa 3</a>
+        <a href="dyktando_16.html" class="menu-button">Zasady pisowni partykuły „nie” – klasa 4</a>
+        <a href="dyktando_17.html" class="menu-button">Wyjątki ortograficzne – klasa 4</a>
+        <a href="dyktando_18.html" class="menu-button">Dyktando mieszane – klasa 4</a>
+
+        <a href="index.html" class="back-button">Powrót na stronę główną</a>
+    </div>
 </body>
 </html>
