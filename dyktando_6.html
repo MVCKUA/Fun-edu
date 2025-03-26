@@ -1,52 +1,119 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dyktando 6</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyktando: ó/u – klasa 3</title>
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background-color: #f0f8ff;
-      padding: 20px;
+      background-color: #e6f7f8;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
-    .box {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 600px;
+    .container {
+      max-width: 800px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
     }
     h1 {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      background: linear-gradient(to right, #4fc3f7, #81d4fa);
       color: white;
+      padding: 15px;
       border-radius: 15px;
-      padding: 10px;
+      margin-bottom: 20px;
     }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
+    select {
       font-size: 1em;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .check { background-color: #4CAF50; color: white; }
-    .new { background-color: #2196F3; color: white; }
-    .back { background-color: #FFC107; color: black; }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Dyktando 6 – Klasa 3</h1>
-    <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
-    <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
-    <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
-    <button class="check">Sprawdź</button>
-    <button class="new">Nowe zdanie</button>
-    <button class="back" onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+  <div class="container">
+    <h1>Dyktando: ó/u – klasa 3</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ['W klasie trzeci{ó/u} dzieci uczą się ortografii. Tomek zapomniał piórnika w autob{ó/u}sie. Na biurku leży stary f{ó/u}tel z dziurą. W ogrodzie rosną r{ó/u}że, tulipany i maki. Mama ugotowała pyszną z{ó/u}pę jarzynową. Pies wskoczył na podw{ó/u}rko i szczekał głośno. Wczoraj Ola zg{ó/u}biła długopis na podłodze. Tata wyjął m{ó/u}j rower z garażu. Dzieci malowały zach{ó/u}d słońca pastelami. W książce była ilustracja smoka z f{ó/u}trem i skrzydłami.', 'W czasie lekcji J{ó/u}zek czytał książkę o dżungli. Na stołówce podano gorącą z{ó/u}pę pomidorową. Pani kazała nam wyjąć zeszyty z piórnik{ó/u}w. Kacper miał ból g{ó/u}wy i poszedł do pielęgniarki. Na łące pasły się krowy i g{ó/u}ralskie owce. Dziadek zabrał nas na spacery po starym podw{ó/u}rku. Na ławce leżał słownik z p{ó/u}łki biblioteki. Mama zapomniała wziąć chleb z samoch{ó/u}du. W tornistrze był rysunek kolorowej papug{ó/u}. Na podw{ó/u}rzu stał samoch{ó/u}d strażacki.', 'W niedzielę odwiedziliśmy babcię mieszkającą na wzg{ó/u}rzu. Brat zg{ó/u}bił rękawiczkę podczas spaceru. Na stole leżała stara książka z op{ó/u}źnioną pieczątką. W kinie grali bajkę o kr{ó/u}lu smoków. Mama przykryła z{ó/u}pę pokrywką, by nie wystygła. Na biurku leżał rysunek stworzony przez Jak{ó/u}ba. W czasie deszczu dzieci schowały się pod paras{ó/u}lą. W tornistrze było za dużo zeszyt{ó/u}w i długopisów. Tato sprawdził koła w samoch{ó/u}dzie przed wyjazdem. Kacper patrzył na zach{ó/u}d zza firanki.'];
+    const poprawne = [['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó']];
+    const zle = [['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u']];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      const tekst = teksty[index];
+      const prawidlowe = poprawne[index];
+      const nieprawidlowe = zle[index];
+      const slowa = tekst.split(/({[^}]+})/g);
+      let html = "";
+      let counter = 0;
+      for (let slowo of slowa) {
+        if (slowo === "{ó/u}") {
+          const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
+          html += `<select><option value="">--</option>`;
+          for (let o of opcje) {
+            html += `<option value="${o}">${o}</option>`;
+          }
+          html += `</select>`;
+          counter++;
+        } else {
+          html += slowo;
+        }
+      }
+      document.getElementById("dyktando").innerHTML = html;
+      document.getElementById("result").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
+        }
+      });
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>
