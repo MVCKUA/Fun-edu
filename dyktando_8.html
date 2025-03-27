@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dyktando 8</title>
+  <title>Dyktando: ch/h – klasa 3</title>
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
@@ -25,21 +25,95 @@
       border-radius: 15px;
       margin-bottom: 20px;
     }
-    .info {
-      font-size: 1.2em;
-      margin-top: 50px;
+    select {
+      font-size: 1em;
+      padding: 5px;
     }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Dyktando 8</h1>
-    <div class="info">
-      Ta strona jest gotowa do sprawdzenia.
+    <h1>Dyktando: ch/h – klasa 3</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
     </div>
-    <div class="buttons" style="margin-top:30px;">
-      <button onclick="location.href='ortografia.html'" style="padding: 10px 20px; border-radius: 8px; background-color: #ffca28; border: none; cursor: pointer;">Powrót do Ortografii</button>
-    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ['Na plaży dzieci budowały zamki z pia{ch/h}u i muszelek. Tato kupił nowy mie{ch/h} do kominka. W kuchni unosił się zapach lo{ch/h}a z przyprawami. Brat przykleił karton taśmą z suwa{ch/h}em. Na stole mapa ze szla{ch/h}em turystycznym. Mama posmarowała chleb masłem z orze{ch/h}ami. Dziadek mówił o rycerzu z mie{ch/h}em złota. Dzieci wskoczyły w ru{ch/h}ome piaski. Pani pokazała ilustrację so{ch/h}y. Kot spał na dywanie z me{ch/h}u.', 'Podczas wycieczki wspinaliśmy się po ska{ch/h}. Mama gotowała zupę z lo{ch/h}em. Na podłodze stało wiadro z pia{ch/h}em. Tato przyniósł suwa{ch/h} do narzędzi. Na biurku zeszyt z mie{ch/h}em. W klasie rozmowy o ru{ch/h}u drogowym. Tablica z obrazkami orze{ch/h}ów. Szliśmy leśnym szla{ch/h}em. Zapalony zapa{ch/h} świecy. Dziadek siedział na fote{ch/h}u.', 'Na boisku kurz i pia{ch/h}. Tato naprawiał suwa{ch/h}. Pachniało lo{ch/h}em w kuchni. Wyklejanki z me{ch/h}u i papieru. Oglądaliśmy mie{ch/h} w muzeum. Mama kupiła torebkę z orze{ch/h}owym wzorem. Brat uczył się o ru{ch/h}u planet. W lesie so{ch/h}a z dziuplą. Wykładzina z pia{ch/h}u. Kot spał na me{ch/h}u.'];
+    const poprawne = [['ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch'], ['ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch'], ['ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch', 'ch']];
+    const zle = [['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'], ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'], ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h']];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      const tekst = teksty[index];
+      const prawidlowe = poprawne[index];
+      const nieprawidlowe = zle[index];
+      const slowa = tekst.split(/({[^}]+})/g);
+      let html = "";
+      let counter = 0;
+      for (let slowo of slowa) {
+        if (slowo === "{ch/h}") {
+          const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
+          html += `<select><option value="">--</option>`;
+          for (let o of opcje) {
+            html += `<option value="${o}">${o}</option>`;
+          }
+          html += `</select>`;
+          counter++;
+        } else {
+          html += slowo;
+        }
+      }
+      document.getElementById("dyktando").innerHTML = html;
+      document.getElementById("result").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
+        }
+      });
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>
