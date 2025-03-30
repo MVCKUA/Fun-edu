@@ -1,52 +1,59 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dyktando 11</title>
   <style>
-    body {
-      font-family: 'Fredoka', sans-serif;
-      background-color: #f0f8ff;
-      padding: 20px;
-      text-align: center;
-    }
-    .box {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    h1 {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      color: white;
-      border-radius: 15px;
-      padding: 10px;
-    }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 1em;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .check { background-color: #4CAF50; color: white; }
-    .new { background-color: #2196F3; color: white; }
-    .back { background-color: #FFC107; color: black; }
+    body { font-family: 'Fredoka', sans-serif; background-color: #e6f7f8; text-align: center; }
+    .container { max-width: 900px; margin: auto; padding: 20px; }
+    h1 { background: linear-gradient(to right, #4fc3f7, #81d4fa); color: white; padding: 15px; border-radius: 15px; }
+    .btn-check { background-color: #4caf50; color: white; padding: 10px 20px; border: none; border-radius: 8px; }
+    .btn-new { background-color: #2196f3; color: white; padding: 10px 20px; border: none; border-radius: 8px; }
+    .btn-back { background-color: #ffca28; color: black; padding: 10px 20px; border: none; border-radius: 8px; }
+    .correct { background-color: #c8e6c9; }
+    .incorrect { background-color: #ffcdd2; }
+    .result { font-size: 1.2em; margin-top: 15px; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Dyktando 11 – Klasa 3</h1>
-    <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
-    <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
-    <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
-    <button class="check">Sprawdź</button>
-    <button class="new">Nowe zdanie</button>
-    <button class="back" onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+  <div class="container">
+    <h1>Dyktando: „nie” z czasownikami</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="nowe()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ["Tomek <select><option value=''>--</option><option value='niepisze'>niepisze</option><option value='nie pisze'>nie pisze</option></select> zadania. Ola <select><option value=''>--</option><option value='niesłucha'>niesłucha</option><option value='nie słucha'>nie słucha</option></select> nauczyciela. My <select><option value=''>--</option><option value='nieidziemy'>nieidziemy</option><option value='nie idziemy'>nie idziemy</option></select> do szkoły. Tata <select><option value=''>--</option><option value='nienaprawił'>nienaprawił</option><option value='nie naprawił'>nie naprawił</option></select> roweru. Dzieci <select><option value=''>--</option><option value='niespiewają'>niespiewają</option><option value='nie śpiewają'>nie śpiewają</option></select> piosenki. Kot <select><option value=''>--</option><option value='niebiega'>niebiega</option><option value='nie biega'>nie biega</option></select> po domu. Mama <select><option value=''>--</option><option value='niegotuje'>niegotuje</option><option value='nie gotuje'>nie gotuje</option></select> obiadu. Pies <select><option value=''>--</option><option value='nieszczeka'>nieszczeka</option><option value='nie szczeka'>nie szczeka</option></select> na kota. Oni <select><option value=''>--</option><option value='nieczytają'>nieczytają</option><option value='nie czytają'>nie czytają</option></select> książek. Ja <select><option value=''>--</option><option value='nielubię'>nielubię</option><option value='nie lubię'>nie lubię</option></select> warzyw.", "Uczniowie <select><option value=''>--</option><option value='nierozwiązali'>nierozwiązali</option><option value='nie rozwiązali'>nie rozwiązali</option></select> zadania. Kasia <select><option value=''>--</option><option value='niewidzi'>niewidzi</option><option value='nie widzi'>nie widzi</option></select> tablicy. Olek <select><option value=''>--</option><option value='nieumie'>nieumie</option><option value='nie umie'>nie umie</option></select> mnożyć. Dziecko <select><option value=''>--</option><option value='niesiedzi'>niesiedzi</option><option value='nie siedzi'>nie siedzi</option></select> spokojnie. My <select><option value=''>--</option><option value='niegramy'>niegramy</option><option value='nie gramy'>nie gramy</option></select> w piłkę. Oni <select><option value=''>--</option><option value='nieczytają'>nieczytają</option><option value='nie czytają'>nie czytają</option></select> bajki. Pies <select><option value=''>--</option><option value='nieszczeka'>nieszczeka</option><option value='nie szczeka'>nie szczeka</option></select> dziś w nocy. Ja <select><option value=''>--</option><option value='nielubię'>nielubię</option><option value='nie lubię'>nie lubię</option></select> hałasu. Mama <select><option value=''>--</option><option value='niesprząta'>niesprząta</option><option value='nie sprząta'>nie sprząta</option></select> dzisiaj. Tata <select><option value=''>--</option><option value='niegotuje'>niegotuje</option><option value='nie gotuje'>nie gotuje</option></select> kolacji.", "Dzieci <select><option value=''>--</option><option value='niebawią się'>niebawią się</option><option value='nie bawią się'>nie bawią się</option></select> na placu. Tomek <select><option value=''>--</option><option value='niesłucha'>niesłucha</option><option value='nie słucha'>nie słucha</option></select> muzyki. Ola <select><option value=''>--</option><option value='nieczyta'>nieczyta</option><option value='nie czyta'>nie czyta</option></select> komiksu. My <select><option value=''>--</option><option value='niesiedzimy'>niesiedzimy</option><option value='nie siedzimy'>nie siedzimy</option></select> przy stole. Babcia <select><option value=''>--</option><option value='nieszyje'>nieszyje</option><option value='nie szyje'>nie szyje</option></select> swetra. Pies <select><option value=''>--</option><option value='niewaruje'>niewaruje</option><option value='nie waruje'>nie waruje</option></select> przy drzwiach. Kasia <select><option value=''>--</option><option value='nietańczy'>nietańczy</option><option value='nie tańczy'>nie tańczy</option></select> w zespole. Brat <select><option value=''>--</option><option value='nienosi'>nienosi</option><option value='nie nosi'>nie nosi</option></select> okularów. Tata <select><option value=''>--</option><option value='nienalewa'>nienalewa</option><option value='nie nalewa'>nie nalewa</option></select> soku. Ona <select><option value=''>--</option><option value='nieskacze'>nieskacze</option><option value='nie skacze'>nie skacze</option></select> po łóżku."];
+    const poprawne = [['nie pisze', 'nie słucha', 'nie idziemy', 'nie naprawił', 'nie śpiewają', 'nie biega', 'nie gotuje', 'nie szczeka', 'nie czytają', 'nie lubię'], ['nie rozwiązali', 'nie widzi', 'nie umie', 'nie siedzi', 'nie gramy', 'nie czytają', 'nie szczeka', 'nie lubię', 'nie sprząta', 'nie gotuje'], ['nie bawią się', 'nie słucha', 'nie czyta', 'nie siedzimy', 'nie szyje', 'nie waruje', 'nie tańczy', 'nie nosi', 'nie nalewa', 'nie skacze']];
+    let index = 0;
+
+    function nowe() {
+      index = Math.floor(Math.random() * teksty.length);
+      document.getElementById("dyktando").innerHTML = teksty[index];
+      document.getElementById("result").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        if (select.value === poprawne[index][i]) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
+        }
+      });
+      document.getElementById("result").innerText = "Liczba błędów: " + blad;
+    }
+
+    nowe();
+  </script>
 </body>
 </html>
