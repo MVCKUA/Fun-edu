@@ -2,44 +2,62 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dyktando 9</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dyktando: -ów / -owa</title>
   <style>
-    body {
-      font-family: 'Fredoka', sans-serif;
-      background-color: #e6f7f8;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+    body { font-family: 'Fredoka', sans-serif; background-color: #e6f7f8; margin: 0; padding: 0; text-align: center; }
+    .container { max-width: 800px; margin: auto; padding: 20px; }
+    h1 { background: linear-gradient(to right, #4fc3f7, #81d4fa); color: white; padding: 15px; border-radius: 15px; }
+    .buttons button {
+      font-size: 1em; padding: 10px 20px; margin: 5px;
+      border: none; border-radius: 8px; cursor: pointer;
     }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-    }
-    h1 {
-      background: linear-gradient(to right, #4fc3f7, #81d4fa);
-      color: white;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-    }
-    .info {
-      font-size: 1.2em;
-      margin-top: 50px;
-    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
+    .correct { background-color: #c8e6c9; }
+    .incorrect { background-color: #ffcdd2; }
+    .result { font-size: 1.2em; margin-top: 15px; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Dyktando 9</h1>
-    <div class="info">
-      Ta strona jest gotowa do sprawdzenia.
+    <h1>Dyktando: -ów / -owa</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
     </div>
-    <div class="buttons" style="margin-top:30px;">
-      <button onclick="location.href='ortografia.html'" style="padding: 10px 20px; border-radius: 8px; background-color: #ffca28; border: none; cursor: pointer;">Powrót do Ortografii</button>
-    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ['W wakacje odwiedziliśmy Krak<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select> i Wrocław. Mama kupiła kilogram jabłk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select> i bananów. Na wycieczce widzieliśmy stado wilk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Tata naprawił drzwi od pokoj<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Na rynku było wielu turyst<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Zosia przyniosła torbę pomarańcz<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W sklepie nie było już gruszk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W książce znalazłem zdjęcia zamk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Na ścianie wisiało dużo obraz<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W zoo dzieci widziały klatki dla lw<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>.', 'Pani kupiła pęczek marchewk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select> i pietruszki. W kuchni stała miska jabłk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W klasie rozmawialiśmy o królestwach król<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W sadzie rosły drzewa pełne gruszk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Na łące pasło się stado baran<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W domu było dużo prezent<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select> pod choinką. Na regale leżało wiele zeszyt<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Z okna było widać dachy dom<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W muzeum były rzeźby dawnych bohater<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Mama kupiła kilka świeżych ogórk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>.', 'Na stole leżały książki znanych autor<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Mama kupiła bukiet tulipan<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select> i róż. Dzieci narysowały obrazki dla sąsiad<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W ogródku rosło dużo krzaków porzeczk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Na lekcji opowiadaliśmy o przygodach podróżnik<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Tata zawiesił półki z narzędziami dla majstr<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W bibliotece były regały pełne słownik<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Uczniowie przygotowali wystawę prac plastyk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W kuchni stały słoiki z ogórkami i grzyb<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W parku słychać było śpiew ptak<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>.', 'W sadzie wisiały jabłka i gruszki na gałęziach drzew owoc<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Na rynku sprzedawano sery i wędliny od wiejskich rolnik<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W teatrze występowali aktorzy i tancerze w rolach bohater<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Na ścianie klasowej zawisły portrety uczn<select><option value="">--</option><option value="iów">iów</option><option value="owa">owa</option></select>. W piwnicy przechowywaliśmy słoiki z konfiturami i dżem<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Pani dała dzieciom zeszyty do język<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select> obcych. Przed szkołą zaparkowały autobusy z wycieczkowicz<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W zoo karmiliśmy kaczki i łabędzie wśród staw<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W konkursie wzięło udział wielu uczni<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select> z różnych szkół. W szafce leżały rękawice należące do sportowc<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>.', 'W stawie pływały ryby różnych gatunk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Na jarmarku można było spotkać wielu handlarzy i rzemieślnik<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. Na cmentarzu odwiedzaliśmy groby naszych przodk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W klasie było wielu koleg<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select> z poprzedniego roku. Na półce stały butelki z sokami owocow<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W muzeum pokazano kolekcję monet i banknot<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W lesie słychać było śpiew drozd<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select> i kosów. Tata opowiadał historię słynnych odkrywc<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. U babci w spiżarni stały słoiki z kiszonymi warzyw<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>. W sklepie kupiliśmy torby pełne smakołyk<select><option value="">--</option><option value="ów">ów</option><option value="owa">owa</option></select>.'];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      document.getElementById("dyktando").innerHTML = teksty[index];
+      document.getElementById("result").innerText = "";
+      document.querySelectorAll("select").forEach(s => s.className = "");
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach(select => {
+        if (select.value === "") {
+          select.className = "incorrect";
+          blad++;
+        } else {
+          select.className = "correct";
+        }
+      });
+      document.getElementById("result").innerText = "Liczba błędów: " + blad;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>

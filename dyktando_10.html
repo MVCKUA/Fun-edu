@@ -2,44 +2,62 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dyktando 10</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dyktando: Homonimy (poprawna forma)</title>
   <style>
-    body {
-      font-family: 'Fredoka', sans-serif;
-      background-color: #e6f7f8;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+    body { font-family: 'Fredoka', sans-serif; background-color: #e6f7f8; margin: 0; padding: 0; text-align: center; }
+    .container { max-width: 800px; margin: auto; padding: 20px; }
+    h1 { background: linear-gradient(to right, #4fc3f7, #81d4fa); color: white; padding: 15px; border-radius: 15px; }
+    .buttons button {
+      font-size: 1em; padding: 10px 20px; margin: 5px;
+      border: none; border-radius: 8px; cursor: pointer;
     }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-    }
-    h1 {
-      background: linear-gradient(to right, #4fc3f7, #81d4fa);
-      color: white;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-    }
-    .info {
-      font-size: 1.2em;
-      margin-top: 50px;
-    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
+    .correct { background-color: #c8e6c9; }
+    .incorrect { background-color: #ffcdd2; }
+    .result { font-size: 1.2em; margin-top: 15px; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Dyktando 10</h1>
-    <div class="info">
-      Ta strona jest gotowa do sprawdzenia.
+    <h1>Dyktando: Homonimy – poprawna forma</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
     </div>
-    <div class="buttons" style="margin-top:30px;">
-      <button onclick="location.href='ortografia.html'" style="padding: 10px 20px; border-radius: 8px; background-color: #ffca28; border: none; cursor: pointer;">Powrót do Ortografii</button>
-    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ['W wakacje jedziemy nad <select><option value="">--</option><option value="morze">morze</option><option value="może">może</option></select>, żeby się kąpać. <select><option value="">--</option><option value="Morze">Morze</option><option value="Może">Może</option></select> być, że jutro będzie padać. <select><option value="">--</option><option value="Lód">Lód</option><option value="Lud">Lud</option></select> w kubku był bardzo zimny. <select><option value="">--</option><option value="Lud">Lud</option><option value="Lód">Lód</option></select> zebrał się na rynku. Mama powiedziała, że <select><option value="">--</option><option value="nie">nie</option><option value="mnie">mnie</option></select> wolno jeść słodyczy. Tata zapytał: <select><option value="">--</option><option value="nie">nie</option><option value="mnie">mnie</option></select> wiesz, gdzie są klucze? <select><option value="">--</option><option value="Kot">Kot</option><option value="Kod">Kod</option></select> wskoczył na szafę. <select><option value="">--</option><option value="Kod">Kod</option><option value="Kot">Kot</option></select> pocztowy naszego miasta to 00-950. <select><option value="">--</option><option value="Bóg">Bóg</option><option value="Buk">Buk</option></select> stworzył świat według Biblii. W lesie rosły wielkie drzewa: dąb i <select><option value="">--</option><option value="buk">buk</option><option value="bóg">bóg</option></select>.', 'Na plaży widać było wielkie <select><option value="">--</option><option value="morze">morze</option><option value="może">może</option></select>. <select><option value="">--</option><option value="Może">Może</option><option value="Morze">Morze</option></select> pojedziemy na wycieczkę rowerową. W szklance roztopił się <select><option value="">--</option><option value="lód">lód</option><option value="lud">lud</option></select>. Na koncercie zebrał się ogromny <select><option value="">--</option><option value="lud">lud</option><option value="lód">lód</option></select>. <select><option value="">--</option><option value="Buk">Buk</option><option value="Bóg">Bóg</option></select> to drzewo o gładkich liściach. Dzieci malowały postać <select><option value="">--</option><option value="boga">boga</option><option value="buka">buka</option></select> z bajki. <select><option value="">--</option><option value="Nie">Nie</option><option value="Mnie">Mnie</option></select> wolno przeszkadzać w klasie. Powiedz <select><option value="">--</option><option value="mnie">mnie</option><option value="nie">nie</option></select> jeśli coś boli. <select><option value="">--</option><option value="Kot">Kot</option><option value="Kod">Kod</option></select> przysnął na parapecie. Zapisałem <select><option value="">--</option><option value="kod">kod</option><option value="kot">kot</option></select> do wejścia do szkoły.'];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      document.getElementById("dyktando").innerHTML = teksty[index];
+      document.getElementById("result").innerText = "";
+      document.querySelectorAll("select").forEach(s => s.className = "");
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach(select => {
+        if (select.value === "") {
+          select.className = "incorrect";
+          blad++;
+        } else {
+          select.className = "correct";
+        }
+      });
+      document.getElementById("result").innerText = "Liczba błędów: " + blad;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>
