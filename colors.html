@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Fredoka', sans-serif;
+      background: linear-gradient(to bottom right, #a0e7e5, #fffde7);
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #00bcd4, #ffeb3b);
+      text-align: center;
+      padding: 20px;
+      font-size: 2em;
+      font-weight: bold;
+    }
+    .task {
+      text-align: center;
+      margin: 40px 20px;
+    }
+    .color-box {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+      border-radius: 12px;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .options button {
+      background-color: #ffc107;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #ff9800;
+    }
+    #feedback {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .nav-buttons {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .nav-buttons button {
+      background-color: #00bcd4;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 5px;
+      color: white;
+    }
+    .nav-buttons button:hover {
+      background-color: #0097a7;
+    }
+  </style>
+</head>
+<body>
+  <header>Colors</header>
+  <div class="task">
+    <p>Jak się nazywa ten kolor po angielsku?</p>
+    <div id="colorBox" class="color-box"></div>
+    <div class="options">
+      <button onclick="checkAnswer(this)">Red</button>
+      <button onclick="checkAnswer(this)">Blue</button>
+      <button onclick="checkAnswer(this)">Green</button>
+    </div>
+    <div id="feedback"></div>
+  </div>
+  <div class="nav-buttons">
+    <button onclick="location.href='fun-english.html'">Powrót</button>
+    <button onclick="newColor()">Nowe zadanie</button>
+  </div>
+
+  <script>
+    const colors = [
+      { name: "Red", code: "red" },
+      { name: "Blue", code: "blue" },
+      { name: "Green", code: "green" },
+      { name: "Yellow", code: "yellow" },
+      { name: "Purple", code: "purple" },
+      { name: "Orange", code: "orange" },
+      { name: "Pink", code: "deeppink" },
+      { name: "Brown", code: "saddlebrown" },
+      { name: "Gray", code: "gray" },
+      { name: "Black", code: "black" }
+    ];
+
+    let currentColor = {};
+    let previousColor = null;
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function newColor() {
+      let shuffled = shuffle([...colors]);
+      do {
+        currentColor = shuffled[0];
+      } while (currentColor.name === previousColor);
+      previousColor = currentColor.name;
+
+      document.getElementById('colorBox').style.backgroundColor = currentColor.code;
+
+      const buttons = document.querySelectorAll('.options button');
+      const options = shuffle([
+        currentColor.name,
+        shuffled[1].name,
+        shuffled[2].name
+      ]);
+
+      buttons.forEach((btn, i) => {
+        btn.textContent = options[i];
+        btn.disabled = false;
+      });
+
+      document.getElementById('feedback').textContent = '';
+    }
+
+    function checkAnswer(button) {
+      const answer = button.textContent;
+      if (answer === currentColor.name) {
+        document.getElementById('feedback').textContent = 'Brawo! To poprawna odpowiedź!';
+        document.getElementById('feedback').style.color = 'green';
+      } else {
+        document.getElementById('feedback').textContent = 'Ups! Spróbuj jeszcze raz!';
+        document.getElementById('feedback').style.color = 'red';
+      }
+      document.querySelectorAll('.options button').forEach(btn => btn.disabled = true);
+    }
+
+    window.onload = newColor;
+  </script>
+</body>
+</html>

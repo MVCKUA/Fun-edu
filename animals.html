@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Fredoka', sans-serif;
+      background: linear-gradient(to bottom right, #fdfcdc, #a0e7e5);
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #00bcd4, #ffeb3b);
+      text-align: center;
+      padding: 20px;
+      font-size: 2em;
+      font-weight: bold;
+    }
+    .task {
+      text-align: center;
+      margin: 40px 20px;
+    }
+    .animal-img {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      margin: 20px auto;
+      display: block;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .options button {
+      background-color: #ffc107;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #ff9800;
+    }
+    #feedback {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .nav-buttons {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .nav-buttons button {
+      background-color: #00bcd4;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 5px;
+      color: white;
+    }
+    .nav-buttons button:hover {
+      background-color: #0097a7;
+    }
+  </style>
+</head>
+<body>
+  <header>Animals</header>
+  <div class="task">
+    <p>Jak się nazywa to zwierzę po angielsku?</p>
+    <img id="animalImage" class="animal-img" src="cat.png" alt="animal">
+    <div class="options">
+      <button onclick="checkAnswer(this)">Cat</button>
+      <button onclick="checkAnswer(this)">Dog</button>
+      <button onclick="checkAnswer(this)">Lion</button>
+    </div>
+    <div id="feedback"></div>
+  </div>
+  <div class="nav-buttons">
+    <button onclick="location.href='fun-english.html'">Powrót</button>
+    <button onclick="newAnimal()">Nowe zadanie</button>
+  </div>
+
+  <script>
+    const animals = [
+      { name: "Cat", image: "cat.png" },
+      { name: "Dog", image: "dog.png" },
+      { name: "Lion", image: "lion.png" },
+      { name: "Elephant", image: "elephant.png" },
+      { name: "Monkey", image: "monkey.png" },
+      { name: "Bear", image: "bear.png" },
+      { name: "Frog", image: "frog.png" },
+      { name: "Tiger", image: "tiger.png" },
+      { name: "Giraffe", image: "giraffe.png" },
+      { name: "Zebra", image: "zebra.png" }
+    ];
+
+    let currentAnimal = {};
+    let previousAnimal = null;
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function newAnimal() {
+      let shuffled = shuffle([...animals]);
+      do {
+        currentAnimal = shuffled[0];
+      } while (currentAnimal.name === previousAnimal);
+      previousAnimal = currentAnimal.name;
+
+      document.getElementById('animalImage').src = currentAnimal.image;
+      document.getElementById('animalImage').alt = currentAnimal.name;
+
+      const buttons = document.querySelectorAll('.options button');
+      const options = shuffle([
+        currentAnimal.name,
+        shuffled[1].name,
+        shuffled[2].name
+      ]);
+
+      buttons.forEach((btn, i) => {
+        btn.textContent = options[i];
+        btn.disabled = false;
+      });
+
+      document.getElementById('feedback').textContent = '';
+    }
+
+    function checkAnswer(button) {
+      const answer = button.textContent;
+      if (answer === currentAnimal.name) {
+        document.getElementById('feedback').textContent = 'Brawo! To poprawna odpowiedź!';
+        document.getElementById('feedback').style.color = 'green';
+      } else {
+        document.getElementById('feedback').textContent = 'Ups! Spróbuj jeszcze raz!';
+        document.getElementById('feedback').style.color = 'red';
+      }
+      document.querySelectorAll('.options button').forEach(btn => btn.disabled = true);
+    }
+
+    window.onload = newAnimal;
+  </script>
+</body>
+</html>
