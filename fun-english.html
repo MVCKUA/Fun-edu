@@ -1,103 +1,80 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fun English</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Fredoka', sans-serif;
       margin: 0;
-      background: #f0f8ff;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><text x="10" y="150" font-size="100" fill="%23e1bee7" font-family="Fredoka">A B C</text></svg>');
-      background-repeat: repeat;
+      font-family: 'Fredoka', sans-serif;
+      background: linear-gradient(to bottom right, #a0e7e5, #fdfcdc);
+      color: #333;
     }
-    .header {
-      background: linear-gradient(to right, #00bcd4, #ffe082);
-      padding: 30px 20px 20px 20px;
+    header {
+      background: linear-gradient(to right, #00bcd4, #ffeb3b);
       text-align: center;
-      color: white;
-      font-size: 32px;
-      font-weight: 600;
-      border-bottom: 4px solid #ffcc80;
-    }
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin: 25px auto;
-    }
-    .menu a {
-      text-decoration: none;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-size: 16px;
+      padding: 20px;
+      font-size: 2em;
       font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      display: inline-block;
     }
-    .menu a:nth-child(1) { background: #ff8a65; color: white; }
-    .menu a:nth-child(2) { background: #ffd54f; color: #333; }
-    .menu a:nth-child(3) { background: #4db6ac; color: white; }
-    .menu a:nth-child(4) { background: #ba68c8; color: white; }
-    .menu a:nth-child(5) { background: #90caf9; color: #333; }
-
-    .content {
+    .container {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
       background: white;
-      max-width: 700px;
-      margin: auto;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.08);
-    }
-
-    h2 {
-      color: #7b1fa2;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
       text-align: center;
-      font-size: 28px;
+      transition: transform 0.3s;
     }
-
-    ul {
-      list-style: none;
-      padding-left: 0;
+    .card:hover {
+      transform: scale(1.05);
     }
-    li {
-      margin: 10px 0;
+    .card img {
+      width: 100px;
+      height: 100px;
     }
-    a.link {
-      color: #512da8;
-      font-weight: bold;
-      text-decoration: none;
+    .card button {
+      background-color: #ffc107;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
     }
-    a.link:hover {
-      text-decoration: underline;
+    .card button:hover {
+      background-color: #ff9800;
     }
   </style>
 </head>
 <body>
-
-<div class="header">Fun Edu</div>
-
-<div class="menu">
-  <a href="index.html">Strona główna</a>
-  <a href="ortografia.html">Ortografia</a>
-  <a href="matematyka.html">Matematyka</a>
-  <a href="fun-english.html">Fun English</a>
-  <a href="o-stronie.html">O stronie</a>
-</div>
-
-<div class="content">
-  <h2>Fun English</h2>
-  <p>Ćwiczenia i zabawy językowe na podstawie podręcznika (klasa 2–4):</p>
-  <ul>
-    <li><a class="link" href="funenglish-unit6-kl3.html">Unit 6 – klasa 3</a></li>
-    <li><a class="link" href="#">Unit 7 – w przygotowaniu</a></li>
-    <li><a class="link" href="#">Unit 8 – w przygotowaniu</a></li>
-  </ul>
-</div>
-
+  <header>Fun English</header>
+  <div class="container">
+    <div class="card">
+      <img src="vocabulary.png" alt="Vocabulary">
+      <h3>Vocabulary</h3>
+      <p>Poznaj nowe słowa z obrazkami!</p>
+      <button onclick="location.href='vocabulary_animals.html'">Zobacz</button>
+    </div>
+    <div class="card">
+      <img src="games.png" alt="Games">
+      <h3>Games</h3>
+      <p>Zagraj i ucz się angielskiego!</p>
+      <button onclick="location.href='games.html'">Graj</button>
+    </div>
+    <div class="card">
+      <img src="songs.png" alt="Songs">
+      <h3>Songs & Videos</h3>
+      <p>Śpiewaj i oglądaj po angielsku!</p>
+      <button onclick="location.href='songs.html'">Otwórz</button>
+    </div>
+  </div>
 </body>
 </html>
