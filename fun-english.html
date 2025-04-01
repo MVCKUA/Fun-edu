@@ -9,49 +9,50 @@
     body {
       margin: 0;
       font-family: 'Fredoka', sans-serif;
-      background: linear-gradient(to bottom right, #a0e7e5, #fdfcdc);
+      background: linear-gradient(to bottom right, #a0e7e5, #fffde7);
       color: #333;
     }
     header {
       background: linear-gradient(to right, #00bcd4, #ffeb3b);
       text-align: center;
-      padding: 20px;
-      font-size: 2em;
+      padding: 30px 20px;
+      font-size: 2.5em;
       font-weight: bold;
+      color: #333;
     }
     .container {
-      padding: 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      padding: 40px 20px;
     }
     .card {
       background: white;
-      border-radius: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 25px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
       padding: 20px;
       text-align: center;
-      transition: transform 0.3s;
+      transition: transform 0.3s ease;
     }
     .card:hover {
       transform: scale(1.05);
     }
     .card img {
-      width: 100%;
-      max-width: 120px;
+      width: 100px;
       height: auto;
-      display: block;
-      margin: 0 auto;
-      border-radius: 15px;
+      margin-bottom: 10px;
+    }
+    .card h3 {
+      font-size: 1.4em;
+      margin: 10px 0;
     }
     .card button {
       background-color: #ffc107;
       border: none;
       padding: 10px 20px;
       font-size: 1em;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      margin-top: 10px;
     }
     .card button:hover {
       background-color: #ff9800;
@@ -62,22 +63,24 @@
   <header>Fun English</header>
   <div class="container">
     <div class="card">
-      <img src="vocabulary.png" alt="Vocabulary">
-      <h3>Vocabulary</h3>
-      <p>Poznaj nowe słowa z obrazkami!</p>
-      <button onclick="location.href='vocabulary_animals.html'">Zobacz</button>
+      <img src="colors.png" alt="Colors">
+      <h3>Colors</h3>
+      <button onclick="location.href='colors.html'">Zobacz</button>
     </div>
     <div class="card">
-      <img src="games.png" alt="Games">
-      <h3>Games</h3>
-      <p>Zagraj i ucz się angielskiego!</p>
-      <button onclick="location.href='games.html'">Graj</button>
+      <img src="animals.png" alt="Animals">
+      <h3>Animals</h3>
+      <button onclick="location.href='animals.html'">Zobacz</button>
     </div>
     <div class="card">
-      <img src="songs.png" alt="Songs">
-      <h3>Songs & Videos</h3>
-      <p>Śpiewaj i oglądaj po angielsku!</p>
-      <button onclick="location.href='songs.html'">Otwórz</button>
+      <img src="alphabet.png" alt="Alphabet">
+      <h3>Alphabet</h3>
+      <button onclick="location.href='alphabet.html'">Zobacz</button>
+    </div>
+    <div class="card">
+      <img src="numbers.png" alt="Numbers">
+      <h3>Numbers</h3>
+      <button onclick="location.href='numbers.html'">Zobacz</button>
     </div>
   </div>
 </body>
