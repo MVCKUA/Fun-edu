@@ -1,20 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dyktando 11</title>
+  <title>Dyktando: „nie” z czasownikami</title>
   <style>
-    body { font-family: 'Fredoka', sans-serif; background-color: #e6f7f8; text-align: center; }
-    .container { max-width: 900px; margin: auto; padding: 20px; }
-    h1 { background: linear-gradient(to right, #4fc3f7, #81d4fa); color: white; padding: 15px; border-radius: 15px; }
-    .btn-check { background-color: #4caf50; color: white; padding: 10px 20px; border: none; border-radius: 8px; }
-    .btn-new { background-color: #2196f3; color: white; padding: 10px 20px; border: none; border-radius: 8px; }
-    .btn-back { background-color: #ffca28; color: black; padding: 10px 20px; border: none; border-radius: 8px; }
-    .correct { background-color: #c8e6c9; }
-    .incorrect { background-color: #ffcdd2; }
-    .result { font-size: 1.2em; margin-top: 15px; }
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background-color: #e6f7f8;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1 {
+      background: linear-gradient(to right, #4fc3f7, #81d4fa);
+      color: white;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+    select {
+      font-size: 1em;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
   </style>
 </head>
 <body>
@@ -23,37 +60,59 @@
     <div id="dyktando"></div>
     <div class="buttons">
       <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
-      <button class="btn-new" onclick="nowe()">Nowe zdanie</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
       <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
     </div>
     <div class="result" id="result"></div>
   </div>
   <script>
-    const teksty = ["Tomek <select><option value=''>--</option><option value='niepisze'>niepisze</option><option value='nie pisze'>nie pisze</option></select> zadania. Ola <select><option value=''>--</option><option value='niesłucha'>niesłucha</option><option value='nie słucha'>nie słucha</option></select> nauczyciela. My <select><option value=''>--</option><option value='nieidziemy'>nieidziemy</option><option value='nie idziemy'>nie idziemy</option></select> do szkoły. Tata <select><option value=''>--</option><option value='nienaprawił'>nienaprawił</option><option value='nie naprawił'>nie naprawił</option></select> roweru. Dzieci <select><option value=''>--</option><option value='niespiewają'>niespiewają</option><option value='nie śpiewają'>nie śpiewają</option></select> piosenki. Kot <select><option value=''>--</option><option value='niebiega'>niebiega</option><option value='nie biega'>nie biega</option></select> po domu. Mama <select><option value=''>--</option><option value='niegotuje'>niegotuje</option><option value='nie gotuje'>nie gotuje</option></select> obiadu. Pies <select><option value=''>--</option><option value='nieszczeka'>nieszczeka</option><option value='nie szczeka'>nie szczeka</option></select> na kota. Oni <select><option value=''>--</option><option value='nieczytają'>nieczytają</option><option value='nie czytają'>nie czytają</option></select> książek. Ja <select><option value=''>--</option><option value='nielubię'>nielubię</option><option value='nie lubię'>nie lubię</option></select> warzyw.", "Uczniowie <select><option value=''>--</option><option value='nierozwiązali'>nierozwiązali</option><option value='nie rozwiązali'>nie rozwiązali</option></select> zadania. Kasia <select><option value=''>--</option><option value='niewidzi'>niewidzi</option><option value='nie widzi'>nie widzi</option></select> tablicy. Olek <select><option value=''>--</option><option value='nieumie'>nieumie</option><option value='nie umie'>nie umie</option></select> mnożyć. Dziecko <select><option value=''>--</option><option value='niesiedzi'>niesiedzi</option><option value='nie siedzi'>nie siedzi</option></select> spokojnie. My <select><option value=''>--</option><option value='niegramy'>niegramy</option><option value='nie gramy'>nie gramy</option></select> w piłkę. Oni <select><option value=''>--</option><option value='nieczytają'>nieczytają</option><option value='nie czytają'>nie czytają</option></select> bajki. Pies <select><option value=''>--</option><option value='nieszczeka'>nieszczeka</option><option value='nie szczeka'>nie szczeka</option></select> dziś w nocy. Ja <select><option value=''>--</option><option value='nielubię'>nielubię</option><option value='nie lubię'>nie lubię</option></select> hałasu. Mama <select><option value=''>--</option><option value='niesprząta'>niesprząta</option><option value='nie sprząta'>nie sprząta</option></select> dzisiaj. Tata <select><option value=''>--</option><option value='niegotuje'>niegotuje</option><option value='nie gotuje'>nie gotuje</option></select> kolacji.", "Dzieci <select><option value=''>--</option><option value='niebawią się'>niebawią się</option><option value='nie bawią się'>nie bawią się</option></select> na placu. Tomek <select><option value=''>--</option><option value='niesłucha'>niesłucha</option><option value='nie słucha'>nie słucha</option></select> muzyki. Ola <select><option value=''>--</option><option value='nieczyta'>nieczyta</option><option value='nie czyta'>nie czyta</option></select> komiksu. My <select><option value=''>--</option><option value='niesiedzimy'>niesiedzimy</option><option value='nie siedzimy'>nie siedzimy</option></select> przy stole. Babcia <select><option value=''>--</option><option value='nieszyje'>nieszyje</option><option value='nie szyje'>nie szyje</option></select> swetra. Pies <select><option value=''>--</option><option value='niewaruje'>niewaruje</option><option value='nie waruje'>nie waruje</option></select> przy drzwiach. Kasia <select><option value=''>--</option><option value='nietańczy'>nietańczy</option><option value='nie tańczy'>nie tańczy</option></select> w zespole. Brat <select><option value=''>--</option><option value='nienosi'>nienosi</option><option value='nie nosi'>nie nosi</option></select> okularów. Tata <select><option value=''>--</option><option value='nienalewa'>nienalewa</option><option value='nie nalewa'>nie nalewa</option></select> soku. Ona <select><option value=''>--</option><option value='nieskacze'>nieskacze</option><option value='nie skacze'>nie skacze</option></select> po łóżku."];
-    const poprawne = [['nie pisze', 'nie słucha', 'nie idziemy', 'nie naprawił', 'nie śpiewają', 'nie biega', 'nie gotuje', 'nie szczeka', 'nie czytają', 'nie lubię'], ['nie rozwiązali', 'nie widzi', 'nie umie', 'nie siedzi', 'nie gramy', 'nie czytają', 'nie szczeka', 'nie lubię', 'nie sprząta', 'nie gotuje'], ['nie bawią się', 'nie słucha', 'nie czyta', 'nie siedzimy', 'nie szyje', 'nie waruje', 'nie tańczy', 'nie nosi', 'nie nalewa', 'nie skacze']];
+    const teksty = ['Dziecko {nie/nie} chciało iść spać o dziewiątej. Tata {nie/nie} naprawił jeszcze kranu w łazience. Mama {nie/nie} kupiła mleka, więc pójdę do sklepu. Uczeń {nie/nie} napisał pracy domowej na czas. Pies {nie/nie} szczekał przez całą noc. Babcia {nie/nie} gotowała dziś zupy. Ona {nie/nie} pamiętała o spotkaniu. My {nie/nie} rozmawiamy teraz o tym problemie. Dzieci {nie/nie} bawiły się na dworze. Ja {nie/nie} mam ochoty wychodzić dziś z domu.', 'Chłopiec {nie/nie} przyniósł zeszytu na lekcję. Tata {nie/nie} zabrał parasola, bo nie padało. Ona {nie/nie} odpowiedziała na pytanie nauczyciela. Dziecko {nie/nie} posprzątało pokoju. My {nie/nie} oglądamy teraz filmu. Pies {nie/nie} obudził mnie rano. Mama {nie/nie} ugotowała jeszcze zupy. Uczeń {nie/nie} czytał książki wczoraj. Dziewczynka {nie/nie} zjadła śniadania. Babcia {nie/nie} przyszła na urodziny.', 'Dziecko {nie/nie} chciało jeść obiadu. Mama {nie/nie} otworzyła okna. Tata {nie/nie} znalazł kluczy. Ja {nie/nie} mogę iść z wami. Ona {nie/nie} posprzątała pokoju. My {nie/nie} lubimy się kłócić. Pies {nie/nie} obudził sąsiadów. Dzieci {nie/nie} rozmawiały w czasie lekcji. Babcia {nie/nie} czytała gazet. On {nie/nie} pamiętał hasła.', 'Uczeń {nie/nie} przeczytał lektury. Mama {nie/nie} kupiła chleba. Pies {nie/nie} biegał po ogrodzie. Babcia {nie/nie} miała czasu. Tata {nie/nie} wziął telefonu. Dzieci {nie/nie} krzyczały. Ona {nie/nie} napisała zadania. My {nie/nie} słyszeliśmy dzwonka. Ja {nie/nie} chcę rozmawiać. Chłopiec {nie/nie} umył rąk.', 'Babcia {nie/nie} spała w nocy. Mama {nie/nie} podała obiadu. Pies {nie/nie} wrócił do domu. Tata {nie/nie} naprawił auta. Ja {nie/nie} zjadłem śniadania. Dzieci {nie/nie} wyszły na dwór. My {nie/nie} mamy książki. Ona {nie/nie} słyszała muzyki. On {nie/nie} zrobił zadania. Uczeń {nie/nie} rozwiązał testu.', 'Chłopiec {nie/nie} zauważył znaku. Mama {nie/nie} ugotowała zupy. Babcia {nie/nie} przyszła wcześniej. Pies {nie/nie} zareagował na hałas. My {nie/nie} zauważyliśmy błędu. Ona {nie/nie} zjadła śniadania. Dziecko {nie/nie} zamknęło drzwi. Tata {nie/nie} poszedł do pracy. Uczeń {nie/nie} znał odpowiedzi. Ja {nie/nie} byłem przygotowany.', 'Dziecko {nie/nie} usłyszało pytania. Mama {nie/nie} zrobiła prania. My {nie/nie} wróciliśmy na czas. Tata {nie/nie} znalazł dokumentów. Babcia {nie/nie} usiadła przy stole. Ona {nie/nie} miała zeszytu. Ja {nie/nie} miałem problemu. Uczeń {nie/nie} skończył pracy. Pies {nie/nie} zareagował na dźwięk. Dzieci {nie/nie} czytały w ciszy.', 'Ona {nie/nie} była w sklepie. My {nie/nie} chcemy kłopotów. Pies {nie/nie} przyniósł piłki. Tata {nie/nie} skończył budowy. Dziecko {nie/nie} miało czasu. Uczeń {nie/nie} znał hasła. Mama {nie/nie} wróciła na czas. Babcia {nie/nie} słyszała pytania. Ja {nie/nie} wiedziałem, co robić. Dzieci {nie/nie} znały piosenki.', 'Dziecko {nie/nie} zjadło śniadania. Tata {nie/nie} jechał samochodem. Mama {nie/nie} kupiła prezentu. My {nie/nie} znaliśmy odpowiedzi. Ona {nie/nie} usiadła przy stole. Babcia {nie/nie} zapomniała o obiedzie. Ja {nie/nie} miałem zadania. Pies {nie/nie} szczekał. Uczeń {nie/nie} napisał sprawdzianu. Dzieci {nie/nie} krzyczały na przerwie.', 'Mama {nie/nie} poszła na zakupy. Dziecko {nie/nie} zamknęło okna. Tata {nie/nie} pojechał do pracy. My {nie/nie} powiedzieliśmy prawdy. Babcia {nie/nie} zrozumiała pytania. Ja {nie/nie} spałem dobrze. Ona {nie/nie} pamiętała o wszystkim. Pies {nie/nie} przyniósł gazety. Dzieci {nie/nie} słyszały dzwonka. Uczeń {nie/nie} zrobił zadania.'];
+    const poprawne = [['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie'], ['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie'], ['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie'], ['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie'], ['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie'], ['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie'], ['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie'], ['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie'], ['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie'], ['nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie', 'nie']];
+    const zle = [['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez'], ['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez'], ['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez'], ['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez'], ['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez'], ['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez'], ['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez'], ['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez'], ['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez'], ['niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez', 'niez']];
     let index = 0;
 
-    function nowe() {
+    function noweZdanie() {
       index = Math.floor(Math.random() * teksty.length);
-      document.getElementById("dyktando").innerHTML = teksty[index];
+      const tekst = teksty[index];
+      const prawidlowe = poprawne[index];
+      const nieprawidlowe = zle[index];
+      const slowa = tekst.split(/({[^}]+})/g);
+      let html = "";
+      let counter = 0;
+      for (let slowo of slowa) {
+        if (slowo === "{nie/nie}") {
+          const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
+          html += `<select><option value="">--</option>`;
+          for (let o of opcje) {
+            html += `<option value="${o}">${o}</option>`;
+          }
+          html += `</select>`;
+          counter++;
+        } else {
+          html += slowo;
+        }
+      }
+      document.getElementById("dyktando").innerHTML = html;
       document.getElementById("result").innerText = "";
     }
 
     function sprawdz() {
-      const selects = document.querySelectorAll("select");
+      const selects = document.querySelectorAll("#dyktando select");
       let blad = 0;
       selects.forEach((select, i) => {
-        if (select.value === poprawne[index][i]) {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
           select.className = "correct";
         } else {
           select.className = "incorrect";
           blad++;
         }
       });
-      document.getElementById("result").innerText = "Liczba błędów: " + blad;
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
     }
 
-    nowe();
+    noweZdanie();
   </script>
 </body>
 </html>
