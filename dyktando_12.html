@@ -1,52 +1,118 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dyktando 12</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyktando: ó/u w rzeczownikach i czasownikach</title>
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background-color: #f0f8ff;
-      padding: 20px;
+      background-color: #e6f7f8;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
-    .box {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 600px;
+    .container {
+      max-width: 800px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
     }
     h1 {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      background: linear-gradient(to right, #4fc3f7, #81d4fa);
       color: white;
+      padding: 15px;
       border-radius: 15px;
-      padding: 10px;
+      margin-bottom: 20px;
     }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
+    select {
       font-size: 1em;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .check { background-color: #4CAF50; color: white; }
-    .new { background-color: #2196F3; color: white; }
-    .back { background-color: #FFC107; color: black; }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Dyktando 12 – Klasa 3</h1>
-    <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
-    <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
-    <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
-    <button class="check">Sprawdź</button>
-    <button class="new">Nowe zdanie</button>
-    <button class="back" onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+  <div class="container">
+    <h1>Dyktando: ó/u w rzeczownikach i czasownikach</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ['W przedszkolu leżał grzebień z pió{ó/u}r pawia. Zrobiłem kanapkę z szynką i ser{ó/u}em. Pies merdał ogonem i patrzył w chm{ó/u}rę. Tata przyniósł z piwnicy stary r{ó/u}ż. Dzieci biegały po korytarz{ó/u}. Mama kupiła pomarańcze i banan{ó/u}. Na półce stał kubek z s{ó/u}kiem. W szkole było cich{ó/u} i spokojnie. Dziadek opowiadał bajkę o kr{ó/u}lu. Zosia znalazła muszelkę w piask{ó/u}.', 'W pudełku leżał pędzel i p{ó/u}łka farb. Dziecko jadło zupę z makaron{ó/u}. Pies wskoczył do kał{ó/u}ży i się zamoczył. Mama zrobiła zakupy na stragan{ó/u}. Tata naprawił r{ó/u}rę w łazience. W sypialni był miękki p{ó/u}łkoc. Na boisku dzieci grały w piłk{ó/u}. Babcia przyniosła pęczek rzeż{ó/u}chy. W ogrodzie zakwitły r{ó/u}że. Na obrazku był kakt{ó/u}s.', 'Na balkonie stał kolorowy kwiat w donic{ó/u}. Dzieci patrzyły na tęczę na horyzont{ó/u}. Chłopiec podarował mamie bukiet r{ó/u}ż. W spiżarni była butelka s{ó/u}ka malinowego. Mama smażyła placki z jabłk{ó/u}. W klasie rozległ się hałas i szept{ó/u}. W lesie rosły grzyby pod drzewk{ó/u}. Tata wyjął narzędzia z p{ó/u}łki. Na podwórku jeździł samoch{ó/u}d. W szafie znalazłem stary palt{ó/u}.', 'Zosia dostała balon w kształcie serd{ó/u}sza. Pies wskoczył do staw{ó/u}. W lod{ó/u}wce leżał ser i masło. Dziecko znalazło patyk i piór{ó/u}ko. W zimie dzieci lepiły bałwan{ó/u}. Na strychu stała stara szkatułk{ó/u}. Mama założyła nowy fart{ó/u}ch. Babcia nalała zupę do garn{ó/u}szka. Na stole stał puchar z l{ó/u}dami. Tata niósł ciężki plecak na ramion{ó/u}.', 'W zoo widzieliśmy małpę z długim og{ó/u}nem. Dzieci rysowały obrazki w zeszyt{ó/u}. Na ganku stał w{ó/u}zek dziecięcy. W wakacje jedziemy nad m{ó/u}rze. Mama kupiła czekoladę z nadzieniem owoc{ó/u}w. W plecaku miałem zeszyty i piórn{ó/u}k. Tata zbudował dom z pustak{ó/u}. Na półce stał album z fot{ó/u}grafiami. Dzieci siedziały w k{ó/u}łku. W klasie było cich{ó/u}.', 'Na stole leżała sól i pieprz{ó/u}. Dziadek opowiadał bajki o kr{ó/u}lewiczach. W sypialni wisiał żyrand{ó/u}l. Mama przyniosła bukiet fioletowych r{ó/u}ż. Pies zasnął na dywan{ó/u}. Zosia zaplotła wark{ó/u}cz. W ogrodzie rosły kakt{ó/u}sy. Dzieci rysowały kredkami po p{ó/u}łce. Babcia nalała kompot do dzban{ó/u}. Ja założyłem cieplutki kapt{ó/u}r.', 'W zimie dzieci lepiły bałwan{ó/u}. Pies pobiegł za motyl{ó/u}. Mama usmażyła racuchy z jabłk{ó/u}. Tata przyniósł narzędzia z p{ó/u}łki. W sklepie kupiłem ser i jog{ó/u}rt. Babcia przygotowała rosoł{ó/u}. Na podłodze leżał stary koc i poduszk{ó/u}. Dziadek naprawił gniazd{ó/u}. Dzieci biegały w k{ó/u}łko. W klasie panował spok{ó/u}j.', 'Na plaży dzieci budowały zamki z piask{ó/u}. W pudełku był w{ó/u}zek dla lalek. Mama przyniosła jabłka i gruszk{ó/u}. W lodówce był sok i p{ó/u}ł masła. Tata wziął narzędzia z garaż{ó/u}. Pies miał obrożę z dzwoneczk{ó/u}. Babcia szyła na maszyn{ó/u}. Dziecko spało w ł{ó/u}żeczku. W ogrodzie stała altank{ó/u}. Ja zobaczyłem biedronk{ó/u}.', 'W pokoju stał stolik z długopisem i piórn{ó/u}kiem. Mama wlała sok do kubk{ó/u}. W ogrodzie leżał stary w{ó/u}zek. Babcia przyniosła pęczek r{ó/u}ż. W lesie rosły jagody i malink{ó/u}. Tata zapisał notatki w zeszyt{ó/u}. Dziecko zgubiło rękawiczk{ó/u}. Pies wskoczył na fotel i zasn{ó/u}ł. Na zdjęciu było dużo kolor{ó/u}w. W koszu leżały warzyw{ó/u}.', 'Na podłodze leżały buty i kapci{ó/u}. Dziecko miało czerwony nos i chusteczk{ó/u}. Mama ugotowała kaszkę z miod{ó/u}. Pies dostał nową obroż{ó/u} i smycz. W szafie wisiał palt{ó/u}. Tata posmarował chleb masł{ó/u}. W kuchni pachniało zup{ó/u}. Babcia przyniosła wiank{ó/u}w z ziół. Ja przeczytałem bajkę o kr{ó/u}lu. W ogródku były pączk{ó/u}i.'];
+    const poprawne = [['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó'], ['ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó', 'ó']];
+    const zle = [['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'], ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u']];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      const tekst = teksty[index];
+      const prawidlowe = poprawne[index];
+      const nieprawidlowe = zle[index];
+      const slowa = tekst.split(/({[^}]+})/g);
+      let html = "";
+      let counter = 0;
+      for (let slowo of slowa) {
+        if (slowo === "{ó/u}") {
+          const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
+          html += `<select><option value="">--</option>`;
+          for (let o of opcje) {
+            html += `<option value="${o}">${o}</option>`;
+          }
+          html += `</select>`;
+          counter++;
+        } else {
+          html += slowo;
+        }
+      }
+      document.getElementById("dyktando").innerHTML = html;
+      document.getElementById("result").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
+        }
+      });
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>
