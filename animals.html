@@ -45,7 +45,11 @@
       border-radius: 10px;
       cursor: pointer;
     }
-    .options button:hover {
+    .options button[disabled] {
+      opacity: 0.5;
+      cursor: default;
+    }
+    .options button:hover:not([disabled]) {
       background-color: #ff9800;
     }
     #feedback {
@@ -76,77 +80,103 @@
   <header>Animals</header>
   <div class="task">
     <p>Jak się nazywa to zwierzę po angielsku?</p>
-    <img id="animalImage" class="animal-img" src="cat.png" alt="animal">
+    <img id="animalImage" class="animal-img" src="" alt="animal">
     <div class="options">
-      <button onclick="checkAnswer(this)">Cat</button>
-      <button onclick="checkAnswer(this)">Dog</button>
-      <button onclick="checkAnswer(this)">Lion</button>
+      <button type="button" class="option-btn" disabled></button>
+      <button type="button" class="option-btn" disabled></button>
+      <button type="button" class="option-btn" disabled></button>
     </div>
     <div id="feedback"></div>
   </div>
   <div class="nav-buttons">
-    <button onclick="location.href='fun-english.html'">Powrót</button>
-    <button onclick="newAnimal()">Nowe zadanie</button>
+    <button type="button" id="backBtn">Powrót</button>
+    <button type="button" id="newBtn">Nowe zadanie</button>
   </div>
 
   <script>
     const animals = [
-      { name: "Cat", image: "cat.png" },
-      { name: "Dog", image: "dog.png" },
-      { name: "Lion", image: "lion.png" },
+      { name: "Cat",      image: "cat.png" },
+      { name: "Dog",      image: "dog.png" },
+      { name: "Lion",     image: "lion.png" },
       { name: "Elephant", image: "elephant.png" },
-      { name: "Monkey", image: "monkey.png" },
-      { name: "Bear", image: "bear.png" },
-      { name: "Frog", image: "frog.png" },
-      { name: "Tiger", image: "tiger.png" },
-      { name: "Giraffe", image: "giraffe.png" },
-      { name: "Zebra", image: "zebra.png" }
+      { name: "Monkey",   image: "monkey.png" },
+      { name: "Bear",     image: "bear.png" },
+      { name: "Frog",     image: "frog.png" },
+      { name: "Tiger",    image: "tiger.png" },
+      { name: "Giraffe",  image: "giraffe.png" },
+      { name: "Zebra",    image: "zebra.png" }
     ];
 
-    let currentAnimal = {};
-    let previousAnimal = null;
+    // Preload images
+    animals.forEach(a => {
+      const img = new Image();
+      img.src = a.image;
+    });
 
+    // Fisher–Yates shuffle
     function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
     }
+
+    const optionButtons = document.querySelectorAll('.option-btn');
+    const feedbackEl    = document.getElementById('feedback');
+    const imgEl         = document.getElementById('animalImage');
+    const backBtn       = document.getElementById('backBtn');
+    const newBtn        = document.getElementById('newBtn');
+
+    let currentAnimal = null;
+    let previousName  = "";
 
     function newAnimal() {
-      let shuffled = shuffle([...animals]);
-      do {
-        currentAnimal = shuffled[0];
-      } while (currentAnimal.name === previousAnimal);
-      previousAnimal = currentAnimal.name;
+      // Defer heavy operations to next frame
+      requestAnimationFrame(() => {
+        let pool = shuffle(animals.slice());
+        if (previousName) {
+          pool = pool.filter(a => a.name !== previousName);
+        }
+        currentAnimal = pool[0];
+        previousName = currentAnimal.name;
 
-      document.getElementById('animalImage').src = currentAnimal.image;
-      document.getElementById('animalImage').alt = currentAnimal.name;
+        imgEl.src = currentAnimal.image;
+        imgEl.alt = currentAnimal.name;
 
-      const buttons = document.querySelectorAll('.options button');
-      const options = shuffle([
-        currentAnimal.name,
-        shuffled[1].name,
-        shuffled[2].name
-      ]);
+        const options = shuffle([
+          currentAnimal.name,
+          pool[1].name,
+          pool[2].name
+        ]);
+        optionButtons.forEach((btn, i) => {
+          btn.textContent = options[i];
+          btn.disabled   = false;
+        });
 
-      buttons.forEach((btn, i) => {
-        btn.textContent = options[i];
-        btn.disabled = false;
+        feedbackEl.textContent = '';
       });
-
-      document.getElementById('feedback').textContent = '';
     }
 
-    function checkAnswer(button) {
-      const answer = button.textContent;
-      if (answer === currentAnimal.name) {
-        document.getElementById('feedback').textContent = 'Brawo! To poprawna odpowiedź!';
-        document.getElementById('feedback').style.color = 'green';
-      } else {
-        document.getElementById('feedback').textContent = 'Ups! Spróbuj jeszcze raz!';
-        document.getElementById('feedback').style.color = 'red';
-      }
-      document.querySelectorAll('.options button').forEach(btn => btn.disabled = true);
+    function checkAnswer(event) {
+      // Guard against null currentAnimal
+      if (!currentAnimal) return;
+
+      const chosen = event.currentTarget.textContent;
+      const isCorrect = chosen === currentAnimal.name;
+      feedbackEl.textContent = isCorrect
+        ? 'Brawo! To poprawna odpowiedź!'
+        : 'Ups! Spróbuj jeszcze raz!';
+      feedbackEl.style.color = isCorrect ? 'green' : 'red';
+      optionButtons.forEach(btn => btn.disabled = true);
     }
 
+    // Attach handlers
+    optionButtons.forEach(btn => btn.addEventListener('click', checkAnswer));
+    newBtn.addEventListener('click', newAnimal);
+    backBtn.addEventListener('click', () => location.href = 'fun-english.html');
+
+    // Initialize first question
     window.onload = newAnimal;
   </script>
 </body>
