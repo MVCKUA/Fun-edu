@@ -44,7 +44,11 @@
       border-radius: 10px;
       cursor: pointer;
     }
-    .options button:hover {
+    .options button[disabled] {
+      opacity: 0.5;
+      cursor: default;
+    }
+    .options button:hover:not([disabled]) {
       background-color: #ff9800;
     }
     #feedback {
@@ -77,74 +81,96 @@
     <p>Jak się nazywa ten kolor po angielsku?</p>
     <div id="colorBox" class="color-box"></div>
     <div class="options">
-      <button onclick="checkAnswer(this)">Red</button>
-      <button onclick="checkAnswer(this)">Blue</button>
-      <button onclick="checkAnswer(this)">Green</button>
+      <button type="button" class="option-btn" disabled></button>
+      <button type="button" class="option-btn" disabled></button>
+      <button type="button" class="option-btn" disabled></button>
     </div>
     <div id="feedback"></div>
   </div>
   <div class="nav-buttons">
-    <button onclick="location.href='fun-english.html'">Powrót</button>
-    <button onclick="newColor()">Nowe zadanie</button>
+    <button type="button" id="backBtn">Powrót</button>
+    <button type="button" id="newBtn">Nowe zadanie</button>
   </div>
 
   <script>
     const colors = [
-      { name: "Red", code: "red" },
-      { name: "Blue", code: "blue" },
-      { name: "Green", code: "green" },
+      { name: "Red",    code: "red" },
+      { name: "Blue",   code: "blue" },
+      { name: "Green",  code: "green" },
       { name: "Yellow", code: "yellow" },
       { name: "Purple", code: "purple" },
       { name: "Orange", code: "orange" },
-      { name: "Pink", code: "deeppink" },
-      { name: "Brown", code: "saddlebrown" },
-      { name: "Gray", code: "gray" },
-      { name: "Black", code: "black" }
+      { name: "Pink",   code: "deeppink" },
+      { name: "Brown",  code: "saddlebrown" },
+      { name: "Gray",   code: "gray" },
+      { name: "Black",  code: "black" }
     ];
 
-    let currentColor = {};
-    let previousColor = null;
-
+    // Fisher–Yates shuffle
     function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
     }
+
+    // Cache DOM elements
+    const colorBox     = document.getElementById('colorBox');
+    const optionBtns   = document.querySelectorAll('.option-btn');
+    const feedbackEl   = document.getElementById('feedback');
+    const backBtn      = document.getElementById('backBtn');
+    const newBtn       = document.getElementById('newBtn');
+
+    let currentColor = null;
+    let previousName = '';
 
     function newColor() {
-      let shuffled = shuffle([...colors]);
-      do {
-        currentColor = shuffled[0];
-      } while (currentColor.name === previousColor);
-      previousColor = currentColor.name;
+      requestAnimationFrame(() => {
+        let pool = shuffle(colors.slice());
+        if (previousName) {
+          pool = pool.filter(c => c.name !== previousName);
+        }
+        currentColor = pool[0];
+        previousName = currentColor.name;
 
-      document.getElementById('colorBox').style.backgroundColor = currentColor.code;
+        // Update color box
+        colorBox.style.backgroundColor = currentColor.code;
 
-      const buttons = document.querySelectorAll('.options button');
-      const options = shuffle([
-        currentColor.name,
-        shuffled[1].name,
-        shuffled[2].name
-      ]);
+        // Prepare options
+        const opts = shuffle([
+          currentColor.name,
+          pool[1].name,
+          pool[2].name
+        ]);
+        optionBtns.forEach((btn, i) => {
+          btn.textContent = opts[i];
+          btn.disabled   = false;
+        });
 
-      buttons.forEach((btn, i) => {
-        btn.textContent = options[i];
-        btn.disabled = false;
+        feedbackEl.textContent = '';
       });
-
-      document.getElementById('feedback').textContent = '';
     }
 
-    function checkAnswer(button) {
-      const answer = button.textContent;
-      if (answer === currentColor.name) {
-        document.getElementById('feedback').textContent = 'Brawo! To poprawna odpowiedź!';
-        document.getElementById('feedback').style.color = 'green';
-      } else {
-        document.getElementById('feedback').textContent = 'Ups! Spróbuj jeszcze raz!';
-        document.getElementById('feedback').style.color = 'red';
-      }
-      document.querySelectorAll('.options button').forEach(btn => btn.disabled = true);
+    function checkAnswer(event) {
+      if (!currentColor) return;
+      const chosen = event.currentTarget.textContent;
+      const correct = chosen === currentColor.name;
+
+      feedbackEl.textContent = correct
+        ? 'Brawo! To poprawna odpowiedź!'
+        : 'Ups! Spróbuj jeszcze raz!';
+      feedbackEl.style.color = correct ? 'green' : 'red';
+
+      optionBtns.forEach(btn => btn.disabled = true);
     }
 
+    // Attach event listeners once
+    optionBtns.forEach(btn => btn.addEventListener('click', checkAnswer));
+    newBtn.addEventListener('click', newColor);
+    backBtn.addEventListener('click', () => window.location = 'fun-english.html');
+
+    // Initialize first task
     window.onload = newColor;
   </script>
 </body>
