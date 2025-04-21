@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Geometria – nazwy figur</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: #f0faff;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #00acc1;
+    }
+    svg {
+      width: 150px;
+      height: 150px;
+      margin: 20px auto;
+    }
+    .options label {
+      margin: 0 10px;
+      font-size: 18px;
+    }
+    button {
+      margin: 10px 5px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      background: #00bcd4;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0097a7;
+    }
+    .result {
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Geometria – nazwy figur</h1>
+    <div id="figureSvg"></div>
+    <p>Jak nazywa się ta figura?</p>
+    <div class="options" id="optionsBox"></div>
+    <div>
+      <button onclick="generateFigure()">Nowa figura</button>
+      <button onclick="checkAnswer()">Sprawdź</button>
+      <button onclick="location.href='matematyka.html'">Powrót do Matematyki</button>
+    </div>
+    <div class="result" id="resultBox"></div>
+  </div>
+
+  <script>
+    const figures = [
+      {
+        name: "Trójkąt",
+        svg: `<svg viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="#e57373"/></svg>`
+      },
+      {
+        name: "Kwadrat",
+        svg: `<svg viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" fill="#81c784"/></svg>`
+      },
+      {
+        name: "Prostokąt",
+        svg: `<svg viewBox="0 0 100 100"><rect x="10" y="30" width="80" height="40" fill="#64b5f6"/></svg>`
+      },
+      {
+        name: "Pięciokąt",
+        svg: `<svg viewBox="0 0 100 100"><polygon points="50,10 90,40 72,85 28,85 10,40" fill="#ffd54f"/></svg>`
+      },
+      {
+        name: "Sześciokąt",
+        svg: `<svg viewBox="0 0 100 100"><polygon points="25,10 75,10 95,50 75,90 25,90 5,50" fill="#ba68c8"/></svg>`
+      },
+      {
+        name: "Ośmiokąt",
+        svg: `<svg viewBox="0 0 100 100"><polygon points="30,10 70,10 90,30 90,70 70,90 30,90 10,70 10,30" fill="#4db6ac"/></svg>`
+      }
+    ];
+
+    let correctName = "";
+
+    function generateFigure() {
+      const rand = Math.floor(Math.random() * figures.length);
+      const figure = figures[rand];
+      document.getElementById("figureSvg").innerHTML = figure.svg;
+      correctName = figure.name;
+
+      let names = figures.map(f => f.name);
+      names = [...new Set([correctName, ...names.filter(n => n !== correctName).sort(() => 0.5 - Math.random()).slice(0, 3)])];
+      names = names.sort(() => 0.5 - Math.random());
+
+      let options = "";
+      names.forEach(val => {
+        options += `<label><input type="radio" name="figura" value="${val}"> ${val}</label>`;
+      });
+      document.getElementById("optionsBox").innerHTML = options;
+      document.getElementById("resultBox").innerText = "";
+    }
+
+    function checkAnswer() {
+      const selected = document.querySelector('input[name="figura"]:checked');
+      if (!selected) {
+        alert("Wybierz odpowiedź.");
+        return;
+      }
+      const answer = selected.value;
+      if (answer === correctName) {
+        document.getElementById("resultBox").innerText = "✅ Poprawna odpowiedź!";
+        document.getElementById("resultBox").style.color = "green";
+      } else {
+        document.getElementById("resultBox").innerText = `❌ Błędna odpowiedź. Poprawna: ${correctName}`;
+        document.getElementById("resultBox").style.color = "red";
+      }
+    }
+
+    window.onload = generateFigure;
+  </script>
+</body>
+</html>

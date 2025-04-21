@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gra: Obwód figury</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: #f0faff;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #00acc1;
+    }
+    .svg-box {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    svg {
+      width: 300px;
+      height: 300px;
+    }
+    text {
+      font-size: 16px;
+      font-weight: bold;
+      fill: #333;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .options label {
+      margin: 0 10px;
+      font-size: 18px;
+    }
+    button {
+      margin: 10px 5px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      background: #00bcd4;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0097a7;
+    }
+    .result {
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gra: Obwód figury</h1>
+    <div id="figureSvg" class="svg-box"></div>
+    <p>Jaki jest obwód tej figury?</p>
+    <div class="options" id="optionsBox"></div>
+    <div>
+      <button onclick="generateFigure()">Nowa figura</button>
+      <button onclick="checkAnswer()">Sprawdź</button>
+      <button onclick="location.href='matematyka.html'">Powrót do Matematyki</button>
+    </div>
+    <div class="result" id="resultBox"></div>
+  </div>
+
+<script>
+let correctAnswer = 0;
+
+function generateFigure() {
+  const type = ["kwadrat", "prostokąt", "trójkąt", "pięciokąt", "sześciokąt"][Math.floor(Math.random() * 5)];
+  let a, b, svg = "";
+
+  if (type === "kwadrat") {
+    a = Math.floor(Math.random() * 20) + 10;
+    correctAnswer = 4 * a;
+    svg = `<svg viewBox="0 0 300 300">
+      <rect x="60" y="60" width="180" height="180" fill="#81c784" />
+      <text x="150" y="45">${a}</text>
+      <text x="150" y="295">${a}</text>
+      <text x="45" y="150" transform="rotate(-90 45,150)">${a}</text>
+      <text x="285" y="150" transform="rotate(90 285,150)">${a}</text>
+    </svg>`;
+  } else if (type === "prostokąt") {
+    a = Math.floor(Math.random() * 30) + 20;
+    b = Math.floor(Math.random() * 15) + 10;
+    correctAnswer = 2 * (a + b);
+    svg = `<svg viewBox="0 0 360 300">
+      <rect x="60" y="80" width="${a * 4}" height="${b * 4}" fill="#4fc3f7" />
+      <text x="${60 + (a * 2)}" y="65">${a}</text>
+      <text x="${60 + (a * 2)}" y="${80 + b * 4 + 20}">${a}</text>
+      <text x="45" y="${80 + b * 2}" transform="rotate(-90 45,${80 + b * 2})">${b}</text>
+      <text x="${60 + a * 4 + 15}" y="${80 + b * 2}" transform="rotate(90 ${60 + a * 4 + 15},${80 + b * 2})">${b}</text>
+    </svg>`;
+  } else if (type === "trójkąt") {
+    a = Math.floor(Math.random() * 20) + 10;
+    correctAnswer = 3 * a;
+    svg = `<svg viewBox="0 0 300 300">
+      <polygon points="150,50 250,250 50,250" fill="#f48fb1"/>
+      <text x="150" y="270">${a}</text>
+    <text x="90" y="200">${a}</text>
+    <text x="210" y="200">${a}</text>
+    </svg>`;
+    a = Math.floor(Math.random() * 20) + 10;
+    correctAnswer = 3 * a;
+    svg = `<svg viewBox="0 0 300 300">
+      <polygon points="150,50 250,250 50,250" fill="#f48fb1"/>
+      <text x="150" y="40">${a}</text>
+      <text x="70" y="200" transform="rotate(-30 70,200)">${a}</text>
+      <text x="230" y="200" transform="rotate(30 230,200)">${a}</text>
+    </svg>`;
+  } else if (type === "pięciokąt") {
+    a = Math.floor(Math.random() * 20) + 10;
+    correctAnswer = 5 * a;
+    svg = `<svg viewBox="0 0 300 300">
+      <polygon points="150,50 54,119 91,230 208,230 245,119" fill="#ffd54f"/>
+      <text x="150" y="75">${a}</text>
+    <text x="78" y="126">${a}</text>
+    <text x="105" y="210">${a}</text>
+    <text x="194" y="210">${a}</text>
+    <text x="221" y="126">${a}</text>
+      <text x="100" y="65">${a}</text>
+      <text x="225" y="65">${a}</text>
+      <text x="65" y="180">${a}</text>
+      <text x="235" y="180">${a}</text>
+    </svg>`;
+    a = Math.floor(Math.random() * 20) + 10;
+    correctAnswer = 5 * a;
+    svg = `<svg viewBox="0 0 300 300">
+      <polygon points="150,50 54,119 91,230 208,230 245,119" fill="#ffd54f"/>
+      <text x="150" y="75">${a}</text>
+    <text x="78" y="126">${a}</text>
+    <text x="105" y="210">${a}</text>
+    <text x="194" y="210">${a}</text>
+    <text x="221" y="126">${a}</text>
+    </svg>`;
+  } else if (type === "sześciokąt") {
+    a = Math.floor(Math.random() * 20) + 10;
+    correctAnswer = 6 * a;
+    svg = `<svg viewBox="0 0 300 300">
+      <polygon points="150,50 63,99 63,199 149,250 236,200 236,100" fill="#ba68c8"/>
+      <text x="150" y="75">${a}</text>
+    <text x="85" y="112">${a}</text>
+    <text x="85" y="187">${a}</text>
+    <text x="150" y="225">${a}</text>
+    <text x="214" y="187">${a}</text>
+    <text x="214" y="112">${a}</text>
+    </svg>`;
+    a = Math.floor(Math.random() * 20) + 10;
+    correctAnswer = 6 * a;
+    svg = `<svg viewBox="0 0 300 300">
+      <polygon points="150,50 63,99 63,199 149,250 236,200 236,100" fill="#ba68c8"/>
+      <text x="150" y="75">${a}</text>
+    <text x="78" y="126">${a}</text>
+    <text x="105" y="210">${a}</text>
+    <text x="194" y="210">${a}</text>
+    <text x="221" y="126">${a}</text>
+    </svg>`;
+  }
+
+  document.getElementById("figureSvg").innerHTML = svg;
+
+  const answers = [correctAnswer, correctAnswer + 2, correctAnswer - 2, correctAnswer + 4]
+    .filter((v, i, a) => v > 0 && a.indexOf(v) === i)
+    .sort(() => 0.5 - Math.random());
+
+  let html = "";
+  answers.forEach(ans => {
+    html += `<label><input type="radio" name="obwod" value="${ans}"> ${ans}</label>`;
+  });
+  document.getElementById("optionsBox").innerHTML = html;
+  document.getElementById("resultBox").innerText = "";
+}
+
+function checkAnswer() {
+  const selected = document.querySelector('input[name="obwod"]:checked');
+  if (!selected) {
+    alert("Wybierz odpowiedź.");
+    return;
+  }
+  const answer = parseInt(selected.value);
+  if (answer === correctAnswer) {
+    document.getElementById("resultBox").innerText = "✅ Poprawna odpowiedź!";
+    document.getElementById("resultBox").style.color = "green";
+  } else {
+    document.getElementById("resultBox").innerText = `❌ Błędna odpowiedź. Poprawna: ${correctAnswer}`;
+    document.getElementById("resultBox").style.color = "red";
+  }
+}
+
+window.onload = generateFigure;
+</script>
+</body>
+</html>
