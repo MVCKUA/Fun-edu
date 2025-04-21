@@ -1,52 +1,118 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dyktando 13</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyktando: ż niewymawiane</title>
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background-color: #f0f8ff;
-      padding: 20px;
+      background-color: #e6f7f8;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
-    .box {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 600px;
+    .container {
+      max-width: 800px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
     }
     h1 {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      background: linear-gradient(to right, #4fc3f7, #81d4fa);
       color: white;
+      padding: 15px;
       border-radius: 15px;
-      padding: 10px;
+      margin-bottom: 20px;
     }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
+    select {
       font-size: 1em;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .check { background-color: #4CAF50; color: white; }
-    .new { background-color: #2196F3; color: white; }
-    .back { background-color: #FFC107; color: black; }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Dyktando 13 – Klasa 3</h1>
-    <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
-    <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
-    <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
-    <button class="check">Sprawdź</button>
-    <button class="new">Nowe zdanie</button>
-    <button class="back" onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+  <div class="container">
+    <h1>Dyktando: ż niewymawiane</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ['Wró{ż/rz}ka spełniła jego życzenie. W lesie panowała mro{ż/rz}na cisza. Tata przygotował mro{ż/rz}one owoce. Dziecko przytuliło się do mro{ż/rz}nego misia. Mama kupiła mro{ż/rz}one warzywa. Babcia zrobiła wró{ż/rz}bę andrzejkową. W pudełku był sok mro{ż/rz}ony. Chłopiec opowiedział wró{ż/rz}bę. Na podwórku leżał mro{ż/rz}ny śnieg. Widzieliśmy wró{ż/rz}kę w bajce.', 'Zbliżyliśmy się do bli{ż/rz}ej nieznanego domu. Mama spojrzała bli{ż/rz}ej na listę zakupów. Bli{ż/rz}ej szkoły stał kiosk. Tata podszedł bli{ż/rz}ej, żeby zobaczyć. Dziecko było bli{ż/rz}ej tablicy. Pies podszedł bli{ż/rz}ej miski. Zbliżyli się bli{ż/rz}ej ekranu. Babcia poprosiła bli{ż/rz}ej stanąć. Bli{ż/rz}ej wejścia było ciepło. Bli{ż/rz}ej końca było trudniej.', 'Znalazłem mro{ż/rz}oną pizzę w lodówce. Mama zrobiła deser z mro{ż/rz}onych truskawek. W sklepie były mro{ż/rz}one pierogi. Tata przyniósł torbę mro{ż/rz}onych warzyw. Pies lizał mro{ż/rz}ony lód. Dzieci dostały mro{ż/rz}ony sok. Babcia podała mro{ż/rz}oną rybę. Ja kupiłem mro{ż/rz}oną pizzę. Zosia znalazła mro{ż/rz}one maliny. Mama rozmroziła mro{ż/rz}oną fasolkę.', 'W bajce wystąpiła dobra wró{ż/rz}ka. Dziecko marzyło o spotkaniu z wró{ż/rz}ką. Babcia opowiadała o wró{ż/rz}kach. Wró{ż/rz}ka pokazała magiczną różdżkę. Chłopiec widział wró{ż/rz}kę we śnie. Tata czytał o wró{ż/rz}bach. Mama przypomniała sobie wró{ż/rz}kę z dzieciństwa. Wró{ż/rz}ba się spełniła. Dzieci pisały wró{ż/rz}by. Pani opowiadała o wró{ż/rz}bach w klasie.', 'Na podwórku było bardzo mro{ż/rz}no. W lodówce leżały mro{ż/rz}one owoce. Tata kupił mro{ż/rz}oną pizzę. Mama podała mro{ż/rz}oną zupę. Zosia lubi mro{ż/rz}onki. Babcia miała mro{ż/rz}ony jogurt. W torbie było dużo mro{ż/rz}onek. Pies nie lubił mro{ż/rz}onych kostek. Dziecko znalazło mro{ż/rz}one lody. Mama trzymała mro{ż/rz}one mięso.', 'Pani wró{ż/rz}ka przyleciała na miotle. Wró{ż/rz}ka znała wiele zaklęć. Bajka była o dobrej wró{ż/rz}ce. Tata pamiętał wró{ż/rz}kę z książki. Babcia opowiedziała o wró{ż/rz}kach. Zosia marzy o wró{ż/rz}ce. Mama narysowała wró{ż/rz}kę. Dziecko chciało być wró{ż/rz}ką. Wró{ż/rz}ka pojawiła się nagle. Pies szczekał na wró{ż/rz}kę.', 'Zbliżyli się bli{ż/rz}ej do ogrodu. Bli{ż/rz}ej było więcej światła. Mama spojrzała bli{ż/rz}ej na etykietę. Tata przesunął się bli{ż/rz}ej telewizora. Babcia była bli{ż/rz}ej piekarnika. Dziecko stało bli{ż/rz}ej drzwi. Pies siedział bli{ż/rz}ej kanapy. W sklepie było bli{ż/rz}ej do wejścia. Bli{ż/rz}ej końca była nagroda. Zosia patrzyła bli{ż/rz}ej plakatu.', 'Lodówka była pełna mro{ż/rz}onych dań. Mama podała mro{ż/rz}ony kompot. Dziecko zjadło mro{ż/rz}onego banana. Babcia kupiła mro{ż/rz}oną marchewkę. Tata rozmroził mro{ż/rz}one ziemniaki. W sklepie były mro{ż/rz}one jagody. Zosia lubi mro{ż/rz}oną pizzę. Pies nie chciał mro{ż/rz}onych kostek. Ja zjadłem mro{ż/rz}one lody. Mama przyniosła mro{ż/rz}oną fasolkę.', 'Wró{ż/rz}ka miała czarodziejską różdżkę. Bajka o wró{ż/rz}ce była ciekawa. Dziecko spotkało wró{ż/rz}kę w ogrodzie. Mama wierzyła w wró{ż/rz}ki. Tata czytał o wró{ż/rz}kach w książce. Babcia znała historie o wró{ż/rz}kach. Pies patrzył na wró{ż/rz}kę z bajki. Wró{ż/rz}ka zniknęła po zaklęciu. Zosia rozmawiała z wró{ż/rz}ką. Pani narysowała wró{ż/rz}kę na tablicy.', 'Dzieci stały bli{ż/rz}ej tablicy. W parku bli{ż/rz}ej była fontanna. Bli{ż/rz}ej końca było więcej ludzi. Mama stanęła bli{ż/rz}ej półki. Tata spojrzał bli{ż/rz}ej na mapę. Babcia siedziała bli{ż/rz}ej okna. Zosia była bli{ż/rz}ej drzwi. Dziecko podeszło bli{ż/rz}ej kota. Pies szczekał bli{ż/rz}ej płotu. Ja byłem bli{ż/rz}ej wyjścia.'];
+    const poprawne = [['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż'], ['ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż', 'ż']];
+    const zle = [['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz'], ['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz'], ['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz'], ['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz'], ['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz'], ['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz'], ['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz'], ['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz'], ['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz'], ['rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz', 'rz']];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      const tekst = teksty[index];
+      const prawidlowe = poprawne[index];
+      const nieprawidlowe = zle[index];
+      const slowa = tekst.split(/({[^}]+})/g);
+      let html = "";
+      let counter = 0;
+      for (let slowo of slowa) {
+        if (slowo === "{ż/rz}") {
+          const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
+          html += `<select><option value="">--</option>`;
+          for (let o of opcje) {
+            html += `<option value="${o}">${o}</option>`;
+          }
+          html += `</select>`;
+          counter++;
+        } else {
+          html += slowo;
+        }
+      }
+      document.getElementById("dyktando").innerHTML = html;
+      document.getElementById("result").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
+        }
+      });
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>
