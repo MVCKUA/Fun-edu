@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -56,6 +55,14 @@
       font-weight: bold;
       text-align: center;
     }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
   </style>
 </head>
 <body>
@@ -63,6 +70,10 @@
 <div class="container">
   <h1>Dodawanie do 100</h1>
   <form id="quizForm"></form>
+  <div style="text-align:center; margin-top:10px;">
+    <button onclick="generateQuiz()">Nowe zadania</button>
+    <button onclick="location.href='matematyka.html'">Powrót do Matematyki</button>
+  </div>
   <div style="text-align:center;">
     <button onclick="checkAnswers()">Sprawdź odpowiedzi</button>
   </div>
@@ -79,12 +90,12 @@ function generateQuiz() {
   correctAnswers = [];
 
   for (let i = 0; i < NUM_QUESTIONS; i++) {
-    let a = Math.floor(Math.random() * 51);
-    let b = Math.floor(Math.random() * (100 - a + 1));
+    let a = Math.floor(Math.random() * 11);
+    let b = Math.floor(Math.random() * (101 - a));
     correctAnswers.push(a + b);
     form.innerHTML += `
       <div class="problem">
-        ${i + 1}. ${a} + ${b} = 
+        ${a} + ${b} =
         <input type="number" name="q${i}" required>
       </div>`;
   }

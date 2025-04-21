@@ -56,16 +56,29 @@
       font-weight: bold;
       text-align: center;
     }
-  </style>
+  
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+</style>
 </head>
 <body>
 
 <div class="container">
   <h1>Dodawanie i odejmowanie</h1>
   <form id="quizForm"></form>
-  <div style="text-align:center;">
-    <button onclick="checkAnswers()">Sprawdź odpowiedzi</button>
-  </div>
+  <div style="text-align:center; margin-top:10px;">
+  <button onclick="generateQuiz()">Nowe zadania</button>
+  <button onclick="location.href='matematyka.html'">Powrót do Matematyki</button>
+</div>
+<div style="text-align:center;">
+  <button onclick="checkAnswers()">Sprawdź odpowiedzi</button>
+</div>
   <div class="result" id="resultBox"></div>
 </div>
 
@@ -97,7 +110,7 @@ function generateQuiz() {
     correctAnswers.push(answer);
     form.innerHTML += `
       <div class="problem">
-        ${i + 1}. ${question} = 
+        ${question} = 
         <input type="number" name="q${i}" required>
       </div>`;
   }
