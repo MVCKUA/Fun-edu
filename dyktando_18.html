@@ -1,52 +1,98 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dyktando 18</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyktando: Zmieszane</title>
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background-color: #f0f8ff;
-      padding: 20px;
+      background-color: #e6f7f8;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
-    .box {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 600px;
+    .container {
+      max-width: 800px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
     }
     h1 {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      background: linear-gradient(to right, #4fc3f7, #81d4fa);
       color: white;
+      padding: 15px;
       border-radius: 15px;
-      padding: 10px;
+      margin-bottom: 20px;
     }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
+    select {
       font-size: 1em;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .check { background-color: #4CAF50; color: white; }
-    .new { background-color: #2196F3; color: white; }
-    .back { background-color: #FFC107; color: black; }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Dyktando 18 – Klasa 4</h1>
-    <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
-    <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
-    <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
-    <button class="check">Sprawdź</button>
-    <button class="new">Nowe zdanie</button>
-    <button class="back" onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+  <div class="container">
+    <h1>Dyktando: Zmieszane</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ["Mama kupiła <select><option value=''>--</option><option value='chleb'>chleb</option><option value='hleb'>hleb</option></select> i s<select><option value=''>--</option><option value='ok'>ok</option><option value='ók'>ók</option></select> malinowy. Dziecko zobaczyło <select><option value=''>--</option><option value='hiena'>hiena</option><option value='iena'>iena</option></select> w zoo. Babcia posadziła <select><option value=''>--</option><option value='rużę'>rużę</option><option value='różę'>różę</option></select> w ogrodzie. Na liściu siedział <select><option value=''>--</option><option value='chrząszcz'>chrząszcz</option><option value='chrąszcz'>chrąszcz</option></select>. Zosia była <select><option value=''>--</option><option value='nie grzeczna'>nie grzeczna</option><option value='niegrzeczna'>niegrzeczna</option></select> dla kolegi. Tata musiał <select><option value=''>--</option><option value='napisatby'>napisatby</option><option value='napisać'>napisać</option></select> raport. Dzieci dostały <select><option value=''>--</option><option value='mrorzony'>mrorzony</option><option value='mrożony'>mrożony</option></select> sok. W lesie słychać było <select><option value=''>--</option><option value='hałas'>hałas</option><option value='hałaz'>hałaz</option></select>. To moje ulubione <select><option value=''>--</option><option value='hobbi'>hobbi</option><option value='hobby'>hobby</option></select>.", "Na śniadanie zjadłem kanapkę z s<select><option value=''>--</option><option value='erem'>erem</option><option value='órem'>órem</option></select>. Tata przyniósł <select><option value=''>--</option><option value='wiadro'>wiadro</option><option value='wiadró'>wiadró</option></select> z wodą. W książce była ilustracja <select><option value=''>--</option><option value='ruży'>ruży</option><option value='róży'>róży</option></select>. Chłopiec biegał po <select><option value=''>--</option><option value='chłodnym'>chłodnym</option><option value='hłodnym'>hłodnym</option></select> lesie. Pies szczekał na <select><option value=''>--</option><option value='wrużkę'>wrużkę</option><option value='wróżkę'>wróżkę</option></select>. Zupa była <select><option value=''>--</option><option value='nie dobra'>nie dobra</option><option value='niedobra'>niedobra</option></select>. Zosia chciała <select><option value=''>--</option><option value='zrobitby'>zrobitby</option><option value='zrobić'>zrobić</option></select> niespodziankę. Na stole leżały <select><option value=''>--</option><option value='mrorzone'>mrorzone</option><option value='mrożone'>mrożone</option></select> owoce. Dziecko usłyszało dziwny <select><option value=''>--</option><option value='hałas'>hałas</option><option value='hałaz'>hałaz</option></select>. Lubię grać na instrumencie z <select><option value=''>--</option><option value='churu'>churu</option><option value='chóru'>chóru</option></select>."];
+    const poprawne = [['chleb', 'ok', 'hiena', 'różę', 'chrząszcz', 'niegrzeczna', 'napisać', 'mrożony', 'hałas', 'hobby'], ['erem', 'wiadro', 'róży', 'chłodnym', 'wróżkę', 'niedobra', 'zrobić', 'mrożone', 'hałas', 'chóru']];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      document.getElementById("dyktando").innerHTML = teksty[index];
+      document.getElementById("result").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
+        }
+      });
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>

@@ -1,52 +1,98 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dyktando 17</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyktando: Trudne wyjątki</title>
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background-color: #f0f8ff;
-      padding: 20px;
+      background-color: #e6f7f8;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
-    .box {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 600px;
+    .container {
+      max-width: 800px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
     }
     h1 {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      background: linear-gradient(to right, #4fc3f7, #81d4fa);
       color: white;
+      padding: 15px;
       border-radius: 15px;
-      padding: 10px;
+      margin-bottom: 20px;
     }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
+    select {
       font-size: 1em;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .check { background-color: #4CAF50; color: white; }
-    .new { background-color: #2196F3; color: white; }
-    .back { background-color: #FFC107; color: black; }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Dyktando 17 – Klasa 4</h1>
-    <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
-    <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
-    <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
-    <button class="check">Sprawdź</button>
-    <button class="new">Nowe zdanie</button>
-    <button class="back" onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+  <div class="container">
+    <h1>Dyktando: Trudne wyjątki</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ["W lesie widzieliśmy <select><option value=''>--</option><option value='chrząszcza'>chrząszcza</option><option value='hrząszcza'>hrząszcza</option></select> na liściu. Na parapecie stała doniczka z <select><option value=''>--</option><option value='rzeżuchą'>rzeżuchą</option><option value='rzehuchą'>rzehuchą</option></select>. Zosia dostała magiczną <select><option value=''>--</option><option value='różdżkę'>różdżkę</option><option value='rużdżkę'>rużdżkę</option></select> od wróżki. Na placu zabaw była nowa <select><option value=''>--</option><option value='huśtawka'>huśtawka</option><option value='hóśtawka'>hóśtawka</option></select>. Dziecko wspinało się na <select><option value=''>--</option><option value='hulajnogę'>hulajnogę</option><option value='hulainogę'>hulainogę</option></select>. Mama kupiła sok z <select><option value=''>--</option><option value='żurawiny'>żurawiny</option><option value='żurawyny'>żurawyny</option></select>. Na koncercie śpiewał <select><option value=''>--</option><option value='chór'>chór</option><option value='hór'>hór</option></select> dziecięcy. Tata naprawił stary <select><option value=''>--</option><option value='wóz'>wóz</option><option value='wuz'>wuz</option></select>. Piekarnia zatrudniła nowego <select><option value=''>--</option><option value='rzemieślnika'>rzemieślnika</option><option value='żemieślnika'>żemieślnika</option></select>. Słowo „<select><option value=''>--</option><option value='gżegżółka'>gżegżółka</option><option value='gżegżułka'>gżegżułka</option></select>” było na dyktandzie.", "Na liściu siedział <select><option value=''>--</option><option value='chrząszcz'>chrząszcz</option><option value='hrząszcz'>hrząszcz</option></select> i się ruszał. W słoiku rosła zielona <select><option value=''>--</option><option value='rzeżucha'>rzeżucha</option><option value='rzehucha'>rzehucha</option></select>. Dziewczynka machała <select><option value=''>--</option><option value='różdżką'>różdżką</option><option value='rużdżką'>rużdżką</option></select> z uśmiechem. Na podwórku była wysoka <select><option value=''>--</option><option value='huśtawka'>huśtawka</option><option value='hóśtawka'>hóśtawka</option></select>. Dziecko jeździło na nowej <select><option value=''>--</option><option value='hulajnodze'>hulajnodze</option><option value='hulainodze'>hulainodze</option></select>. Babcia zrobiła kompot z <select><option value=''>--</option><option value='żurawiny'>żurawiny</option><option value='żurawyny'>żurawyny</option></select>. W kościele śpiewał piękny <select><option value=''>--</option><option value='chór'>chór</option><option value='hór'>hór</option></select>. Na wozie leżał worek z sianem – to był stary <select><option value=''>--</option><option value='wóz'>wóz</option><option value='wuz'>wuz</option></select>. Pan Nowak to dobry <select><option value=''>--</option><option value='rzemieślnik'>rzemieślnik</option><option value='żemieślnik'>żemieślnik</option></select>. Słowo „<select><option value=''>--</option><option value='gżegżółka'>gżegżółka</option><option value='gżegżułka'>gżegżułka</option></select>” jest bardzo trudne."];
+    const poprawne = [['chrząszcza', 'rzeżuchą', 'różdżkę', 'huśtawka', 'hulajnogę', 'żurawiny', 'chór', 'wóz', 'rzemieślnika', 'gżegżółka'], ['chrząszcz', 'rzeżucha', 'różdżką', 'huśtawka', 'hulajnodze', 'żurawiny', 'chór', 'wóz', 'rzemieślnik', 'gżegżółka']];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      document.getElementById("dyktando").innerHTML = teksty[index];
+      document.getElementById("result").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
+        }
+      });
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>

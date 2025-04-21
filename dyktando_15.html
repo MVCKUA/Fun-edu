@@ -1,52 +1,118 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dyktando 15</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyktando: „nie” z przymiotnikami</title>
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background-color: #f0f8ff;
-      padding: 20px;
+      background-color: #e6f7f8;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
-    .box {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 600px;
+    .container {
+      max-width: 800px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
     }
     h1 {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      background: linear-gradient(to right, #4fc3f7, #81d4fa);
       color: white;
+      padding: 15px;
       border-radius: 15px;
-      padding: 10px;
+      margin-bottom: 20px;
     }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
+    select {
       font-size: 1em;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .check { background-color: #4CAF50; color: white; }
-    .new { background-color: #2196F3; color: white; }
-    .back { background-color: #FFC107; color: black; }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Dyktando 15 – Klasa 3</h1>
-    <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
-    <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
-    <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
-    <button class="check">Sprawdź</button>
-    <button class="new">Nowe zdanie</button>
-    <button class="back" onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+  <div class="container">
+    <h1>Dyktando: „nie” z przymiotnikami</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ['To był bardzo {niewielki/nie wielki} domek. Pogoda była dziś {niesłoneczna/nie słoneczna}. Zosia miała {nieładną/nie ładną} sukienkę. Ten obrazek jest {nieciekawy/nie ciekawy}. To zadanie było {nieskomplikowane/nie skomplikowane}. Mój pies jest {niegrzeczny/nie grzeczny}. To danie było {niesmaczne/nie smaczne}. Bajka była {niedługa/nie długa}. Ten chłopiec jest {nieszczęśliwy/nie szczęśliwy}. Mama jest dziś {niewyspana/nie wyspana}.', 'Ten film był {niezły/nie zły}. Książka była {nieciekawa/nie ciekawa}. Pokój był {niewielki/nie wielki}. Zadanie było {nieskomplikowane/nie skomplikowane}. Zosia była {niespokojna/nie spokojna}. Obiad był {niesmaczny/nie smaczny}. Tata był {niedostępny/nie dostępny}. Pogoda była {niewyraźna/nie wyraźna}. Dziecko było {niezadowolone/nie zadowolone}. Dziś był {nieładny/nie ładny} dzień.', 'Pies miał {niewyraźny/nie wyraźny} głos. Ten kot jest {niegrzeczny/nie grzeczny}. Obrazek był {niewyraźny/nie wyraźny}. Pokój był {nieposprzątany/nie posprzątany}. Ta dziewczynka była {nieśmiała/nie śmiała}. Zupa była {niesłona/nie słona}. Ubranie było {niewyprasowane/nie wyprasowane}. Plecak był {niewielki/nie wielki}. Test był {niesprawdzony/nie sprawdzony}. Zadanie było {niegotowe/nie gotowe}.', 'To był {nieprzyjemny/nie przyjemny} zapach. Bajka była {niedługa/nie długa}. Pokój był {niewielki/nie wielki}. Dziecko było {niewesołe/nie wesołe}. Ten film był {nieciekawy/nie ciekawy}. Zupa była {niedobra/nie dobra}. Pogoda była {nieładna/nie ładna}. Talerz był {nieczysty/nie czysty}. Książka była {nieinteresująca/nie interesująca}. Ten dzień był {niewyjątkowy/nie wyjątkowy}.', 'Uczeń był {niewyspany/nie wyspany}. Dziecko było {niespokojne/nie spokojne}. Pokój był {nieuporządkowany/nie uporządkowany}. Zosia miała {nieczyste/nie czyste} buty. Ten chłopiec jest {niegrzeczny/nie grzeczny}. Pies był {nieposłuszny/nie posłuszny}. Obiad był {niesmaczny/nie smaczny}. Talerz był {nieumyty/nie umyty}. Mama była {niedysponowana/nie dysponowana}. Bajka była {nienudna/nie nudna}.', 'Dom był {niewielki/nie wielki}, ale przytulny. Ulica była {niewąska/nie wąska}. To było {nielogiczne/nie logiczne}. Tata był {niespokojny/nie spokojny}. Zadanie było {nieukończone/nie ukończone}. Trawnik był {nieprzycięty/nie przycięty}. Dziecko miało {nieczyste/nie czyste} ręce. Chłopiec był {niechętny/nie chętny}. To danie było {niesłodkie/nie słodkie}. Pogoda była {nieprzyjemna/nie przyjemna}.', 'Bajka była {nieciekawa/nie ciekawa}, więc ją wyłączyłam. Zosia miała {niesympatycznego/nie sympatycznego} kolegę. Mama była {niezadowolona/nie zadowolona}. Tata był {niewyspany/nie wyspany}. Film był {niedobry/nie dobry}. Pogoda była {nieładna/nie ładna}. Talerz był {nieczysty/nie czysty}. Kolor był {niewyraźny/nie wyraźny}. Kanapka była {niesmaczna/nie smaczna}. Sposób był {nieskuteczny/nie skuteczny}.', 'Książka była {nieinteresująca/nie interesująca}. Pies był {niespokojny/nie spokojny}. Dziecko było {niechętne/nie chętne}. Zadanie było {niedokończone/nie dokończone}. Chłopiec był {nieuprzejmy/nie uprzejmy}. Dziewczynka była {niesympatyczna/nie sympatyczna}. Pogoda była {nieprzyjemna/nie przyjemna}. Film był {niewciągający/nie wciągający}. Bajka była {niezabawna/nie zabawna}. Koc był {nieczysty/nie czysty}.', 'Ten dzień był {nieleniwy/nie leniwy}. Pokój był {nieposprzątany/nie posprzątany}. Pies był {niewyciszony/nie wyciszony}. Uczeń był {nieuważny/nie uważny}. Obrazek był {niewykończony/nie wykończony}. List był {niepodpisany/nie podpisany}. Mama była {niedysponowana/nie dysponowana}. Tata był {nieprzygotowany/nie przygotowany}. Talerz był {nieumyty/nie umyty}. Książka była {niedoczytana/nie doczytana}.', 'Uczeń był {niezorganizowany/nie zorganizowany}. Praca była {nieukończona/nie ukończona}. Chłopiec był {niepunktualny/nie punktualny}. Dziewczynka była {niespokojna/nie spokojna}. Pogoda była {niepogodna/nie pogodna}. Obiad był {niedosolony/nie dosolony}. Książka była {niedokończona/nie dokończona}. Tata był {niewyspany/nie wyspany}. Mama była {niedokładna/nie dokładna}. Film był {nieprzemyślany/nie przemyślany}.'];
+    const poprawne = [['niewielki', 'niesłoneczna', 'nieładną', 'nieciekawy', 'nieskomplikowane', 'niegrzeczny', 'niesmaczne', 'niedługa', 'nieszczęśliwy', 'niewyspana'], ['niezły', 'nieciekawa', 'niewielki', 'nieskomplikowane', 'niespokojna', 'niesmaczny', 'niedostępny', 'niewyraźna', 'niezadowolone', 'nieładny'], ['niewyraźny', 'niegrzeczny', 'niewyraźny', 'nieposprzątany', 'nieśmiała', 'niesłona', 'niewyprasowane', 'niewielki', 'niesprawdzony', 'niegotowe'], ['nieprzyjemny', 'niedługa', 'niewielki', 'niewesołe', 'nieciekawy', 'niedobra', 'nieładna', 'nieczysty', 'nieinteresująca', 'niewyjątkowy'], ['niewyspany', 'niespokojne', 'nieuporządkowany', 'nieczyste', 'niegrzeczny', 'nieposłuszny', 'niesmaczny', 'nieumyty', 'niedysponowana', 'nienudna'], ['niewielki', 'niewąska', 'nielogiczne', 'niespokojny', 'nieukończone', 'nieprzycięty', 'nieczyste', 'niechętny', 'niesłodkie', 'nieprzyjemna'], ['nieciekawa', 'niesympatycznego', 'niezadowolona', 'niewyspany', 'niedobry', 'nieładna', 'nieczysty', 'niewyraźny', 'niesmaczna', 'nieskuteczny'], ['nieinteresująca', 'niespokojny', 'niechętne', 'niedokończone', 'nieuprzejmy', 'niesympatyczna', 'nieprzyjemna', 'niewciągający', 'niezabawna', 'nieczysty'], ['nieleniwy', 'nieposprzątany', 'niewyciszony', 'nieuważny', 'niewykończony', 'niepodpisany', 'niedysponowana', 'nieprzygotowany', 'nieumyty', 'niedoczytana'], ['niezorganizowany', 'nieukończona', 'niepunktualny', 'niespokojna', 'niepogodna', 'niedosolony', 'niedokończona', 'niewyspany', 'niedokładna', 'nieprzemyślany']];
+    const zle = [['nie wielki', 'nie słoneczna', 'nie ładną', 'nie ciekawy', 'nie skomplikowane', 'nie grzeczny', 'nie smaczne', 'nie długa', 'nie szczęśliwy', 'nie wyspana'], ['nie zły', 'nie ciekawa', 'nie wielki', 'nie skomplikowane', 'nie spokojna', 'nie smaczny', 'nie dostępny', 'nie wyraźna', 'nie zadowolone', 'nie ładny'], ['nie wyraźny', 'nie grzeczny', 'nie wyraźny', 'nie posprzątany', 'nie śmiała', 'nie słona', 'nie wyprasowane', 'nie wielki', 'nie sprawdzony', 'nie gotowe'], ['nie przyjemny', 'nie długa', 'nie wielki', 'nie wesołe', 'nie ciekawy', 'nie dobra', 'nie ładna', 'nie czysty', 'nie interesująca', 'nie wyjątkowy'], ['nie wyspany', 'nie spokojne', 'nie uporządkowany', 'nie czyste', 'nie grzeczny', 'nie posłuszny', 'nie smaczny', 'nie umyty', 'nie dysponowana', 'nie nudna'], ['nie wielki', 'nie wąska', 'nie logiczne', 'nie spokojny', 'nie ukończone', 'nie przycięty', 'nie czyste', 'nie chętny', 'nie słodkie', 'nie przyjemna'], ['nie ciekawa', 'nie sympatycznego', 'nie zadowolona', 'nie wyspany', 'nie dobry', 'nie ładna', 'nie czysty', 'nie wyraźny', 'nie smaczna', 'nie skuteczny'], ['nie interesująca', 'nie spokojny', 'nie chętne', 'nie dokończone', 'nie uprzejmy', 'nie sympatyczna', 'nie przyjemna', 'nie wciągający', 'nie zabawna', 'nie czysty'], ['nie leniwy', 'nie posprzątany', 'nie wyciszony', 'nie uważny', 'nie wykończony', 'nie podpisany', 'nie dysponowana', 'nie przygotowany', 'nie umyty', 'nie doczytana'], ['nie zorganizowany', 'nie ukończona', 'nie punktualny', 'nie spokojna', 'nie pogodna', 'nie dosolony', 'nie dokończona', 'nie wyspany', 'nie dokładna', 'nie przemyślany']];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      const tekst = teksty[index];
+      const prawidlowe = poprawne[index];
+      const nieprawidlowe = zle[index];
+      const slowa = tekst.split(/({[^}]+})/g);
+      let html = "";
+      let counter = 0;
+      for (let slowo of slowa) {
+        if (slowo.startsWith("{")) {
+          const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
+          html += `<select><option value="">--</option>`;
+          for (let o of opcje) {
+            html += `<option value="${o}">${o}</option>`;
+          }
+          html += `</select>`;
+          counter++;
+        } else {
+          html += slowo;
+        }
+      }
+      document.getElementById("dyktando").innerHTML = html;
+      document.getElementById("result").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
+        }
+      });
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>
