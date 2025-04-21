@@ -1,52 +1,118 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dyktando 14</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyktando: -ić / -itby</title>
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background-color: #f0f8ff;
-      padding: 20px;
+      background-color: #e6f7f8;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
-    .box {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 600px;
+    .container {
+      max-width: 800px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
     }
     h1 {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      background: linear-gradient(to right, #4fc3f7, #81d4fa);
       color: white;
+      padding: 15px;
       border-radius: 15px;
-      padding: 10px;
+      margin-bottom: 20px;
     }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
+    select {
       font-size: 1em;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .check { background-color: #4CAF50; color: white; }
-    .new { background-color: #2196F3; color: white; }
-    .back { background-color: #FFC107; color: black; }
+    .correct {
+      background-color: #c8e6c9;
+    }
+    .incorrect {
+      background-color: #ffcdd2;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+    .btn-check { background-color: #4caf50; color: white; }
+    .btn-new { background-color: #2196f3; color: white; }
+    .btn-back { background-color: #ffca28; color: black; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Dyktando 14 – Klasa 4</h1>
-    <p>To jest przykładowe zdanie z luką do uzupełnienia: sł__wo.</p>
-    <p>To jest kolejne przykładowe zdanie z luką do uzupełnienia: l__tera.</p>
-    <p>Jeszcze jedno zdanie z luką: uc__ń.</p>
-    <button class="check">Sprawdź</button>
-    <button class="new">Nowe zdanie</button>
-    <button class="back" onclick="window.location.href='dyktanda.html'">Powrót do Ortografii</button>
+  <div class="container">
+    <h1>Dyktando: -ić / -itby</h1>
+    <div id="dyktando"></div>
+    <div class="buttons">
+      <button class="btn-check" onclick="sprawdz()">Sprawdź</button>
+      <button class="btn-new" onclick="noweZdanie()">Nowe zdanie</button>
+      <button class="btn-back" onclick="location.href='ortografia.html'">Powrót do Ortografii</button>
+    </div>
+    <div class="result" id="result"></div>
   </div>
+  <script>
+    const teksty = ['Chciałem zrob{ić/itby} zakupy. Mama kazała mi posprząta{ić/itby} pokój. Trzeba ugotowa{ić/itby} obiad. Pies chce pobiega{ić/itby} po podwórku. Dziecko chce narysowa{ić/itby} obrazek. Muszę napisa{ić/itby} list do babci. Tata kazał mi umy{ić/itby} samochód. Babcia chce upiec ciasto i udekorowa{ić/itby} je. Warto spróbowac napraw{ić/itby} kran. Chłopiec chce zobaczyć bajkę i odpoczn{ić/itby}.', 'Uczeń musi nauczy{ić/itby} się tabliczki. Zosia chce przeczyta{ić/itby} książkę. Trzeba odpisa{ić/itby} na wiadomość. Dzieci mają przygotowa{ić/itby} występ. Tata chce pomalowa{ić/itby} płot. Mama planuje zasadzi{ić/itby} kwiaty. Ja chcę zrozumie{ić/itby} zadanie. Musimy wspólnie rozwiąza{ić/itby} problem. Warto przeanalizowa{ić/itby} sytuację. Chłopiec chce odtworzy{ić/itby} piosenkę.', 'Babcia chce ugotowa{ić/itby} rosół. Mama prosi, by zapamięta{ić/itby} przepis. Tata musi wyczyś{ić/itby} narzędzia. Muszę uporządkowa{ić/itby} pokój. Pies próbuje otworzy{ić/itby} drzwi. Uczeń chce powtórzy{ić/itby} materiał. Nauczyciel polecił przeczyta{ić/itby} lekturę. Dziecko chce odnaleź{ić/itby} zabawkę. Trzeba napraw{ić/itby} tornister. Dziś chcę rozpoczą{ić/itby} nowe hobby.', 'Mama postanowiła ugotowa{ić/itby} zupę. Zosia próbuje rozwiąza{ić/itby} zagadkę. Dziecko chce ulepi{ić/itby} bałwana. Tata musi przeprowadzi{ić/itby} remont. Musimy pozna{ić/itby} nowe słowa. Uczeń chce powiększy{ić/itby} wiedzę. Warto zapisa{ić/itby} plan. Pies chce przynieś{ić/itby} piłkę. Chłopiec chce zakończy{ić/itby} grę. Babcia kazała mi otworzy{ić/itby} drzwi.', 'Dziecko chce zasadzi{ić/itby} drzewko. Musimy wspólnie uczy{ić/itby} się słówek. Mama chce uporządkowa{ić/itby} szafkę. Tata postanowił napraw{ić/itby} rower. Zosia chce wyjaśn{ić/itby} zagadkę. Trzeba podla{ić/itby} kwiaty. Babcia planuje upiec placek i pokroi{ić/itby} go. Pies chce wspina{ić/itby} się na kanapę. Dzieci mają podzieli{ić/itby} się zabawkami. Ja muszę wydrukowa{ić/itby} pracę.', 'Chcę posprząta{ić/itby} biurko. Trzeba załatw{ić/itby} sprawę. Mama chce rozmieś{ić/itby} książki. Pies próbuje przegryz{ić/itby} smycz. Dzieci chcą ozdobi{ić/itby} salę. Nauczyciel polecił napisa{ić/itby} opowiadanie. Musimy wspólnie wymyśl{ić/itby} tytuł. Zosia chce zaprezentowa{ić/itby} swój projekt. Tata planuje wydrukowa{ić/itby} zdjęcia. Babcia chce pokaza{ić/itby} album.', 'Uczeń chce policzy{ić/itby} zadania. Trzeba zamówi{ić/itby} nowe książki. Mama chce wyprasowa{ić/itby} ubrania. Pies próbuje zrzuc{ić/itby} poduszkę. Ja muszę sprawdzi{ić/itby} wyniki. Dzieci mają przygotowa{ić/itby} przedstawienie. Zosia chce wybra{ić/itby} prezent. Babcia kazała zapamięta{ić/itby} adres. Tata chce zorganizowa{ić/itby} warsztat. Muszę wyczyś{ić/itby} buty.', 'Muszę odebra{ić/itby} paczkę z poczty. Tata planuje zamkną{ić/itby} bramę. Pies chce przynieś{ić/itby} gazetę. Mama planuje udekorowa{ić/itby} stół. Uczeń chce uporządkowa{ić/itby} książki. Zosia musi obliczy{ić/itby} wynik. Trzeba przygotowa{ić/itby} śniadanie. Dzieci chcą narysowa{ić/itby} obrazki. Ja chcę sprawdzi{ić/itby} zadanie. Babcia chce posadzi{ić/itby} zioła.', 'Dziecko musi przynieś{ić/itby} zeszyt. Mama chce przejrze{ić/itby} gazetę. Pies chce wskoczy{ić/itby} na łóżko. Trzeba powtórzy{ić/itby} słówka. Ja chcę zbudowa{ić/itby} domek z klocków. Babcia planuje wyhaftowa{ić/itby} obrus. Tata chce wysła{ić/itby} list. Muszę przeczyta{ić/itby} opowiadanie. Zosia chce pokolorowa{ić/itby} rysunek. Dzieci chcą zatańczy{ić/itby} na scenie.', 'Uczeń chce przeliczy{ić/itby} punkty. Trzeba odnaleź{ić/itby} klucze. Mama planuje zapisa{ić/itby} się na kurs. Dziecko chce ułoży{ić/itby} puzzle. Babcia chce wyczyś{ić/itby} okulary. Ja muszę dopisa{ić/itby} ostatnie zdanie. Pies próbuje otworzy{ić/itby} szafkę. Tata chce podmienić żarówkę. Dzieci mają stworzy{ić/itby} rzeźby. Warto zapamięta{ić/itby} ważne informacje.'];
+    const poprawne = [['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić'], ['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić'], ['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić'], ['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić'], ['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić'], ['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić'], ['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić'], ['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić'], ['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić'], ['ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić', 'ić']];
+    const zle = [['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby'], ['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby'], ['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby'], ['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby'], ['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby'], ['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby'], ['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby'], ['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby'], ['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby'], ['itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby', 'itby']];
+    let index = 0;
+
+    function noweZdanie() {
+      index = Math.floor(Math.random() * teksty.length);
+      const tekst = teksty[index];
+      const prawidlowe = poprawne[index];
+      const nieprawidlowe = zle[index];
+      const slowa = tekst.split(/({[^}]+})/g);
+      let html = "";
+      let counter = 0;
+      for (let slowo of slowa) {
+        if (slowo === "{ić/itby}") {
+          const opcje = [prawidlowe[counter], nieprawidlowe[counter]].sort();
+          html += `<select><option value="">--</option>`;
+          for (let o of opcje) {
+            html += `<option value="${o}">${o}</option>`;
+          }
+          html += `</select>`;
+          counter++;
+        } else {
+          html += slowo;
+        }
+      }
+      document.getElementById("dyktando").innerHTML = html;
+      document.getElementById("result").innerText = "";
+    }
+
+    function sprawdz() {
+      const selects = document.querySelectorAll("#dyktando select");
+      let blad = 0;
+      selects.forEach((select, i) => {
+        const wartosc = select.value;
+        const prawidlowa = poprawne[index][i];
+        if (wartosc === prawidlowa) {
+          select.className = "correct";
+        } else {
+          select.className = "incorrect";
+          blad++;
+        }
+      });
+      document.getElementById("result").innerText = `Liczba błędów: ${blad}`;
+    }
+
+    noweZdanie();
+  </script>
 </body>
 </html>
