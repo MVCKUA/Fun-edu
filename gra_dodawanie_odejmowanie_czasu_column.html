@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gra: Dodawanie i odejmowanie czasu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: #f0faff;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #00acc1;
+    }
+    .options label {
+      margin: 0 10px;
+      font-size: 18px;
+    }
+    button {
+      margin: 10px 5px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      background: #00bcd4;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0097a7;
+    }
+    .result {
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gra: Dodawanie i odejmowanie czasu</h1>
+    <p>Godzina początkowa: <span id="startTime"></span></p>
+    <p>Dodaj lub odejmij czas (w formie stawki):</p><div id="columnTask" style="text-align: center;"></div>
+    <p id="operation"></p>
+    <div class="options" id="optionsBox"></div>
+    <div>
+      <button onclick="generateTime()">Nowe zadanie</button>
+      <button onclick="checkAnswer()">Sprawdź</button>
+      <button onclick="location.href='matematyka.html'">Powrót do Matematyki</button>
+    </div>
+    <div class="result" id="resultBox"></div>
+  </div>
+
+<script>
+  let correctAnswer = "";
+  
+  
+    function generateTime() {
+      const startHour = Math.floor(Math.random() * 12) + 1;
+      const startMinute = Math.floor(Math.random() * 60);
+      const addOrSubtract = Math.random() < 0.5 ? "add" : "subtract";
+      const changeHour = Math.floor(Math.random() * 3) + 1;
+      const changeMinute = Math.floor(Math.random() * 30) + 1;
+
+      let newHour, newMinute, operation;
+
+      if (addOrSubtract === "add") {
+        newHour = startHour + changeHour;
+        newMinute = startMinute + changeMinute;
+        operation = `dodaj ${changeHour} godzin(y) i ${changeMinute} minut(y)`;
+      } else {
+        newHour = startHour - changeHour;
+        newMinute = startMinute - changeMinute;
+        operation = `odejmij ${changeHour} godzin(y) i ${changeMinute} minut(y)`;
+      }
+
+      // Normalize the time
+      if (newMinute >= 60) {
+        newMinute -= 60;
+        newHour += 1;
+      }
+      if (newMinute < 0) {
+        newMinute += 60;
+        newHour -= 1;
+      }
+      if (newHour > 12) newHour -= 12;
+      if (newHour < 1) newHour += 12;
+
+      // Format time
+      const startFormatted = `${startHour}:${startMinute < 10 ? '0' : ''}${startMinute}`;
+      const resultFormatted = `${newHour}:${newMinute < 10 ? '0' : ''}${newMinute}`;
+
+      correctAnswer = resultFormatted;
+      document.getElementById("startTime").textContent = startFormatted;
+      document.getElementById("operation").textContent = `Czas początkowy: ${startFormatted}. ${operation}.`;
+
+      // Show it in column format
+      document.getElementById("columnTask").innerHTML = `
+        <div>
+          <span>${startHour}:${startMinute < 10 ? '0' : ''}${startMinute}</span>
+        </div>
+        <div>
+          <span>+</span>
+        </div>
+        <div>
+          <span>${changeHour}:${changeMinute < 10 ? '0' : ''}${changeMinute}</span>
+        </div>
+        <div>
+          <span>________</span>
+        </div>
+        <div>
+          <span>${newHour}:${newMinute < 10 ? '0' : ''}${newMinute}</span>
+        </div>
+      `;
+      // Generate options for answers
+      const options = [correctAnswer, generateRandomTime(), generateRandomTime(), generateRandomTime()];
+      const shuffledOptions = options.sort(() => 0.5 - Math.random());
+      document.getElementById("optionsBox").innerHTML = shuffledOptions.map(opt => 
+        `<label><input type="radio" name="time" value="${opt}"> ${opt}</label>`
+      ).join("");
+      document.getElementById("resultBox").innerText = "";
+    }
+    
+    const startHour = Math.floor(Math.random() * 12) + 1;
+    const startMinute = Math.floor(Math.random() * 60);
+    const addOrSubtract = Math.random() < 0.5 ? "add" : "subtract";
+    const changeHour = Math.floor(Math.random() * 3) + 1;
+    const changeMinute = Math.floor(Math.random() * 30) + 1;
+
+    let newHour, newMinute, operation;
+
+    if (addOrSubtract === "add") {
+      newHour = startHour + changeHour;
+      newMinute = startMinute + changeMinute;
+      operation = `dodaj ${changeHour} godzin(y) i ${changeMinute} minut(y)`;
+    } else {
+      newHour = startHour - changeHour;
+      newMinute = startMinute - changeMinute;
+      operation = `odejmij ${changeHour} godzin(y) i ${changeMinute} minut(y)`;
+    }
+
+    // Normalize the time
+    if (newMinute >= 60) {
+      newMinute -= 60;
+      newHour += 1;
+    }
+    if (newMinute < 0) {
+      newMinute += 60;
+      newHour -= 1;
+    }
+    if (newHour > 12) newHour -= 12;
+    if (newHour < 1) newHour += 12;
+
+    // Format time
+    const startFormatted = `${startHour}:${startMinute < 10 ? '0' : ''}${startMinute}`;
+    const resultFormatted = `${newHour}:${newMinute < 10 ? '0' : ''}${newMinute}`;
+
+    correctAnswer = resultFormatted;
+    document.getElementById("startTime").textContent = startFormatted;
+    document.getElementById("operation").textContent = `Dodaj lub odejmij czas: ${startFormatted}. ${operation}.`;
+
+    // Generate options for answers
+    const options = [correctAnswer, generateRandomTime(), generateRandomTime(), generateRandomTime()];
+    const shuffledOptions = options.sort(() => 0.5 - Math.random());
+    
+    document.getElementById("optionsBox").innerHTML = shuffledOptions.map(opt => 
+      `<label><input type="radio" name="time" value="${opt}"> ${opt}</label>`
+    ).join("");
+
+    document.getElementById("resultBox").innerText = "";
+  }
+
+  function generateRandomTime() {
+    const randomHour = Math.floor(Math.random() * 12) + 1;
+    const randomMinute = Math.floor(Math.random() * 60);
+    return `${randomHour}:${randomMinute < 10 ? '0' : ''}${randomMinute}`;
+  }
+
+  function checkAnswer() {
+    const selected = document.querySelector('input[name="time"]:checked');
+    if (!selected) {
+      alert("Wybierz odpowiedź.");
+      return;
+    }
+    const answer = selected.value;
+    if (answer === correctAnswer) {
+      document.getElementById("resultBox").innerText = "✅ Poprawna odpowiedź!";
+      document.getElementById("resultBox").style.color = "green";
+    } else {
+      document.getElementById("resultBox").innerText = `❌ Błędna odpowiedź. Poprawna: ${correctAnswer}`;
+      document.getElementById("resultBox").style.color = "red";
+    }
+  }
+
+  window.onload = generateTime;
+</script>
+
+</body>
+</html>
