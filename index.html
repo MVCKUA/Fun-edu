@@ -1,91 +1,62 @@
-
-<!DOCTYPE html>
-<html lang="pl">
+<!doctype html>
+<html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <title>Fun Edu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Fredoka', sans-serif;
-      margin: 0;
-      background: #eafcff;
-    }
-    .header {
-      background: linear-gradient(to right, #00bcd4, #ffe082);
-      padding: 30px 20px 20px 20px;
-      text-align: center;
-      color: white;
-      font-size: 32px;
-      font-weight: 600;
-      border-bottom: 4px solid #ffcc80;
-    }
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin: 25px auto;
-    }
-    .menu a {
-      text-decoration: none;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      display: inline-block;
-    }
-    .menu a:nth-child(1) { background: #ff8a65; color: white; }
-    .menu a:nth-child(2) { background: #ffd54f; color: #333; }
-    .menu a:nth-child(3) { background: #4db6ac; color: white; }
-    .menu a:nth-child(4) { background: #ba68c8; color: white; }
-    .menu a:nth-child(5) { background: #90caf9; color: #333; }
-
-    .content {
-      background: white;
-      max-width: 700px;
-      margin: auto;
-      padding: 30px;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(0,0,0,0.08);
-    }
-
-    .content p {
-      font-size: 18px;
-      line-height: 1.6;
-    }
-
-    .content img {
-      max-width: 100%;
-      border-radius: 16px;
-      margin-top: 20px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fun-edu — веселі навчальні вправи для 1–4 класів">
+  <title>Fun-edu — навчайся граючись</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <header class="site-header">
+    <div class="brand"><span class="brand-mark">★</span><span>Fun-edu</span></div>
+    <nav aria-label="Основна навігація">
+      <a class="nav-link active" href="index.html">Навчатися</a>
+      <a class="nav-link" href="#old-exercises">Усі вправи</a>
+      <a class="nav-link" href="o-stronie.html">Про сайт</a>
+    </nav>
+    <div class="progress-pill" aria-label="Загальний прогрес"><span id="totalStars">0</span> ⭐</div>
+  </header>
 
-<div class="header">Fun Edu</div>
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Маленькі кроки — великі відкриття</p>
+        <h1 id="page-title">Навчайся граючись!</h1>
+        <p class="hero-copy">Обери свій клас і тренуй математику, мову, читання, логіку та знання про світ.</p>
+      </div>
+      <div class="hero-owl" aria-hidden="true">🦉</div>
+    </section>
 
-<div class="menu">
-  <a href="index.html">Strona główna</a>
-  <a href="ortografia.html">Ortografia</a>
-  <a href="matematyka.html">Matematyka</a>
-  <a href="fun-english.html">Fun English</a>
-  <a href="o-stronie.html">O stronie</a>
-</div>
+    <section class="card grade-card" aria-labelledby="grade-title">
+      <div class="section-heading"><div><p class="eyebrow">Крок 1</p><h2 id="grade-title">Обери свій клас</h2></div><span class="step">1 / 2</span></div>
+      <div class="grade-grid" id="gradeSelector" role="group" aria-label="Вибір класу"></div>
+    </section>
 
-<div class="content">
-  <h2>Fun-edu</h2>
-  <p>
-    Witaj na <strong>Fun Edu</strong> – miejscu, gdzie nauka staje się zabawą!<br />
-    Odkrywaj świat ortografii, matematyki i angielskiego z uśmiechem.<br />
-    Każde zadanie to nowa przygoda. Gotowi? Zaczynamy!
-  </p>
-  <img src="A_colorful_and_friendly_cartoon-style_illustration.png" alt="Edukacyjna sowa" />
-</div>
+    <section class="card learning-card" aria-labelledby="learning-title">
+      <div class="section-heading"><div><p class="eyebrow">Крок 2</p><h2 id="learning-title">Що потренуємо?</h2><p id="gradeHint" class="muted"></p></div><span class="topic-count" id="topicCount"></span></div>
+      <div class="topic-grid" id="topicSelector"></div>
+    </section>
 
+    <section class="card exercise-card" id="exercisePanel" aria-labelledby="exerciseTitle">
+      <div class="exercise-topline"><span class="tag" id="subjectTag">Математика</span><span id="questionNumber">Завдання 1</span></div>
+      <div class="exercise-progress"><span id="progressBar"></span></div>
+      <h2 id="exerciseTitle">Готовий до пригоди?</h2>
+      <p class="question" id="questionText"></p>
+      <div id="answerArea" class="answer-area"></div>
+      <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+      <div class="exercise-actions"><button class="button primary" id="checkButton" type="button">Перевірити</button><button class="button secondary" id="nextButton" type="button" hidden>Наступне завдання →</button></div>
+    </section>
+
+    <section class="stats-row" aria-label="Статистика">
+      <div class="stat-card"><span class="stat-icon">🔥</span><div><strong id="streak">0</strong><span>серія відповідей</span></div></div>
+      <div class="stat-card"><span class="stat-icon">✅</span><div><strong id="correct">0</strong><span>правильних сьогодні</span></div></div>
+      <div class="stat-card"><span class="stat-icon">🏆</span><div><strong id="best">0</strong><span>найкраща серія</span></div></div>
+    </section>
+
+    <section class="card old-card" id="old-exercises"><h2>Більше готових вправ</h2><p class="muted">Попередні тематичні сторінки Fun-edu теж залишаються доступними.</p><div class="old-links"><a href="matematyka.html">🔢 Старі вправи з математики</a><a href="ortografia.html">✏️ Орфографія та диктанти</a><a href="alphabet.html">🔤 Український алфавіт</a><a href="animals.html">🐾 Тварини</a></div></section>
+  </main>
+  <footer>Fun-edu · Вчися у власному темпі 💛</footer>
+  <script src="app.js"></script>
 </body>
 </html>
