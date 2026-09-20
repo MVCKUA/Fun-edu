@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Перевірки Fun-edu</title>
+  <style>body{font:16px system-ui;max-width:760px;margin:2rem auto;padding:0 1rem;color:#24324a}li{margin:.5rem 0}.ok{color:#17835b}.fail{color:#b3261e}</style>
+</head>
+<body>
+  <h1>Перевірки Fun-edu</h1>
+  <p>Невеликий smoke-test для статичного рушія. Відкрийте файл у браузері після завантаження <code>index.html</code>.</p>
+  <ul id="results"></ul>
+  <script>
+    const results = document.querySelector('#results');
+    const check = (name, condition) => {
+      const li = document.createElement('li');
+      li.className = condition ? 'ok' : 'fail';
+      li.textContent = `${condition ? '✓' : '✗'} ${name}`;
+      results.append(li);
+    };
+    const statsKey = 'funStats';
+    const original = localStorage.getItem(statsKey);
+    let parsed;
+    try { parsed = JSON.parse(original || '{"correct":0,"streak":0,"best":0,"stars":0}'); } catch { parsed = null; }
+    check('Статистика має коректний JSON-формат', parsed !== null);
+    check('Статистика містить невід’ємні лічильники', parsed && ['correct','streak','best','stars'].every(k => Number.isInteger(parsed[k]) && parsed[k] >= 0));
+    check('Збережений клас, якщо є, належить до 1–4', !localStorage.getItem('funGrade') || ['1','2','3','4'].includes(localStorage.getItem('funGrade')));
+    check('Сторінка містить основні області вправи', ['gradeSelector','topicSelector','answerArea','checkButton','nextButton'].every(id => document.querySelector(`#${id}`) !== null));
+    if (original === null) localStorage.removeItem(statsKey);
+  </script>
+</body>
+</html>
