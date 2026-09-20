@@ -6,74 +6,18 @@
   <title>Animals</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Fredoka', sans-serif;
-      background: linear-gradient(to bottom right, #fdfcdc, #a0e7e5);
-      color: #333;
-    }
-    header {
-      background: linear-gradient(to right, #00bcd4, #ffeb3b);
-      text-align: center;
-      padding: 20px;
-      font-size: 2em;
-      font-weight: bold;
-    }
-    .task {
-      text-align: center;
-      margin: 40px 20px;
-    }
-    .animal-img {
-      width: 150px;
-      height: 150px;
-      object-fit: contain;
-      margin: 20px auto;
-      display: block;
-    }
-    .options {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .options button {
-      background-color: #ffc107;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1em;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .options button[disabled] {
-      opacity: 0.5;
-      cursor: default;
-    }
-    .options button:hover:not([disabled]) {
-      background-color: #ff9800;
-    }
-    #feedback {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-    .nav-buttons {
-      text-align: center;
-      margin-top: 40px;
-    }
-    .nav-buttons button {
-      background-color: #00bcd4;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1em;
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 5px;
-      color: white;
-    }
-    .nav-buttons button:hover {
-      background-color: #0097a7;
-    }
+    body { margin: 0; font-family: 'Fredoka', sans-serif; background: linear-gradient(to bottom right, #fdfcdc, #a0e7e5); color: #333; }
+    header { background: linear-gradient(to right, #00bcd4, #ffeb3b); text-align: center; padding: 20px; font-size: 2em; font-weight: bold; }
+    .task { text-align: center; margin: 40px 20px; }
+    .animal-img { width: 150px; height: 150px; object-fit: contain; margin: 20px auto; display: block; }
+    .options { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+    .options button { background-color: #ffc107; border: none; padding: 10px 20px; font-size: 1em; border-radius: 10px; cursor: pointer; }
+    .options button[disabled] { opacity: 0.5; cursor: default; }
+    .options button:hover:not([disabled]) { background-color: #ff9800; }
+    #feedback { font-size: 1.2em; font-weight: bold; margin-top: 20px; }
+    .nav-buttons { text-align: center; margin-top: 40px; }
+    .nav-buttons button { background-color: #00bcd4; border: none; padding: 10px 20px; font-size: 1em; border-radius: 10px; cursor: pointer; margin: 5px; color: white; }
+    .nav-buttons button:hover { background-color: #0097a7; }
   </style>
 </head>
 <body>
@@ -86,34 +30,20 @@
       <button type="button" class="option-btn" disabled></button>
       <button type="button" class="option-btn" disabled></button>
     </div>
-    <div id="feedback"></div>
+    <div id="feedback" aria-live="polite"></div>
   </div>
   <div class="nav-buttons">
     <button type="button" id="backBtn">Powrót</button>
     <button type="button" id="newBtn">Nowe zadanie</button>
   </div>
-
   <script>
     const animals = [
-      { name: "Cat",      image: "cat.png" },
-      { name: "Dog",      image: "dog.png" },
-      { name: "Lion",     image: "lion.png" },
-      { name: "Elephant", image: "elephant.png" },
-      { name: "Monkey",   image: "monkey.png" },
-      { name: "Bear",     image: "bear.png" },
-      { name: "Frog",     image: "frog.png" },
-      { name: "Tiger",    image: "tiger.png" },
-      { name: "Giraffe",  image: "giraffe.png" },
-      { name: "Zebra",    image: "zebra.png" }
+      { name: "Cat", image: "cat.png" }, { name: "Dog", image: "dog.png" },
+      { name: "Lion", image: "lion.png" }, { name: "Elephant", image: "elephant.png" },
+      { name: "Monkey", image: "monkey.png" }, { name: "Bear", image: "bear.png" },
+      { name: "Frog", image: "frog.png" }, { name: "Tiger", image: "tiger.png" },
+      { name: "Giraffe", image: "giraffe.png" }, { name: "Zebra", image: "zebra.png" }
     ];
-
-    // Preload images
-    animals.forEach(a => {
-      const img = new Image();
-      img.src = a.image;
-    });
-
-    // Fisher–Yates shuffle
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -121,63 +51,33 @@
       }
       return array;
     }
-
     const optionButtons = document.querySelectorAll('.option-btn');
-    const feedbackEl    = document.getElementById('feedback');
-    const imgEl         = document.getElementById('animalImage');
-    const backBtn       = document.getElementById('backBtn');
-    const newBtn        = document.getElementById('newBtn');
-
+    const feedbackEl = document.getElementById('feedback');
+    const imgEl = document.getElementById('animalImage');
     let currentAnimal = null;
-    let previousName  = "";
-
+    let previousName = '';
     function newAnimal() {
-      // Defer heavy operations to next frame
-      requestAnimationFrame(() => {
-        let pool = shuffle(animals.slice());
-        if (previousName) {
-          pool = pool.filter(a => a.name !== previousName);
-        }
-        currentAnimal = pool[0];
-        previousName = currentAnimal.name;
-
-        imgEl.src = currentAnimal.image;
-        imgEl.alt = currentAnimal.name;
-
-        const options = shuffle([
-          currentAnimal.name,
-          pool[1].name,
-          pool[2].name
-        ]);
-        optionButtons.forEach((btn, i) => {
-          btn.textContent = options[i];
-          btn.disabled   = false;
-        });
-
-        feedbackEl.textContent = '';
-      });
+      const pool = shuffle(animals.filter(a => a.name !== previousName).slice());
+      currentAnimal = pool[0];
+      previousName = currentAnimal.name;
+      imgEl.src = currentAnimal.image;
+      imgEl.alt = currentAnimal.name;
+      const options = shuffle([currentAnimal.name, pool[1].name, pool[2].name]);
+      optionButtons.forEach((btn, i) => { btn.textContent = options[i]; btn.disabled = false; });
+      feedbackEl.textContent = '';
+      feedbackEl.style.color = '';
     }
-
     function checkAnswer(event) {
-      // Guard against null currentAnimal
       if (!currentAnimal) return;
-
-      const chosen = event.currentTarget.textContent;
-      const isCorrect = chosen === currentAnimal.name;
-      feedbackEl.textContent = isCorrect
-        ? 'Brawo! To poprawna odpowiedź!'
-        : 'Ups! Spróbuj jeszcze raz!';
-      feedbackEl.style.color = isCorrect ? 'green' : 'red';
-      optionButtons.forEach(btn => btn.disabled = true);
+      const correct = event.currentTarget.textContent === currentAnimal.name;
+      feedbackEl.textContent = correct ? 'Brawo! To poprawna odpowiedź!' : 'Ups! Spróbuj jeszcze raz!';
+      feedbackEl.style.color = correct ? 'green' : 'red';
+      if (correct) optionButtons.forEach(btn => btn.disabled = true);
     }
-
-    // Attach handlers
     optionButtons.forEach(btn => btn.addEventListener('click', checkAnswer));
-    newBtn.addEventListener('click', newAnimal);
-    backBtn.addEventListener('click', () => location.href = 'fun-english.html');
-
-    // Initialize first question
-    window.onload = newAnimal;
+    document.getElementById('newBtn').addEventListener('click', newAnimal);
+    document.getElementById('backBtn').addEventListener('click', () => { window.location.href = 'fun-english.html'; });
+    newAnimal();
   </script>
 </body>
 </html>
